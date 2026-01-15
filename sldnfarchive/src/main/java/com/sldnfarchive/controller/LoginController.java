@@ -38,16 +38,16 @@ import com.sldnfarchive.model.SampleVO;
 import com.sldnfarchive.service.EgovSampleService;
 
 /**
- * @Class Name : EgovSampleController.java
- * @Description : EgovSample Controller Class
+ * @Class Name : LoginController.java
+ * @Description : Login Controller Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
  * @ ---------   ---------   -------------------------------
- * @ 2009.03.16           최초생성
+ * @ 2026.01.16	 HHP          최초생성
  *
- * @author 개발프레임웍크 실행환경 개발팀
- * @since 2009. 03.16
+ * @author HHP
+ * @since 2016.01.16
  * @version 1.0
  * @see
  *
@@ -55,15 +55,12 @@ import com.sldnfarchive.service.EgovSampleService;
  */
 
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 
 	/** EgovSampleService */
 	@Resource(name = "sampleService")
 	private EgovSampleService sampleService;
-
-	/** EgovPropertyService */
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService propertiesService;
 
 	/** Validator */
 	@Resource(name = "beanValidator")
@@ -77,30 +74,12 @@ public class LoginController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/login.do")
-	public String selectSampleList(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
-
-		/** EgovPropertyService.sample */
-		searchVO.setPageUnit(propertiesService.getInt("pageUnit"));
-		searchVO.setPageSize(propertiesService.getInt("pageSize"));
-
-		/** pageing setting */
-		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(searchVO.getPageIndex());
-		paginationInfo.setRecordCountPerPage(searchVO.getPageUnit());
-		paginationInfo.setPageSize(searchVO.getPageSize());
-
-		searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
-
-		List<?> sampleList = sampleService.selectSampleList(searchVO);
-		model.addAttribute("resultList", sampleList);
-
-		int totCnt = sampleService.selectSampleListTotCnt(searchVO);
-		paginationInfo.setTotalRecordCount(totCnt);
-		model.addAttribute("paginationInfo", paginationInfo);
-
-		return "sample/egovSampleList";
+	public String login(@ModelAttribute("searchVO") SampleDefaultVO searchVO, ModelMap model) throws Exception {
+		System.out.println("============================");
+		System.out.println("Success - login.do");
+		System.out.println("============================");
+		
+		return "login/login";
 	}
 
 }

@@ -11241,3 +11241,9 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+.btn-login {
+	width: 300px;
+	height: 45px;
+	font-size: 0.875rem;
+}

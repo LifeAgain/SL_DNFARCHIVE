@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sldnfarchive.service.impl.LoginMapper">
+	
+	<select id="loginCheckAdm" parameterType="userVO" resultType="egovMap">
+		SELECT
+			USER_MAIL
+		  , USER_NM
+		  , USER_PW
+		  , USER_STAT
+		FROM
+			USER_MASTER
+		WHERE
+				1=1
+		<if test="userMail != null and userMail != ''">
+			AND USER_MAIL = #{userMail}
+		</if>
+		<if test="userPw != null and userPw != ''">
+			AND USER_PW = #{userPw}
+		</if>
+	</select>
+
+	<select id="loginCheckAdmCnt" parameterType="userVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			USER_MASTER
+		WHERE
+				1=1
+		<if test="userMail != null and userMail != ''">
+			AND USER_MAIL = #{userMail}
+		</if>
+		<if test="userPw != null and userPw != ''">
+			AND USER_PW = #{userPw}
+		</if>
+	</select>
+
+</mapper>

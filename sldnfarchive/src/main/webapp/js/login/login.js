@@ -9,8 +9,7 @@ function login() {
 	  , async: true
 	  , success: function(res) { // 결과 성공 콜백함수
 	        if(res.loginCnt == 1) {
-	        	console.log("Login Success");
-	        	// window.location.href = "/main/main.do";
+	        	window.location.href = "/main/main.do";
 	        } else {
 				Swal.fire({
 					icon: "info",

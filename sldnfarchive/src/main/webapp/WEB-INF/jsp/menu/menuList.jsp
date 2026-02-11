@@ -4,16 +4,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%
   /**
-  * @Class Name : main.jsp
-  * @Description : 메인화면
+  * @Class Name : menuList.jsp
+  * @Description : 메뉴관리
   * @Modification Information
   *
   *   수정일         수정자                   수정내용
   *  -------    --------    ---------------------------
-  *  2026.02.03	HHP            최초 생성
+  *  2026.02.10	HHP            최초 생성
   *
   * author HHP
-  * since 2026.02.03
+  * since 2026.02.10
   *
   * Copyright (C) 2009 by MOPAS  All right reserved.
   */

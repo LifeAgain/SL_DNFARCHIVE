@@ -7,11 +7,11 @@
 			USER_MAIL
 		  , USER_NM
 		  , USER_PW
-		  , USER_STAT
 		FROM
 			USER_MASTER
 		WHERE
 				1=1
+			AND USER_STAT = '1'
 		<if test="userMail != null and userMail != ''">
 			AND USER_MAIL = #{userMail}
 		</if>
@@ -27,6 +27,7 @@
 			USER_MASTER
 		WHERE
 				1=1
+			AND USER_STAT = '1'
 		<if test="userMail != null and userMail != ''">
 			AND USER_MAIL = #{userMail}
 		</if>

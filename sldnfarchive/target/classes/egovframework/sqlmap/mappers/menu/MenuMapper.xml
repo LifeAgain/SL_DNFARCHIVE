@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sldnfarchive.service.impl.MenuMapper">
+
+	<select id="menuList" parameterType="menuVO" resultType="egovMap">
+		WITH RECURSIVE CTE (ID, TEXT, PARENT, ICON) AS
+		(
+			(
+				SELECT
+					A.ID
+				  , A.TEXT
+				  , A.PARENT
+				  , A.ICON
+				FROM
+					(
+						SELECT
+							CONCAT(MENU_LCD, MENU_SCD) AS ID
+						  , MENU_NM AS TEXT
+						  , IFNULL(
+								  	(
+								  		CASE MENU_SCD
+								  		WHEN '00' THEN '#'
+								  		ELSE CONCAT(MENU_LCD, '00')
+								  		END
+								  	)
+								  	, '#'
+								  ) AS PARENT
+							, ICON_TYPE AS ICON
+						FROM
+							MENU_MASTER
+					) A
+					WHERE
+						A.PARENT = '#'
+			)
+			UNION ALL
+			(
+					SELECT
+						B.ID
+					  , B.TEXT
+					  , B.PARENT
+					  , B.ICON
+					FROM
+						(
+							SELECT
+								CONCAT(MENU_LCD, MENU_SCD) AS ID
+							  , MENU_NM AS TEXT
+							  , (
+								  		CASE MENU_SCD
+								  		WHEN '00' THEN '#'
+								  		ELSE CONCAT(MENU_LCD, '00')
+								  		END
+								  	) AS PARENT
+							  , ICON_TYPE AS ICON
+							FROM
+								MENU_MASTER
+						) B
+					INNER JOIN
+					CTE
+					ON B.PARENT = CTE.ID
+			)
+		)
+		
+		SELECT
+			CTE.ID
+		  , CTE.TEXT
+		  , CTE.PARENT
+		  , CTE.ICON
+		FROM
+			CTE
+		WHERE
+				 1=1
+		<if test="schMenuNm != null and schMenuNm != ''">
+			AND CTE.TEXT LIKE CONCAT('%', #{schMenuNm}, '%')
+		</if>
+		ORDER BY
+			CTE.ID
+	</select>
+	
+	<select id="selectMenu" parameterType="menuVO" resultType="egovMap">
+		SELECT
+			MENU_LCD
+		  , MENU_SCD
+		  , MENU_NM
+		  , MENU_PATH
+		  , USE_YN
+		  , MENU_NOTE
+		FROM
+			MENU_MASTER
+		WHERE
+				1=1
+		<if test="menuLcd != null and menuLcd != ''">
+			AND MENU_LCD = #{menuLcd}
+		</if>
+		<if test="menuScd != null and menuScd != ''">
+			AND MENU_SCD = #{menuScd}
+		</if>
+	</select>
+	
+	<insert id="insertSample" parameterType="menuVO">
+		INSERT INTO MENU_MASTER
+		(
+			MENU_LCD
+		  , MENU_SCD
+		  , MENU_NM
+		  , MENU_PATH
+		  , USE_YN
+		  , MENU_NOTE
+		  , ICON_TYPE
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{menuLcd}
+		  , #{menuScd}
+		  , #{menuNm}
+		  , #{menuPath}
+		  , #{useYn}
+		  , #{menuNote}
+		  , (
+		  		CASE
+		  		WHEN MENU_SCD = '00' THEN 'default'
+		  		ELSE 'file'
+		  		END
+		  	)
+		  , '1'
+		  , NOW()
+		  , '1'
+		  , NOW()
+		)
+	</insert>
+	
+	<update id="updateMenu" parameterType="menuVO">
+		UPDATE
+			MENU_MASTER
+		SET
+			MENU_NM = #{menuNm}
+		  , MENU_PATH = #{menuPath}
+		  , USE_YN = #{useYn}
+		  , MENU_NOTE = #{menuNote}
+		  , UP_NO = '1'
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="menuLcd != null and menuLcd != ''">
+			AND MENU_LCD = #{menuLcd}
+		</if>
+		<if test="menuScd != null and menuScd != ''">
+			AND MENU_SCD = #{menuScd}
+		</if>
+	</update>
+
+	<delete id="deleteMenu" parameterType="menuVO">
+		DELETE FROM
+			MENU_MASTER
+		WHERE
+				1=1
+		<if test="menuLcd != null and menuLcd != ''">
+			AND MENU_LCD = #{menuLcd}
+		</if>
+		<if test="menuScd != null and menuScd != ''">
+			AND MENU_SCD = #{menuScd}
+		</if>
+	</delete>
+
+</mapper>

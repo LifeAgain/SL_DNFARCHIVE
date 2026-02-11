@@ -36,8 +36,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
-import com.sldnfarchive.model.UserVO;
-import com.sldnfarchive.service.LoginService;
+import com.sldnfarchive.model.MenuVO;
+import com.sldnfarchive.service.MenuService;
 
 /**
  * @Class Name : MenuController.java
@@ -60,26 +60,101 @@ import com.sldnfarchive.service.LoginService;
 @RequestMapping("/menu")
 public class MenuController {
 
-	/** LoginService */
-	@Resource(name = "loginService")
-	private LoginService loginService;
+	/** MenuService */
+	@Resource(name = "menuService")
+	private MenuService menuService;
 
 	/** Validator */
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
 
 	/**
-	 * 메인화면
+	 * 메뉴관리
 	 * @return "menu/menuList"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/menuList.do")
-	public String main() throws Exception {
+	public String menuList() throws Exception {
 		System.out.println("============================");
 		System.out.println("Success - menuList.do");
 		System.out.println("============================");
 		
 		return "menu/menuList";
+	}
+	
+	/**
+	 * 메뉴 목록
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/selectMenuList.do")
+	public String selectMenuList(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+		
+		List<EgovMap> menuList = menuService.menuList(menuVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - selectMenuList.do");
+		System.out.println("============================");
+		
+		model.addAttribute("menuList", menuList);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 메뉴 상세정보
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/selectMenu.do")
+	public String selectMenu(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+		
+		EgovMap selectMenu = menuService.selectMenu(menuVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - selectMenu.do");
+		System.out.println("============================");
+		
+		model.addAttribute("selectMenu", selectMenu);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 메뉴 추가/수정
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/saveMenu.do")
+	public String saveMenu(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+		
+		menuService.insertMenu(menuVO);
+		menuService.updateMenu(menuVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - saveMenu.do");
+		System.out.println("============================");
+		
+		return "jsonView";
+		
+	}
+	
+	/**
+	 * 메뉴 추가
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/deleteMenu.do")
+	public String deleteMenu(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+		
+		menuService.deleteMenu(menuVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - deleteMenu.do");
+		System.out.println("============================");
+		
+		return "jsonView";
+		
 	}
 
 }

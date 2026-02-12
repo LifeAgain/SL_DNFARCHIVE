@@ -3,14 +3,14 @@
 <mapper namespace="com.sldnfarchive.service.impl.MenuMapper">
 
 	<select id="menuList" parameterType="menuVO" resultType="egovMap">
-		WITH RECURSIVE CTE (ID, TEXT, PARENT, ICON) AS
+		WITH RECURSIVE CTE (ID, TEXT, PARENT, TYPE) AS
 		(
 			(
 				SELECT
 					A.ID
 				  , A.TEXT
 				  , A.PARENT
-				  , A.ICON
+				  , A.TYPE
 				FROM
 					(
 						SELECT
@@ -25,7 +25,7 @@
 								  	)
 								  	, '#'
 								  ) AS PARENT
-							, ICON_TYPE AS ICON
+							, ICON_TYPE AS TYPE
 						FROM
 							MENU_MASTER
 					) A
@@ -38,7 +38,7 @@
 						B.ID
 					  , B.TEXT
 					  , B.PARENT
-					  , B.ICON
+					  , B.TYPE
 					FROM
 						(
 							SELECT
@@ -50,7 +50,7 @@
 								  		ELSE CONCAT(MENU_LCD, '00')
 								  		END
 								  	) AS PARENT
-							  , ICON_TYPE AS ICON
+							  , ICON_TYPE AS TYPE
 							FROM
 								MENU_MASTER
 						) B
@@ -64,7 +64,7 @@
 			CTE.ID
 		  , CTE.TEXT
 		  , CTE.PARENT
-		  , CTE.ICON
+		  , CTE.TYPE
 		FROM
 			CTE
 		WHERE
@@ -96,7 +96,7 @@
 		</if>
 	</select>
 	
-	<insert id="insertSample" parameterType="menuVO">
+	<insert id="insertMenu" parameterType="menuVO">
 		INSERT INTO MENU_MASTER
 		(
 			MENU_LCD

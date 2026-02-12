@@ -23,8 +23,11 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 
-import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -60,14 +63,19 @@ import com.sldnfarchive.service.MenuService;
 @RequestMapping("/menu")
 public class MenuController {
 
-	/** MenuService */
-	@Resource(name = "menuService")
-	private MenuService menuService;
-
 	/** Validator */
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
-
+	
+	/** txManager */
+	@Resource(name = "txManager")
+	protected DataSourceTransactionManager txManager;
+	
+	/** MenuService */
+	@Resource(name = "menuService")
+	private MenuService menuService;
+	
+	
 	/**
 	 * 메뉴관리
 	 * @return "menu/menuList"
@@ -121,37 +129,71 @@ public class MenuController {
 	}
 	
 	/**
-	 * 메뉴 추가/수정
+	 * 메뉴 추가
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/saveMenu.do")
-	public String saveMenu(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/insertMenu.do")
+	public String insertMenu(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - insertMenu.do");
+		System.out.println("============================");
 		
 		menuService.insertMenu(menuVO);
-		menuService.updateMenu(menuVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 메뉴 정보 수정
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updateMenu.do")
+	public String updateMenu(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
 		System.out.println("============================");
-		System.out.println("Success - saveMenu.do");
+		System.out.println("Success - updateMenu.do");
 		System.out.println("============================");
+		
+		menuService.updateMenu(menuVO);
+		txManager.commit(txStatus);
 		
 		return "jsonView";
 		
 	}
 	
 	/**
-	 * 메뉴 추가
+	 * 메뉴 삭제
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/deleteMenu.do")
 	public String deleteMenu(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
-		menuService.deleteMenu(menuVO);
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
 		System.out.println("============================");
 		System.out.println("Success - deleteMenu.do");
 		System.out.println("============================");
+		
+		menuService.deleteMenu(menuVO);
+		txManager.commit(txStatus);
 		
 		return "jsonView";
 		

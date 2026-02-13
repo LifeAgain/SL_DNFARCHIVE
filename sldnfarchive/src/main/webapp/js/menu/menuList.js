@@ -51,18 +51,38 @@ function insertMenu(cat) {
 	var baseCd = $("#jstree").jstree(true).get_selected()[0];
 	var parent = "";
 	var type = "";
+	var maxId = "";
+	var newId = "";
+	var cdArr = null;
 	
 	if(cat == "L") {
 		parent = "#";
 		type = "default";
-	} else if(cat == "S") {
+		cdArr = $("a.jstree-anchor[aria-level=1]");
+	}
+	else if(cat == "S") {
 		parent = baseCd;
 		type = "file";
+		cdArr = $("a.jstree-anchor[id^='" + parent.substr(0, 1) + "']");
 	}
 	
-	$("#jstree").jstree(true).create_node(parent, {"id": "E00", "text": "11", "type": type}, "last");
+	var maxNum = cdArr.length-1;
+	var obj = $(cdArr[maxNum]);
+	
+	if(cat == "L") {
+		maxId = obj.attr("id").substr(0, 1);
+		newId = String.fromCharCode(maxId.charCodeAt(0) + 1) + "00";
+	} else if(cat == "S") {
+		maxId = parseInt(obj.attr("id").substr(1, 2));
+		maxId = maxId + 1;
+		newId = parent.substr(0, 1) + String(maxId).padStart(2, '0');
+	}
+	
+	console.log(newId);
+	
+	$("#jstree").jstree(true).create_node(parent, {"id": newId, "text": "", "type": type}, "last");
 	$("#jstree").jstree(true).deselect_all();
-	$("#jstree").jstree(true).select_node("E00");
+	$("#jstree").jstree(true).select_node(newId);
 }
 
 function editMenu() {
@@ -104,8 +124,8 @@ function editMenu() {
 		  			var id = $(obj[i]).attr("id");
 		  			var val = "";
 		  			
-		  			if(id == "menuLcd") val = "E";
-		  			else if(id == "menuScd") val = "00";
+		  			if(id == "menuLcd") val = menuLcd;
+		  			else if(id == "menuScd") val = menuScd;
 		  			else val = "";
 		  			
 		  			$("#" + id).val(val);
@@ -191,9 +211,12 @@ function saveMenu() {
 			  			var id = "#" + key;
 			  			var val = obj[key];
 			  			
+			  			$(id).val(val);
 			  			$(id).data("orgVal", val);
 			  			$(id).data("changeYn", "N");
 			  		}
+			  		
+			  		$("#jstree").jstree(true).rename_node(obj.menuLcd + obj.menuScd, obj.menuNm);
 			  		
 			        Swal.fire({
 						icon: "success",

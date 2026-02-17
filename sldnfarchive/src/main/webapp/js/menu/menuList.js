@@ -78,8 +78,6 @@ function insertMenu(cat) {
 		newId = parent.substr(0, 1) + String(maxId).padStart(2, '0');
 	}
 	
-	console.log(newId);
-	
 	$("#jstree").jstree(true).create_node(parent, {"id": newId, "text": "", "type": type}, "last");
 	$("#jstree").jstree(true).deselect_all();
 	$("#jstree").jstree(true).select_node(newId);
@@ -173,12 +171,33 @@ function beforeSaveMenu() {
 				title: "변경내용 없음",
 				text: "변경된 내용이 없습니다. 다시 확인해주세요."
 			});
-		} else {
-			saveMenu();
+			
+			return;
 		}
 	} else if(flag == "I") {
-		saveMenu();
+		for(var i = 0; i < obj.length; i++) {
+			var id = $(obj[i]).attr("id");
+			var nm = $("label[for='" + id + "']").text();
+			
+			if(!(id == "useYn" || id == "menuNote")) {
+				var num = $(obj[i]).val().length;
+			
+				if(num <= 0) {
+					$(obj[i]).focus();
+					
+					Swal.fire({
+						icon: "info",
+						title: "내용 없음",
+						text: nm + "을/를 입력해주세요."
+					});
+					
+					return;
+				}
+			}
+		}
 	}
+	
+	saveMenu();
 }
 
 function saveMenu() {

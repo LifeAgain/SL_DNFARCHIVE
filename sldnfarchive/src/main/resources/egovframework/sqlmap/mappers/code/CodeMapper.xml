@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sldnfarchive.service.impl.CodeMapper">
+
+	<select id="codeList" parameterType="codeVO" resultType="egovMap">
+		WITH RECURSIVE CTE (ID, TEXT, PARENT, TYPE) AS
+		(
+			(
+				SELECT
+					A.ID
+				  , A.TEXT
+				  , A.PARENT
+				  , A.TYPE
+				FROM
+					(
+						SELECT
+							CONCAT(CODE_LCD, CODE_SCD) AS ID
+						  , CODE_NM AS TEXT
+						  , IFNULL(
+								  	(
+								  		CASE CODE_SCD
+								  		WHEN '00' THEN '#'
+								  		ELSE CONCAT(CODE_LCD, '00')
+								  		END
+								  	)
+								  	, '#'
+								  ) AS PARENT
+							, ICON_TYPE AS TYPE
+						FROM
+							CODE_MASTER
+					) A
+					WHERE
+						A.PARENT = '#'
+			)
+			UNION ALL
+			(
+					SELECT
+						B.ID
+					  , B.TEXT
+					  , B.PARENT
+					  , B.TYPE
+					FROM
+						(
+							SELECT
+								CONCAT(CODE_LCD, CODE_SCD) AS ID
+							  , CODE_NM AS TEXT
+							  , (
+								  		CASE CODE_SCD
+								  		WHEN '00' THEN '#'
+								  		ELSE CONCAT(CODE_LCD, '00')
+								  		END
+								  	) AS PARENT
+							  , ICON_TYPE AS TYPE
+							FROM
+								CODE_MASTER
+						) B
+					INNER JOIN
+					CTE
+					ON B.PARENT = CTE.ID
+			)
+		)
+		
+		SELECT
+			CTE.ID
+		  , CTE.TEXT
+		  , CTE.PARENT
+		  , CTE.TYPE
+		FROM
+			CTE
+		WHERE
+				 1=1
+		<if test="schCodeNm != null and schCodeNm != ''">
+			AND CTE.TEXT LIKE CONCAT('%', #{schCodeNm}, '%')
+		</if>
+		ORDER BY
+			CTE.ID
+	</select>
+	
+	<select id="selectCode" parameterType="codeVO" resultType="egovMap">
+		SELECT
+			CODE_LCD
+		  , CODE_SCD
+		  , CODE_NM
+		  , USE_YN
+		  , CODE_NOTE
+		FROM
+			CODE_MASTER
+		WHERE
+				1=1
+		<if test="codeLcd != null and codeLcd != ''">
+			AND CODE_LCD = #{codeLcd}
+		</if>
+		<if test="codeScd != null and codeScd != ''">
+			AND CODE_SCD = #{codeScd}
+		</if>
+	</select>
+	
+	<insert id="insertCode" parameterType="codeVO">
+		INSERT INTO CODE_MASTER
+		(
+			CODE_LCD
+		  , CODE_SCD
+		  , CODE_NM
+		  , USE_YN
+		  , CODE_NOTE
+		  , ICON_TYPE
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{codeLcd}
+		  , #{codeScd}
+		  , #{codeNm}
+		  , #{useYn}
+		  , #{codeNote}
+		  , (
+		  		CASE
+		  		WHEN CODE_SCD = '00' THEN 'default'
+		  		ELSE 'file'
+		  		END
+		  	)
+		  , '1'
+		  , NOW()
+		  , '1'
+		  , NOW()
+		)
+	</insert>
+	
+	<update id="updateCode" parameterType="codeVO">
+		UPDATE
+			CODE_MASTER
+		SET
+			CODE_NM = #{codeNm}
+		  , USE_YN = #{useYn}
+		  , CODE_NOTE = #{codeNote}
+		  , UP_NO = '1'
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="codeLcd != null and codeLcd != ''">
+			AND CODE_LCD = #{codeLcd}
+		</if>
+		<if test="codeScd != null and codeScd != ''">
+			AND CODE_SCD = #{codeScd}
+		</if>
+	</update>
+
+	<delete id="deleteCode" parameterType="codeVO">
+		DELETE FROM
+			CODE_MASTER
+		WHERE
+				1=1
+		<if test="codeLcd != null and codeLcd != ''">
+			AND CODE_LCD = #{codeLcd}
+		</if>
+		<if test="codeScd != null and codeScd != '' and codeScd != '00'">
+			AND CODE_SCD = #{codeScd}
+		</if>
+	</delete>
+
+</mapper>

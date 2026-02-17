@@ -8,5 +8,6 @@
 		<typeAlias alias="sampleVO" type="com.sldnfarchive.model.SampleVO" />
 		<typeAlias alias="userVO" type="com.sldnfarchive.model.UserVO" />
 		<typeAlias alias="menuVO" type="com.sldnfarchive.model.MenuVO" />
+		<typeAlias alias="codeVO" type="com.sldnfarchive.model.CodeVO" />
     </typeAliases>
 </configuration>

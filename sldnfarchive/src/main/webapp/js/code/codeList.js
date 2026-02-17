@@ -1,19 +1,19 @@
 var flag = "";
 
 $(function() {
-	menuList();
+	codeList();
 });
 
-function menuList() {
+function codeList() {
 	$.ajax({
-		url: "/menu/selectMenuList.do"
+		url: "/code/selectCodeList.do"
 	  , type: "post"
 	  , dataType: "json"
 	  , async: true
 	  , success: function(res) { // 결과 성공 콜백함수
 	        $("#jstree").jstree({
 	        	"core": {
-	        		"data": res.menuList
+	        		"data": res.codeList
 	        	  , "check_callback": true
 	        	}
 	          , "plugins": ["types", "search"]
@@ -28,7 +28,7 @@ function menuList() {
 	        	$("#jstree").jstree(true).open_all();
 	        	$("#jstree").jstree(true).select_node("A00");
 	        }).on("select_node.jstree", function(e, data) {
-	        	editMenu();
+	        	editCode();
 	        });
 	    }
 	  , error: function(req, status, err) { // 결과 에러 콜백함수
@@ -41,13 +41,13 @@ function menuList() {
 	});
 }
 
-function schMenu() {
-	var schMenuNm = $("#schMenuNm").val();
+function schCode() {
+	var schCodeNm = $("#schCodeNm").val();
 	
-	$("#jstree").jstree(true).search(schMenuNm);
+	$("#jstree").jstree(true).search(schCodeNm);
 }
 
-function insertMenu(cat) {
+function insertCode(cat) {
 	var baseCd = $("#jstree").jstree(true).get_selected()[0];
 	var parent = "";
 	var type = "";
@@ -74,8 +74,8 @@ function insertMenu(cat) {
 		if(!baseCd) {
 			Swal.fire({
 				icon: "info",
-				title: "상위메뉴 없음",
-				text: "상위메뉴가 존재하지 않습니다. 다시 확인해주세요."
+				title: "상위분류 없음",
+				text: "상위분류 코드가 존재하지 않습니다. 다시 확인해주세요."
 			});
 			
 			return;
@@ -98,19 +98,19 @@ function insertMenu(cat) {
 	$("#jstree").jstree(true).select_node(newId);
 }
 
-function editMenu() {
-	var menuCd = $("#jstree").jstree(true).get_selected()[0];
-	var menuLcd = menuCd.substr(0, 1);
-	var menuScd = menuCd.substr(1, 2);
+function editCode() {
+	var codeCd = $("#jstree").jstree(true).get_selected()[0];
+	var codeLcd = codeCd.substr(0, 1);
+	var codeScd = codeCd.substr(1, 2);
 	
 	$.ajax({
-		url: "/menu/selectMenu.do"
-	  , data: {"menuLcd": menuLcd, "menuScd": menuScd}
+		url: "/code/selectCode.do"
+	  , data: {"codeLcd": codeLcd, "codeScd": codeScd}
 	  , type: "post"
 	  , dataType: "json"
 	  , async: true
 	  , success: function(res) { // 결과 성공 콜백함수
-	  		var obj = res.selectMenu;
+	  		var obj = res.selectCode;
 	  		
 	  		if(obj) {
 		  		flag = "U";
@@ -137,8 +137,8 @@ function editMenu() {
 		  			var id = $(obj[i]).attr("id");
 		  			var val = "";
 		  			
-		  			if(id == "menuLcd") val = menuLcd;
-		  			else if(id == "menuScd") val = menuScd;
+		  			if(id == "codeLcd") val = codeLcd;
+		  			else if(id == "codeScd") val = codeScd;
 		  			else val = "";
 		  			
 		  			$("#" + id).val(val);
@@ -167,7 +167,7 @@ function chkChangeVal(ele) {
 	else $(ele).data("changeYn", "Y");
 } 
 
-function beforeSaveMenu() {
+function beforeSaveCode() {
 	var len = $("#jstree").jstree(true).get_json('#', {flat:true}).length;
 	var cnt = 0;
 	var obj = $("#editFrm input[type!='button'], #editFrm textarea");
@@ -177,7 +177,7 @@ function beforeSaveMenu() {
 			for(var i = 0; i < obj.length; i++) {
 				var id = $(obj[i]).attr("id");
 				
-				if(!(id == "menuLcd" || id == "menuScd")) {
+				if(!(id == "codeLcd" || id == "codeScd")) {
 					if($(obj[i]).data("changeYn") == "Y") cnt++;
 				}
 			}
@@ -196,7 +196,7 @@ function beforeSaveMenu() {
 				var id = $(obj[i]).attr("id");
 				var nm = $("label[for='" + id + "']").text();
 				
-				if(!(id == "useYn" || id == "menuNote")) {
+				if(!(id == "useYn" || id == "codeNote")) {
 					var num = $(obj[i]).val().length;
 				
 					if(num <= 0) {
@@ -214,19 +214,19 @@ function beforeSaveMenu() {
 			}
 		}
 		
-		saveMenu();
+		saveCode();
 	}
 }
 
-function saveMenu() {
+function saveCode() {
 	var url = "";
 	var obj = $("#editFrm").serializeObject();
 	
 	if($("#editFrm input[type='checkbox']").is(":checked")) obj.useYn = 'Y';
 	else obj.useYn = 'N';
 	
-	if(flag == "I") url = "/menu/insertMenu.do";
-	else if(flag == "U") url = "/menu/updateMenu.do";
+	if(flag == "I") url = "/code/insertCode.do";
+	else if(flag == "U") url = "/code/updateCode.do";
 	
 	Swal.fire({
 		icon: "question",
@@ -253,7 +253,7 @@ function saveMenu() {
 			  			$(id).data("changeYn", "N");
 			  		}
 			  		
-			  		$("#jstree").jstree(true).rename_node(obj.menuLcd + obj.menuScd, obj.menuNm);
+			  		$("#jstree").jstree(true).rename_node(obj.codeLcd + obj.codeScd, obj.codeNm);
 			  		
 			        Swal.fire({
 						icon: "success",
@@ -273,30 +273,30 @@ function saveMenu() {
 	});
 }
 
-function beforeDeleteMenu() {
+function beforeDeleteCode() {
 	var len = $("#jstree").jstree(true).get_json('#', {flat:true}).length;
-			
+	
 	if(len > 0) {
 		Swal.fire({
 			icon: "question",
 			title: "삭제 여부",
-			text: "메뉴를 삭제하시겠습니까?",
+			text: "공통코드를 삭제하시겠습니까? (대분류코드를 삭제할 경우, 소분류코드도 같이 삭제됩니다.)",
 			showCancelButton: true,
 			confirmButtonText: "예",
 			cancelButtonText: "아니오"
 		}).then((res) => {
 			if(res.isConfirmed) {
-				deleteMenu();
+				deleteCode();
 			}
 		});
 	}
 }
 
-function deleteMenu() {
+function deleteCode() {
 	var obj = $("#editFrm").serializeObject();
 	
 	$.ajax({
-		url: "/menu/deleteMenu.do"
+		url: "/code/deleteCode.do"
 	  , data: obj
 	  , type: "post"
 	  , dataType: "json"
@@ -308,7 +308,7 @@ function deleteMenu() {
 				text: "메뉴 삭제를 완료했습니다."
 			});
 			
-			$("#jstree").jstree(true).delete_node(obj.menuLcd + obj.menuScd);
+			$("#jstree").jstree(true).delete_node(obj.codeLcd + obj.codeScd);
 			
 			var len = $("#jstree").jstree(true).get_json('#', {flat:true}).length;
 			

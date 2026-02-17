@@ -160,7 +160,7 @@
 		<if test="menuLcd != null and menuLcd != ''">
 			AND MENU_LCD = #{menuLcd}
 		</if>
-		<if test="menuScd != null and menuScd != ''">
+		<if test="menuScd != null and menuScd != '' and menuScd != '00'">
 			AND MENU_SCD = #{menuScd}
 		</if>
 	</delete>

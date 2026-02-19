@@ -39,20 +39,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
-import com.sldnfarchive.model.CodeVO;
-import com.sldnfarchive.service.CodeService;
+import com.sldnfarchive.model.UserVO;
+import com.sldnfarchive.service.UserService;
 
 /**
- * @Class Name : CodeController.java
- * @Description : Code Controller Class
+ * @Class Name : UserController.java
+ * @Description : User Controller Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
  * @ ---------   ---------   -------------------------------
- * @ 2026.02.18	 HHP          최초생성
+ * @ 2026.02.19	 HHP          최초생성
  *
  * @author HHP
- * @since 2016.02.18
+ * @since 2016.02.19
  * @version 1.0
  * @see
  *
@@ -60,8 +60,8 @@ import com.sldnfarchive.service.CodeService;
  */
 
 @Controller
-@RequestMapping("/code")
-public class CodeController {
+@RequestMapping("/user")
+public class UserController {
 
 	/** Validator */
 	@Resource(name = "beanValidator")
@@ -71,70 +71,70 @@ public class CodeController {
 	@Resource(name = "txManager")
 	protected DataSourceTransactionManager txManager;
 	
-	/** CodeService */
-	@Resource(name = "codeService")
-	private CodeService codeService;
+	/** UserService */
+	@Resource(name = "userService")
+	private UserService userService;
 	
 	
 	/**
-	 * 공통코드관리
-	 * @return "code/codeList"
+	 * 회원관리
+	 * @return "user/userList"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/codeList.do")
-	public String codeList() throws Exception {
+	@RequestMapping(value = "/userList.do")
+	public String userList() throws Exception {
 		System.out.println("============================");
-		System.out.println("Success - codeList.do");
+		System.out.println("Success - userList.do");
 		System.out.println("============================");
 		
-		return "code/codeList";
+		return "user/userList";
 	}
 	
 	/**
-	 * 코드 목록
+	 * 회원 목록
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/selectCodeList.do")
-	public String selectCodeList(@ModelAttribute("codeVO") CodeVO codeVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/selectUserList.do")
+	public String selectUserList(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
 		
-		List<EgovMap> codeList = codeService.codeList(codeVO);
+		List<EgovMap> userList = userService.userList(userVO);
 		
 		System.out.println("============================");
-		System.out.println("Success - selectCodeList.do");
+		System.out.println("Success - selectUserList.do");
 		System.out.println("============================");
 		
-		model.addAttribute("codeList", codeList);
+		model.addAttribute("userList", userList);
 		
 		return "jsonView";
 	}
 	
 	/**
-	 * 코드 상세정보
+	 * 회원 상세정보
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/selectCode.do")
-	public String selectCode(@ModelAttribute("codeVO") CodeVO codeVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/selectUser.do")
+	public String selectUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
 		
-		EgovMap selectCode = codeService.selectCode(codeVO);
+		EgovMap selectUser = userService.selectUser(userVO);
 		
 		System.out.println("============================");
-		System.out.println("Success - selectCode.do");
+		System.out.println("Success - selectUser.do");
 		System.out.println("============================");
 		
-		model.addAttribute("selectCode", selectCode);
+		model.addAttribute("selectUser", selectUser);
 		
 		return "jsonView";
 	}
 	
 	/**
-	 * 공통코드 추가
+	 * 회원 추가
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/insertCode.do")
-	public String insertCode(@ModelAttribute("codeVO") CodeVO codeVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/insertUser.do")
+	public String insertUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
@@ -142,22 +142,22 @@ public class CodeController {
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
 		System.out.println("============================");
-		System.out.println("Success - insertCode.do");
+		System.out.println("Success - insertUser.do");
 		System.out.println("============================");
 		
-		codeService.insertCode(codeVO);
+		userService.insertUser(userVO);
 		txManager.commit(txStatus);
 		
 		return "jsonView";
 	}
 	
 	/**
-	 * 코드 정보 수정
+	 * 회원 정보 수정
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/updateCode.do")
-	public String updateCode(@ModelAttribute("codeVO") CodeVO codeVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/updateUser.do")
+	public String updateUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
@@ -165,10 +165,10 @@ public class CodeController {
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
 		System.out.println("============================");
-		System.out.println("Success - updateCode.do");
+		System.out.println("Success - updateUser.do");
 		System.out.println("============================");
 		
-		codeService.updateCode(codeVO);
+		userService.updateUser(userVO);
 		txManager.commit(txStatus);
 		
 		return "jsonView";
@@ -176,12 +176,12 @@ public class CodeController {
 	}
 	
 	/**
-	 * 공통코드 삭제
+	 * 회원 정보 삭제
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = "/deleteCode.do")
-	public String deleteCode(@ModelAttribute("codeVO") CodeVO codeVO, ModelMap model) throws Exception {
+	@RequestMapping(value = "/deleteUser.do")
+	public String deleteUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
@@ -189,10 +189,10 @@ public class CodeController {
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
 		System.out.println("============================");
-		System.out.println("Success - deleteCode.do");
+		System.out.println("Success - deleteUser.do");
 		System.out.println("============================");
 		
-		codeService.deleteCode(codeVO);
+		userService.deleteUser(userVO);
 		txManager.commit(txStatus);
 		
 		return "jsonView";

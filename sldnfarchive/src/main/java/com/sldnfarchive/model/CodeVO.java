@@ -68,7 +68,7 @@ public class CodeVO {
 		return schCodeNm;
 	}
 
-	public void setSchMenuNm(String schCodeNm) {
+	public void setSchCodeNm(String schCodeNm) {
 		this.schCodeNm = schCodeNm;
 	}
 
@@ -108,7 +108,7 @@ public class CodeVO {
 		return codeNote;
 	}
 
-	public void setMenuNote(String codeNote) {
+	public void setCodeNote(String codeNote) {
 		this.codeNote = codeNote;
 	}
 

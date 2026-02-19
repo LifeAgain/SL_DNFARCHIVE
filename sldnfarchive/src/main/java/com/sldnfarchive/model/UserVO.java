@@ -33,6 +33,15 @@ package com.sldnfarchive.model;
  */
 public class UserVO {
 	
+	/** 검색할 유저명 */
+	private String schUserNm;
+	
+	/** 검색할 유저 상태 */
+	private String schUserStat;
+	
+	/** 회원 인덱스 번호 */
+	private int userIdx;
+	
 	/** 메일(아이디) */
 	private String userMail;
 	
@@ -61,6 +70,30 @@ public class UserVO {
 	private String upDate;
 	
 	
+	public String getSchUserNm() {
+		return schUserNm;
+	}
+
+	public void setSchUserNm(String schUserNm) {
+		this.schUserNm = schUserNm;
+	}
+
+	public String getSchUserStat() {
+		return schUserStat;
+	}
+
+	public void setSchUserStat(String schUserStat) {
+		this.schUserStat = schUserStat;
+	}
+
+	public int getUserIdx() {
+		return userIdx;
+	}
+
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
+
 	public String getUserMail() {
 		return userMail;
 	}

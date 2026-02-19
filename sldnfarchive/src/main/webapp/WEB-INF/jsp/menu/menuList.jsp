@@ -29,10 +29,12 @@
 		            <div class="container-fluid px-4">
 		            	<div class="card card-header mt-4">
 		            		<form id="schMenuFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
-		            			<div class="input-group px-0 w-auto">
-		            				<label for="schMenuNm" class="input-group-text">메뉴명</label>
-		            				<input type="text" id="schMenuNm" name="schMenuNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schMenu();" />
-		            			</div>
+		            			<div class="row col-auto gap-2">
+			            			<div class="input-group px-0 w-auto">
+			            				<label for="schMenuNm" class="input-group-text">메뉴명</label>
+			            				<input type="text" id="schMenuNm" name="schMenuNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schMenu();" />
+			            			</div>
+			            		</div>
 		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schMenu();" value="검색" />
 		            		</form>
 		            	</div>
@@ -62,13 +64,13 @@
 				                    			<div class="col-6 p-0 m-0">
 						                    		<div class="input-group">
 				                              			<label for="menuLcd" class="col-4 p-2 text-end">대분류코드</label>
-				                              			<input type="text" id="menuLcd" name="menuLcd" class="form-control bg-secondary" value="" readonly />
+				                              			<input type="text" id="menuLcd" name="menuLcd" class="form-control bg-secondary" placeholder="대분류코드" value="" readonly />
 				                              		</div>
 			                              		</div>
 			                              		<div class="col-6 p-0 m-0">
 				                              		<div class="input-group">
 				                              			<label for="menuScd" class="col-4 p-2 text-end">소분류코드</label>
-				                              			<input type="text" id="menuScd" name="menuScd" class="form-control bg-secondary" value="" readonly />
+				                              			<input type="text" id="menuScd" name="menuScd" class="form-control bg-secondary" placeholder="소분류코드" value="" readonly />
 				                              		</div>
 			                              		</div>
 		                              		</div>
@@ -76,13 +78,13 @@
 				                    			<div class="col-6 p-0 m-0">
 						                    		<div class="input-group">
 				                              			<label for="menuNm" class="col-4 p-2 text-end">메뉴명</label>
-				                              			<input type="text" id="menuNm" name="menuNm" class="form-control" onchange="javascript:chkChangeVal(this);" value="" />
+				                              			<input type="text" id="menuNm" name="menuNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="메뉴명" value="" />
 				                              		</div>
 			                              		</div>
 			                              		<div class="col-6 p-0 m-0">
 				                              		<div class="input-group">
 				                              			<label for="menuPath" class="col-4 p-2 text-end">메뉴경로</label>
-				                              			<input type="text" id="menuPath" name="menuPath" class="form-control" onchange="javascript:chkChangeVal(this);" value="" />
+				                              			<input type="text" id="menuPath" name="menuPath" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="메뉴경로" value="" />
 				                              		</div>
 			                              		</div>
 		                              		</div>
@@ -95,7 +97,7 @@
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 				                    			<div class="input-group p-0">
 			                              			<label for="menuNote" class="col-2 p-2 text-end">비고</label>
-			                              			<textarea id="menuNote" name="menuNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);"></textarea>
+			                              			<textarea id="menuNote" name="menuNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);" placeholder="비고(500자 내외 입력)"></textarea>
 			                              		</div>
 		                              		</div>
 		                              		<div class="col-12 p-0 mx-0 mt-3 mb-1 text-end">

@@ -20,58 +20,58 @@ import java.util.List;
 import org.egovframe.rte.psl.dataaccess.mapper.Mapper;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 
-import com.sldnfarchive.model.CodeVO;
+import com.sldnfarchive.model.UserVO;
 
 /**
- * 코드에 관한 데이터처리 매퍼 클래스
+ * 회원에 관한 데이터처리 매퍼 클래스
  *
  * @author HHP
- * @since 2026.02.18
+ * @since 2026.02.19
  * @version 1.0
  * @see <pre>
  *  == 개정이력(Modification Information) ==
  *
  *          수정일          수정자           수정내용
  *  ----------------    ------------    ---------------------------
- *   2026.02.18        		HHP          최초 생성
+ *   2026.02.19        		HHP          최초 생성
  *
  * </pre>
  */
-@Mapper("codeMapper")
-public interface CodeMapper {
+@Mapper("userMapper")
+public interface UserMapper {
 	/**
-	 * 공톻코드 리스트를 조회한다.
-	 * @param CodeVO
+	 * 회원 목록을 조회한다.
+	 * @param UserVO
 	 * @exception Exception
 	 */
-	List<EgovMap> codeList(CodeVO codeVO) throws Exception;
+	List<EgovMap> userList(UserVO userVO) throws Exception;
 
 	/**
-	 * 코드 상세정보 조회
-	 * @param CodeVO
+	 * 회원 상세정보 조회
+	 * @param UserVO
 	 * @exception
 	 */
-	EgovMap selectCode(CodeVO codeVO) throws Exception;
+	EgovMap selectUser(UserVO userVO) throws Exception;
 	
 	/**
-	 * 공통코드 추가
-	 * @param CodeVO
+	 * 회원 추가
+	 * @param UserVO
 	 * @exception
 	 */
-	void insertCode(CodeVO codeVO) throws Exception;
+	void insertUser(UserVO userVO) throws Exception;
 	
 	/**
-	 * 코드 정보 수정
-	 * @param CodeVO
+	 * 회원 정보 수정
+	 * @param UserVO
 	 * @exception
 	 */
-	void updateCode(CodeVO codeVO) throws Exception;
+	void updateUser(UserVO userVO) throws Exception;
 	
 	/**
-	 * 공통코드 삭제
-	 * @param CodeVO
+	 * 회원 정보 삭제
+	 * @param UserVO
 	 * @exception
 	 */
-	void deleteCode(CodeVO codeVO) throws Exception;
+	void deleteUser(UserVO userVO) throws Exception;
 
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sldnfarchive.service.impl.UserMapper">
+
+	<select id="userList" parameterType="userVO" resultType="egovMap">
+		SELECT
+			USER_IDX
+		  , USER_MAIL
+		  , USER_NM
+		  , USER_STAT
+		FROM
+			USER_MASTER
+		WHERE
+				1=1
+		<if test="schUserNm != null and schUserNm != ''">
+			AND USER_NM LIKE CONCAT('%', #{schUserNm}, '%')
+		</if>
+		<if test="schUserStat != null and schUserStat != ''">
+			AND USER_STAT = #{schUserStat}
+		</if>
+		ORDER BY
+			USER_IDX
+	</select>
+	
+	<select id="selectUser" parameterType="userVO" resultType="egovMap">
+		SELECT
+			USER_IDX
+		  , USER_MAIL
+		  , USER_NM
+		  , USER_PW
+		  , USER_STAT
+		  , USER_NOTE
+		FROM
+			USER_MASTER
+		WHERE
+				1=1
+		<if test="userIdx != null and userIdx != ''">
+			AND USER_IDX = #{userIdx}
+		</if>
+	</select>
+	
+	<insert id="insertUser" parameterType="userVO">
+		INSERT INTO USER_MASTER
+		(
+			USER_MAIL
+		  , USER_NM
+		  , USER_PW
+		  , USER_STAT
+		  , USER_NOTE
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{userMail}
+		  , #{userNm}
+		  , #{userPw}
+		  , #{userStat}
+		  , #{userNote}
+		  , '1'
+		  , NOW()
+		  , '1'
+		  , NOW()
+		)
+	</insert>
+	
+	<update id="updateUser" parameterType="userVO">
+		UPDATE
+			USER_MASTER
+		SET
+			USER_MAIL = #{userMail}
+		  , USER_NM = #{userNm}
+		  , USER_PW = #{userPw}
+		  , USER_STAT = #{userStat}
+		  , USER_NOTE = #{userNote}
+		  , UP_NO = '1'
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="userIdx != null and userIdx != ''">
+			AND USER_IDX = #{userIdx}
+		</if>
+	</update>
+
+	<delete id="deleteUser" parameterType="userVO">
+		DELETE FROM
+			USER_MASTER
+		WHERE
+				1=1
+		<if test="userIdx != null and userIdx != ''">
+			AND USER_IDX = #{userIdx}
+		</if>
+	</delete>
+
+</mapper>

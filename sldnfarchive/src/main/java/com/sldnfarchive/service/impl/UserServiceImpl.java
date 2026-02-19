@@ -27,82 +27,82 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.sldnfarchive.model.CodeVO;
-import com.sldnfarchive.service.CodeService;
+import com.sldnfarchive.model.UserVO;
+import com.sldnfarchive.service.UserService;
 
 /**
- * @Class Name : CodeServiceImpl.java
- * @Description : Code Service Implement Class
+ * @Class Name : UserServiceImpl.java
+ * @Description : User Service Implement Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
  * @ ---------   ---------   -------------------------------
- * @ 2026.02.18		HHP           최초생성
+ * @ 2026.02.19		HHP           최초생성
  *
  * @author HHP
- * @since 2026.02.18
+ * @since 2026.02.19
  * @version 1.0
  * @see
  *
  *  Copyright (C) by MOPAS All right reserved.
  */
 
-@Service("codeService")
-public class CodeServiceImpl extends EgovAbstractServiceImpl implements CodeService {
+@Service("userService")
+public class UserServiceImpl extends EgovAbstractServiceImpl implements UserService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CodeServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 	
-	@Resource(name="codeMapper")
-	private CodeMapper codeMapper;
+	@Resource(name="userMapper")
+	private UserMapper userMapper;
 	
 	/**
-	 * 공통코드 목록 조회
-	 * @param CodeVO
-	 * @return codeMapper.codeList
+	 * 회원목록 조회
+	 * @param UserVO
+	 * @return userMapper.userList
 	 * @exception Exception
 	 */
 	@Override
-	public List<EgovMap> codeList(CodeVO codeVO) throws Exception {
-		return codeMapper.codeList(codeVO);
+	public List<EgovMap> userList(UserVO userVO) throws Exception {
+		return userMapper.userList(userVO);
 	}
 	
 	/**
-	 * 코드 상세정보 조회
-	 * @param CodeVO
-	 * @return codeMapper.selectCode
+	 * 회원 상세정보 조회
+	 * @param UserVO
+	 * @return userMapper.selectUser
 	 * @exception
 	 */
 	@Override
-	public EgovMap selectCode(CodeVO codeVO) throws Exception {
-		return codeMapper.selectCode(codeVO);
+	public EgovMap selectUser(UserVO userVO) throws Exception {
+		return userMapper.selectUser(userVO);
 	}
 	
 	/**
-	 * 공통코드 추가
-	 * @param CodeVO
+	 * 회원 추가
+	 * @param UserVO
 	 * @exception
 	 */
 	@Override
-	public void insertCode(CodeVO codeVO) throws Exception {
-		codeMapper.insertCode(codeVO);
+	public void insertUser(UserVO userVO) throws Exception {
+		userMapper.insertUser(userVO);
 	}
 	
 	/**
-	 * 코드 정보 수정
-	 * @param CodeVO
+	 * 회원 정보 수정
+	 * @param UserVO
 	 * @exception
 	 */
-	public void updateCode(CodeVO codeVO) throws Exception {
-		codeMapper.updateCode(codeVO);
+	public void updateUser(UserVO userVO) throws Exception {
+		userMapper.updateUser(userVO);
 	}
 	
 	/**
-	 * 코드 삭제
-	 * @param CodeVO
+	 * 회원 정보 삭제
+	 * @param UserVO
 	 * @exception
 	 */
-	public void deleteCode(CodeVO codeVO) throws Exception {
-		codeMapper.deleteCode(codeVO);
+	public void deleteUser(UserVO userVO) throws Exception {
+		userMapper.deleteUser(userVO);
 	}
 
 }

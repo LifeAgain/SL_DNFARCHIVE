@@ -29,8 +29,15 @@
         <title>SL_DNF ARCHIVE</title>
         <link href="/css/style.css" rel="stylesheet" />
         <link href="/css/swal2.css" rel="stylesheet" />
+        <link href="/css/style_jstree.css" rel="stylesheet" />
+        <link href="/css/jquery-ui.css" rel="stylesheet" />
+        <link href="/css/jqGrid.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script src="/js/util/serializeObject.js"></script>
 		<script src="/js/util/swal2.js"></script>
+		<script src="/js/util/jstree.js"></script>
+		<script src="/js/util/jquery-ui.js"></script>
+		<script src="/js/util/jqGrid.js"></script>
+		<script src="/js/util/jqGrid_locale-en.js"></script>
     </head>

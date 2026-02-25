@@ -32,7 +32,7 @@
 		            			<div class="row col-auto gap-2">
 			            			<div class="input-group px-0 w-auto">
 			            				<label for="schUserStat" class="input-group-text">휴면여부</label>
-			            				<select id="schUserStat" name="schUserStat" class="form-select">
+			            				<select id="schUserStat" name="schUserStat" class="form-select" onchange="javascript:userList();">
 			            					<option value="">전체</option>
 			            					<option value="Y">정상</option>
 			            					<option value="N">휴면</option>
@@ -40,10 +40,10 @@
 			            			</div>
 			            			<div class="input-group px-0 w-auto">
 			            				<label for="schUserNm" class="input-group-text">이름</label>
-			            				<input type="text" id="schUserNm" name="schUserNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schCode();" />
+			            				<input type="text" id="schUserNm" name="schUserNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) userList();" />
 			            			</div>
 		            			</div>
-		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schCode();" value="검색" />
+		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:userList();" value="검색" />
 		            		</form>
 		            	</div>
 		            	
@@ -63,7 +63,10 @@
                         		
 		                    	<div class="row col-12 p-0 m-0 mt-4">
 			                    	<div class="col-6 p-0 m-0">
-			                    		<div id="jstree"></div>
+			                    		<div class="table">
+			                    			<table id="userGrid"></table>
+			                    			<div id="gridPager"></div>
+			                    		</div>
 			                    	</div>
 			                    	<div class="col-6 p-0 m-0">
 			                    		<form id="editFrm" onsubmit="javascript:return false;">
@@ -114,7 +117,5 @@
 	            <%@include file="/WEB-INF/jsp/template/innerFooter.jsp" %>
             </div>
         </div>
-        <link href="/css/style_jstree.css" rel="stylesheet" />
-        <script src="/js/util/jstree.js"></script>
         <script src="/js/user/userList.js"></script>
 <%@include file="/WEB-INF/jsp/template/footer.jsp" %>

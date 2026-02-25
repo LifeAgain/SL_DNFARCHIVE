@@ -109,7 +109,5 @@
 	            <%@include file="/WEB-INF/jsp/template/innerFooter.jsp" %>
             </div>
         </div>
-        <link href="/css/style_jstree.css" rel="stylesheet" />
-        <script src="/js/util/jstree.js"></script>
         <script src="/js/code/codeList.js"></script>
 <%@include file="/WEB-INF/jsp/template/footer.jsp" %>

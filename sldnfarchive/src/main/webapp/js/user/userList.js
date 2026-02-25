@@ -6,23 +6,47 @@ $(function() {
 
 function userList() {
 	var obj = $("#schUserFrm").serializeObject();
+	var colNamesArr = ["No.", "아이디(이메일)", "이름", "휴면여부"]
+	var colModelArr = [
+		{name: "userIdx", index: "userIdx", align: "center", hidden: true}
+	  , {name: "userMail", index: "userMail", align: "left", width: "50%"}
+	  , {name: "userNm", index: "userNm", align: "left", width: "30%"}
+	  , {name: "userStat", index: "userStat", align: "center", width: "20%"}
+	];
 	
-	$.ajax({
+	$("#userGrid").jqGrid({
 		url: "/user/selectUserList.do"
-	  , data: obj
-	  , type: "post"
-	  , dataType: "json"
-	  , async: true
-	  , success: function(res) { // 결과 성공 콜백함수
-	        console.log("success");
-	    }
-	  , error: function(req, status, err) { // 결과 에러 콜백함수
-	        Swal.fire({
-				icon: "error",
-				title: "에러 발생",
-				text: "관리자에게 문의해주세요."
-			});
-	    }
+	  , mtype: "post"
+	  , postData: obj
+	  , datatype: "json"
+	  , colNames: colNamesArr
+	  , colModel: colModelArr
+	  , jsonReader: {
+	  	  root: function(res) {
+	  	  	return res.userList;
+	  	  }
+	  	, records: function(res) {
+	  		return res.userList.length;
+	  	  }
+	  	, repeatitems: false
+	  }
+	  , rowNum: 10
+	  , autowidth: true
+	  , shrinkToFit: true
+	  , height: 200
+	  , rownumbers: true
+	  , pager: "#gridPager"
+	  , loadComplete: function(res) {
+	  	var records = $("#userGrid").getGridParam("records");
+	  	var id = $("#userGrid").jqGrid("getDataIDs");
+	  	
+	  	if(records > 0) {
+	  		$("#userGrid").jqGrid("setSelection", id[0]);
+	  	}
+	  }
+	  , onSelectRow: function(res) {
+	  	editUser();
+	  }
 	});
 }
 
@@ -83,19 +107,17 @@ function insertCode(cat) {
 	$("#jstree").jstree(true).select_node(newId);
 }
 
-function editCode() {
-	var codeCd = $("#jstree").jstree(true).get_selected()[0];
-	var codeLcd = codeCd.substr(0, 1);
-	var codeScd = codeCd.substr(1, 2);
+function editUser() {
+	var idx = $("#userGrid").getGridParam("selrow");
 	
 	$.ajax({
-		url: "/code/selectCode.do"
-	  , data: {"codeLcd": codeLcd, "codeScd": codeScd}
+		url: "/user/selectUser.do"
+	  , data: {"userIdx": idx}
 	  , type: "post"
 	  , dataType: "json"
 	  , async: true
 	  , success: function(res) { // 결과 성공 콜백함수
-	  		var obj = res.selectCode;
+	  		var obj = res.selectUser;
 	  		
 	  		if(obj) {
 		  		flag = "U";

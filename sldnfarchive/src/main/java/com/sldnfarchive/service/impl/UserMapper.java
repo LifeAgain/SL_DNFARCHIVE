@@ -45,6 +45,13 @@ public interface UserMapper {
 	 * @exception Exception
 	 */
 	List<EgovMap> userList(UserVO userVO) throws Exception;
+	
+	/**
+	 * 회원 목록 개수를 조회한다.
+	 * @param UserVO
+	 * @exception Exception
+	 */
+	int userListCnt(UserVO userVO) throws Exception;
 
 	/**
 	 * 회원 상세정보 조회

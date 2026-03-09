@@ -14,6 +14,10 @@ function userList() {
 	  , {name: "userStat", index: "userStat", align: "center", width: "20%"}
 	];
 	
+	obj.curIdx = 1;
+	obj.pageUnit = 10;
+	obj.curPage = 1;
+	
 	$("#userGrid").clearGridData();
 	$("#userGrid").jqGrid({
 		url: "/user/selectUserList.do"
@@ -26,16 +30,24 @@ function userList() {
 	  	  root: function(res) {
 	  	  	return res.userList;
 	  	  }
+	  	, page: "page"
+	  	, total: function(res) {
+	  		var total = res.totalCnt;
+	  		var pageSize = Math.ceil(total / res.userVO.pageUnit);
+	  		
+	  		return pageSize;
+	  	  }
 	  	, records: function(res) {
 	  		return res.userList.length;
 	  	  }
 	  	, repeatitems: false
 	  }
-	  , rowNum: 10
+	  , rowNum: obj.pageUnit
 	  , autowidth: true
 	  , shrinkToFit: true
 	  , height: "auto"
 	  , rownumbers: true
+	  , pager: "#gridPager"
 	  , loadComplete: function(res) {
 	  	var records = $("#userGrid").getGridParam("records");
 	  	var arr = $("#userGrid").jqGrid("getDataIDs");
@@ -51,6 +63,38 @@ function userList() {
 	  			$("#" + id).val("");
 			}
 	  	}
+	  }
+	  , onPaging: function(btn) {
+	  	var gridPage = $("#userGrid").getGridParam("page");
+	  	var totalPage = $("#sp_1_gridPager").text();
+	  	
+	  	if(btn == "next") {
+	  		if(gridPage < totalPage) gridPage = gridPage + 1;
+	  		else gridPage = totalPage;
+	  	} else if(btn == "prev") {
+	  		if(gridPage > 1) gridPage -= 1;
+	  		else gridPage = 1;
+	  	} else if(btn == "first") gridPage = 1;
+	  	else if(btn == "last") gridPage = totalPage;
+	  	else if(btn == "user") {
+	  		var inptPage = Number($("#gridPager .ui-pg-input").val());
+	  		
+	  		console.log(inptPage);
+	  		console.log(totalPage);
+	  		
+	  		if(inptPage > 0 && inptPage <= totalPage) gridPage = inptPage;
+	  		else {
+	  			gridPage = 1;
+	  			$("#gridPager .ui-pg-input").val(gridPage);
+	  		}
+	  	} else if(btn == "records") gridPage = 1;
+	  	
+		obj.curPage = gridPage;
+	  	
+	  	$("#userGrid").clearGridData();
+		$("#userGrid").setGridParam({
+			postData: obj
+		}).trigger("reloadGrid");
 	  }
 	  , onSelectRow: function(res) {
 	  	editUser();
@@ -293,7 +337,10 @@ function deleteUser() {
 					text: "메뉴 삭제를 완료했습니다."
 				});
 				
-				userList();
+				$("#userGrid").clearGridData();
+				$("#userGrid").setGridParam({
+					postData: {curPage: 1}
+				}).trigger("reloadGrid");
 		    }
 		  , error: function(req, status, err) { // 결과 에러 콜백함수
 		        Swal.fire({

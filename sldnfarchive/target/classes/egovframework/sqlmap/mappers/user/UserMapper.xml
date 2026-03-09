@@ -4,10 +4,45 @@
 
 	<select id="userList" parameterType="userVO" resultType="egovMap">
 		SELECT
-			USER_IDX
-		  , USER_MAIL
-		  , USER_NM
-		  , USER_STAT
+			A.RN
+		  , A.USER_IDX
+		  , A.USER_MAIL
+		  , A.USER_NM
+		  , A.USER_STAT
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY USER_IDX) AS RN
+				  , USER_IDX
+				  , USER_MAIL
+				  , USER_NM
+				  , USER_STAT
+				FROM
+					USER_MASTER
+				WHERE
+						1=1
+				<if test="schUserNm != null and schUserNm != ''">
+					AND USER_NM LIKE CONCAT('%', #{schUserNm}, '%')
+				</if>
+				<if test="schUserStat != null and schUserStat != ''">
+					AND USER_STAT = #{schUserStat}
+				</if>
+				ORDER BY
+					USER_IDX
+			) A
+		WHERE
+				1=1
+		<if test="curIdx != null and pageUnit != null and curPage != null">
+			AND A.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+		</if>
+		ORDER BY
+			A.RN
+		  , A.USER_IDX
+	</select>
+	
+	<select id="userListCnt" parameterType="userVO" resultType="int">
+		SELECT
+			COUNT(*)
 		FROM
 			USER_MASTER
 		WHERE
@@ -18,8 +53,6 @@
 		<if test="schUserStat != null and schUserStat != ''">
 			AND USER_STAT = #{schUserStat}
 		</if>
-		ORDER BY
-			USER_IDX
 	</select>
 	
 	<select id="selectUser" parameterType="userVO" resultType="egovMap">

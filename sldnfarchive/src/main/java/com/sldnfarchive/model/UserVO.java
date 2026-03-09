@@ -69,6 +69,15 @@ public class UserVO {
 	/** 수정일자 */
 	private String upDate;
 	
+	/** 관리 페이지 페이지 당 레코드 개수 */
+	private int pageUnit;
+	
+	/** 관리 페이지 페이지 현재 페이지 넘버 */
+	private int curPage;
+	
+	/** 관리 페이지 현재 인덱스 번호 */
+	private int curIdx;
+	
 	
 	public String getSchUserNm() {
 		return schUserNm;
@@ -164,6 +173,30 @@ public class UserVO {
 
 	public void setUpDate(String upDate) {
 		this.upDate = upDate;
+	}
+
+	public int getPageUnit() {
+		return pageUnit;
+	}
+
+	public void setPageUnit(int pageUnit) {
+		this.pageUnit = pageUnit;
+	}
+	
+	public int getCurPage() {
+		return curPage;
+	}
+
+	public void setCurPage(int curPage) {
+		this.curPage = curPage;
+	}
+
+	public int getCurIdx() {
+		return curIdx;
+	}
+
+	public void setCurIdx(int curIdx) {
+		this.curIdx = curIdx;
 	}
 
 }

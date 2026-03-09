@@ -67,6 +67,17 @@ public class UserServiceImpl extends EgovAbstractServiceImpl implements UserServ
 	}
 	
 	/**
+	 * 회원목록 개수 조회
+	 * @param UserVO
+	 * @return userMapper.userListCnt
+	 * @exception Exception
+	 */
+	@Override
+	public int userListCnt(UserVO userVO) throws Exception {
+		return userMapper.userListCnt(userVO);
+	}
+	
+	/**
 	 * 회원 상세정보 조회
 	 * @param UserVO
 	 * @return userMapper.selectUser

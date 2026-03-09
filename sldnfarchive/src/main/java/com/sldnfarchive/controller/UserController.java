@@ -99,12 +99,14 @@ public class UserController {
 	public String selectUserList(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
 		
 		List<EgovMap> userList = userService.userList(userVO);
+		int totalCnt = userService.userListCnt(userVO);
 		
 		System.out.println("============================");
 		System.out.println("Success - selectUserList.do");
 		System.out.println("============================");
 		
 		model.addAttribute("userList", userList);
+		model.addAttribute("totalCnt", totalCnt);
 		
 		return "jsonView";
 	}

@@ -79,9 +79,6 @@ function userList() {
 	  	else if(btn == "user") {
 	  		var inptPage = Number($("#gridPager .ui-pg-input").val());
 	  		
-	  		console.log(inptPage);
-	  		console.log(totalPage);
-	  		
 	  		if(inptPage > 0 && inptPage <= totalPage) gridPage = inptPage;
 	  		else {
 	  			gridPage = 1;

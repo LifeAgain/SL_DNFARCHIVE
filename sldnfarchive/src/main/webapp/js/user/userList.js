@@ -148,6 +148,11 @@ function editUser() {
 		  			var id = "#" + key;
 		  			var val = obj[key];
 		  			
+		  			if(key == "userMail") {
+		  				$(id).addClass("bg-secondary");
+		  				$(id).attr("readonly", true);
+		  			}
+		  			
 		  			if($(id).is(":checkbox")) {
 		  				if(val == "Y") $(id).prop("checked", true);
 		  				else $(id).prop("checked", false);
@@ -172,6 +177,11 @@ function editUser() {
 			  		
   		for(var i = 0; i < obj.length; i++) {
   			var id = $(obj[i]).attr("id");
+  			
+  			if(id == "userMail") {
+  				$("#" + id).removeClass("bg-secondary");
+  				$("#" + id).attr("readonly", false);
+  			}
   			
   			$("#" + id).val("");
   		}
@@ -255,7 +265,7 @@ function saveUser() {
 	Swal.fire({
 		icon: "question",
 		title: "저장 여부",
-		text: "메뉴 정보를 저장하시겠습니까?",
+		text: "회원 정보를 저장하시겠습니까?",
 		showCancelButton: true,
 		confirmButtonText: "예",
 		cancelButtonText: "아니오"
@@ -282,7 +292,7 @@ function saveUser() {
 			        Swal.fire({
 						icon: "success",
 						title: "저장 완료",
-						text: "메뉴 정보를 저장했습니다."
+						text: "회원 정보를 저장했습니다."
 					});
 			    }
 			  , error: function(req, status, err) { // 결과 에러 콜백함수
@@ -331,7 +341,7 @@ function deleteUser() {
 		        Swal.fire({
 					icon: "success",
 					title: "삭제 완료",
-					text: "메뉴 삭제를 완료했습니다."
+					text: "회원 정보 삭제를 완료했습니다."
 				});
 				
 				$("#userGrid").clearGridData();

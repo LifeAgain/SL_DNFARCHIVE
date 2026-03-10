@@ -97,8 +97,8 @@ function insertCode(cat) {
 		if(!baseCd) {
 			Swal.fire({
 				icon: "info",
-				title: "상위메뉴 없음",
-				text: "상위메뉴가 존재하지 않습니다. 다시 확인해주세요."
+				title: "상위코드 없음",
+				text: "상위코드가 존재하지 않습니다. 다시 확인해주세요."
 			});
 			
 			return;
@@ -267,7 +267,7 @@ function saveCode() {
 	Swal.fire({
 		icon: "question",
 		title: "저장 여부",
-		text: "메뉴 정보를 저장하시겠습니까?",
+		text: "코드 정보를 저장하시겠습니까?",
 		showCancelButton: true,
 		confirmButtonText: "예",
 		cancelButtonText: "아니오"
@@ -292,7 +292,7 @@ function saveCode() {
 			        Swal.fire({
 						icon: "success",
 						title: "저장 완료",
-						text: "메뉴 정보를 저장했습니다."
+						text: "코드 정보를 저장했습니다."
 					});
 					
 					$("#jstree").jstree(true).destroy();
@@ -342,7 +342,7 @@ function deleteCode() {
 	        Swal.fire({
 				icon: "success",
 				title: "삭제 완료",
-				text: "메뉴 삭제를 완료했습니다."
+				text: "코드 삭제를 완료했습니다."
 			});
 			
 			$("#jstree").jstree(true).destroy();

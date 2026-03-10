@@ -73,7 +73,7 @@
 				                    		<div class="row col-12 p-0 m-0">
 					                    		<div class="input-group p-0">
 			                              			<label for="userMail" class="col-2 p-2 text-end">ID</label>
-			                              			<input type="text" id="userMail" name="userMail" class="form-control" placeholder="메일주소" value="" />
+			                              			<input type="text" id="userMail" name="userMail" class="form-control bg-secondary" placeholder="메일주소" value="" readonly />
 			                              		</div>
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">

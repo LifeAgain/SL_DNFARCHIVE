@@ -99,12 +99,16 @@ public class CodeController {
 	public String selectCodeList(@ModelAttribute("codeVO") CodeVO codeVO, ModelMap model) throws Exception {
 		
 		List<EgovMap> codeList = codeService.codeList(codeVO);
+		String maxLcd = codeService.maxLcd();
+		List<EgovMap> maxScd = codeService.maxScd();
 		
 		System.out.println("============================");
 		System.out.println("Success - selectCodeList.do");
 		System.out.println("============================");
 		
 		model.addAttribute("codeList", codeList);
+		model.addAttribute("maxLcd", maxLcd);
+		model.addAttribute("maxScd", maxScd);
 		
 		return "jsonView";
 	}

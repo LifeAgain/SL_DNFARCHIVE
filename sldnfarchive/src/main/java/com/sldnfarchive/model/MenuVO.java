@@ -33,6 +33,9 @@ package com.sldnfarchive.model;
  */
 public class MenuVO {
 	
+	/** 사용여부 검색 */
+	private String schUseYn;
+	
 	/** 검색할 메뉴명 */
 	private String schMenuNm;
 	
@@ -67,6 +70,14 @@ public class MenuVO {
 	private String upDate;
 	
 	
+	public String getSchUseYn() {
+		return schUseYn;
+	}
+
+	public void setSchUseYn(String schUseYn) {
+		this.schUseYn = schUseYn;
+	}
+
 	public String getSchMenuNm() {
 		return schMenuNm;
 	}

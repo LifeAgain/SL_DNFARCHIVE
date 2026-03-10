@@ -33,6 +33,9 @@ package com.sldnfarchive.model;
  */
 public class CodeVO {
 	
+	/** 사용여부 검색 */
+	private String schUseYn;
+	
 	/** 검색할 메뉴명 */
 	private String schCodeNm;
 	
@@ -64,6 +67,14 @@ public class CodeVO {
 	private String upDate;
 	
 	
+	public String getSchUseYn() {
+		return schUseYn;
+	}
+
+	public void setSchUseYn(String schUseYn) {
+		this.schUseYn = schUseYn;
+	}
+
 	public String getSchCodeNm() {
 		return schCodeNm;
 	}

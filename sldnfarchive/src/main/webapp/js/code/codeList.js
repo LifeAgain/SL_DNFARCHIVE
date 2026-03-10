@@ -1,16 +1,24 @@
 var flag = "";
+var maxLcd = "";
+var maxScd = [];
 
 $(function() {
 	codeList();
 });
 
 function codeList() {
+	var data = $("#schUseYn").val();
+	
 	$.ajax({
 		url: "/code/selectCodeList.do"
+	  , data: {schUseYn: data}
 	  , type: "post"
 	  , dataType: "json"
 	  , async: true
 	  , success: function(res) { // 결과 성공 콜백함수
+	  		maxLcd = res.maxLcd;
+	  		maxScd = res.maxScd;
+	  		
 	        $("#jstree").jstree({
 	        	"core": {
 	        		"data": res.codeList
@@ -25,8 +33,13 @@ function codeList() {
 	          	  	}
 	          	}
 	        }).on("loaded.jstree", function(e, data) {
-	        	$("#jstree").jstree(true).open_all();
-	        	$("#jstree").jstree(true).select_node("A00");
+	        	var len = $("#jstree").jstree(true).get_json('#', {flat:true}).length;
+			
+				if(len > 0) {
+					$("#jstree").jstree(true).open_all();
+		        	$("#jstree").jstree(true).select_node("A00");
+				}
+				else $("#editFrm input[type!='button'], #editFrm textarea").val("");
 	        }).on("select_node.jstree", function(e, data) {
 	        	editCode();
 	        });
@@ -47,50 +60,73 @@ function schCode() {
 	$("#jstree").jstree(true).search(schCodeNm);
 }
 
+function schCodeUseYn() {
+	$("#jstree").jstree(true).destroy();
+	codeList();
+}
+
 function insertCode(cat) {
 	var baseCd = $("#jstree").jstree(true).get_selected()[0];
+	var newBaseCd = "";
 	var parent = "";
 	var type = "";
-	var cdArr = null;
-	var maxNum = 0;
-	var obj = null;
-	var maxId = "";
 	var newId = "";
+	var nodeExists1 = false;
+	var nodeExists2 = false;
 	
 	if(cat == "L") {
 		parent = "#";
 		type = "default";
 		
-		if(!baseCd) {
+		if(baseCd) {
+			for(var i = 0; i < maxScd.length; i++) {
+				if(baseCd.substr(0, 1) == maxScd[i].codeLcd) {
+					newBaseCd = maxScd[i].codeLcd + String(Number(maxScd[i].maxScd) + 1).padStart(2, '0')
+				}
+			}
+		}
+		
+		if(!maxLcd) {
 			newId = "A00";
 		} else {
-			cdArr = $("a.jstree-anchor[aria-level=1]");
-			maxNum = cdArr.length-1;
-			obj = $(cdArr[maxNum]);
-			maxId = obj.attr("id").substr(0, 1);
-			newId = String.fromCharCode(maxId.charCodeAt(0) + 1) + "00";
+			newId = String.fromCharCode(maxLcd.charCodeAt(0) + 1) + "00";
+			nodeExists1 = $("#jstree").jstree(true).get_node(newId);
+			nodeExists2 = $("#jstree").jstree(true).get_node(newBaseCd);
 		}
 	} else if(cat == "S") {
 		if(!baseCd) {
 			Swal.fire({
 				icon: "info",
-				title: "상위분류 없음",
-				text: "상위분류 코드가 존재하지 않습니다. 다시 확인해주세요."
+				title: "상위메뉴 없음",
+				text: "상위메뉴가 존재하지 않습니다. 다시 확인해주세요."
 			});
 			
 			return;
 		} else {
-			$("#jstree").jstree(true).open_all();
-			
 			parent = baseCd.substr(0, 1) + "00";
 			type = "file";
-			cdArr = $("a.jstree-anchor[id^='" + parent.substr(0, 1) + "']");
-			maxNum = cdArr.length-1;
-			obj = $(cdArr[maxNum]);
-			maxId = parseInt(obj.attr("id").substr(1, 2));
-			maxId = maxId + 1;
-			newId = parent.substr(0, 1) + String(maxId).padStart(2, '0');
+			newBaseCd = String.fromCharCode(maxLcd.charCodeAt(0) + 1) + "00";
+			
+			for(var i = 0; i < maxScd.length; i++) {
+				
+				if(baseCd.substr(0, 1) == maxScd[i].codeLcd) {
+					newId = maxScd[i].codeLcd + String(Number(maxScd[i].maxScd) + 1).padStart(2, '0')
+				}
+			}
+			
+			nodeExists1 = $("#jstree").jstree(true).get_node(newBaseCd);
+			nodeExists2 = $("#jstree").jstree(true).get_node(newId);
 		}
+	}
+	
+	if(nodeExists1 || nodeExists2) {
+		Swal.fire({
+			icon: "info",
+			title: "알림",
+			text: "기존 입력 중인 정보가 존재합니다."
+		});
+		
+		return false;
 	}
 	
 	$("#jstree").jstree(true).create_node(parent, {"id": newId, "text": "", "type": type}, "last");
@@ -253,13 +289,14 @@ function saveCode() {
 			  			$(id).data("changeYn", "N");
 			  		}
 			  		
-			  		$("#jstree").jstree(true).rename_node(obj.codeLcd + obj.codeScd, obj.codeNm);
-			  		
 			        Swal.fire({
 						icon: "success",
 						title: "저장 완료",
 						text: "메뉴 정보를 저장했습니다."
 					});
+					
+					$("#jstree").jstree(true).destroy();
+					codeList();
 			    }
 			  , error: function(req, status, err) { // 결과 에러 콜백함수
 			        Swal.fire({
@@ -308,12 +345,8 @@ function deleteCode() {
 				text: "메뉴 삭제를 완료했습니다."
 			});
 			
-			$("#jstree").jstree(true).delete_node(obj.codeLcd + obj.codeScd);
-			
-			var len = $("#jstree").jstree(true).get_json('#', {flat:true}).length;
-			
-			if(len > 0) $("#jstree").jstree(true).select_node("A00");
-			else $("#editFrm input[type!='button'], #editFrm textarea").val("");
+			$("#jstree").jstree(true).destroy();
+			codeList();
 	    }
 	  , error: function(req, status, err) { // 결과 에러 콜백함수
 	        Swal.fire({

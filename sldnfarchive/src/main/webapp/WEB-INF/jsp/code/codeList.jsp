@@ -30,6 +30,14 @@
 		            	<div class="card card-header mt-4">
 		            		<form id="schCodeFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
 		            			<div class="row col-auto gap-2">
+		            				<div class="input-group px-0 w-auto">
+			            				<label for="schUseYn" class="input-group-text">사용여부</label>
+			            				<select id="schUseYn" name="schUseYn" class="form-select" onchange="javascript:schCodeUseYn();">
+			            					<option value="">전체</option>
+			            					<option value="Y">사용</option>
+			            					<option value="N">미사용</option>
+			            				</select>
+			            			</div>
 			            			<div class="input-group px-0 w-auto">
 			            				<label for="schCodeNm" class="input-group-text">코드명</label>
 			            				<input type="text" id="schCodeNm" name="schCodeNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schCode();" />

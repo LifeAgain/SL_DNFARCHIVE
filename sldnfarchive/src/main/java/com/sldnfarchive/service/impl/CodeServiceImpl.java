@@ -67,6 +67,26 @@ public class CodeServiceImpl extends EgovAbstractServiceImpl implements CodeServ
 	}
 	
 	/**
+	 * 최근 대분류코드 조회
+	 * @return menuMapper.maxLcd
+	 * @exception Exception
+	 */
+	@Override
+	public String maxLcd() throws Exception {
+		return codeMapper.maxLcd();
+	}
+	
+	/**
+	 * 최근 소분류코드 조회
+	 * @return menuMapper.maxScd
+	 * @exception Exception
+	 */
+	@Override
+	public List<EgovMap> maxScd() throws Exception {
+		return codeMapper.maxScd();
+	}
+	
+	/**
 	 * 코드 상세정보 조회
 	 * @param CodeVO
 	 * @return codeMapper.selectCode

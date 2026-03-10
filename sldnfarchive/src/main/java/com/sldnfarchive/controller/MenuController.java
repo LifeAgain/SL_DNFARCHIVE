@@ -99,12 +99,16 @@ public class MenuController {
 	public String selectMenuList(@ModelAttribute("menuVO") MenuVO menuVO, ModelMap model) throws Exception {
 		
 		List<EgovMap> menuList = menuService.menuList(menuVO);
+		String maxLcd = menuService.maxLcd();
+		List<EgovMap> maxScd = menuService.maxScd();
 		
 		System.out.println("============================");
 		System.out.println("Success - selectMenuList.do");
 		System.out.println("============================");
 		
 		model.addAttribute("menuList", menuList);
+		model.addAttribute("maxLcd", maxLcd);
+		model.addAttribute("maxScd", maxScd);
 		
 		return "jsonView";
 	}

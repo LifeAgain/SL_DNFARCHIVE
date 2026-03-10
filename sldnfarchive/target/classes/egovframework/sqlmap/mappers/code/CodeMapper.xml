@@ -3,7 +3,7 @@
 <mapper namespace="com.sldnfarchive.service.impl.CodeMapper">
 
 	<select id="codeList" parameterType="codeVO" resultType="egovMap">
-		WITH RECURSIVE CTE (ID, TEXT, PARENT, TYPE) AS
+		WITH RECURSIVE CTE (ID, TEXT, PARENT, TYPE, USE_YN) AS
 		(
 			(
 				SELECT
@@ -11,6 +11,7 @@
 				  , A.TEXT
 				  , A.PARENT
 				  , A.TYPE
+				  , A.USE_YN
 				FROM
 					(
 						SELECT
@@ -26,6 +27,7 @@
 								  	, '#'
 								  ) AS PARENT
 							, ICON_TYPE AS TYPE
+							, USE_YN
 						FROM
 							CODE_MASTER
 					) A
@@ -39,6 +41,7 @@
 					  , B.TEXT
 					  , B.PARENT
 					  , B.TYPE
+					  , B.USE_YN
 					FROM
 						(
 							SELECT
@@ -51,6 +54,7 @@
 								  		END
 								  	) AS PARENT
 							  , ICON_TYPE AS TYPE
+							  , USE_YN
 							FROM
 								CODE_MASTER
 						) B
@@ -65,15 +69,36 @@
 		  , CTE.TEXT
 		  , CTE.PARENT
 		  , CTE.TYPE
+		  , CTE.USE_YN
 		FROM
 			CTE
 		WHERE
 				 1=1
+		<if test="schUseYn != null and schUseYn != ''">
+			AND CTE.USE_YN = #{schUseYn}
+		</if>
 		<if test="schCodeNm != null and schCodeNm != ''">
 			AND CTE.TEXT LIKE CONCAT('%', #{schCodeNm}, '%')
 		</if>
 		ORDER BY
 			CTE.ID
+	</select>
+	
+	<select id="maxLcd" resultType="String">
+		SELECT
+			MAX(CODE_LCD) AS MAX_LCD
+		FROM
+			CODE_MASTER
+	</select>
+	
+	<select id="maxScd" resultType="egovMap">
+		SELECT
+			CODE_LCD
+		  , IFNULL(MAX(CODE_SCD), '00') AS MAX_SCD
+		FROM
+			CODE_MASTER
+		GROUP BY
+			CODE_LCD
 	</select>
 	
 	<select id="selectCode" parameterType="codeVO" resultType="egovMap">

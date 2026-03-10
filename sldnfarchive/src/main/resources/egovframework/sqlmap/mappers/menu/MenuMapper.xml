@@ -3,7 +3,7 @@
 <mapper namespace="com.sldnfarchive.service.impl.MenuMapper">
 
 	<select id="menuList" parameterType="menuVO" resultType="egovMap">
-		WITH RECURSIVE CTE (ID, TEXT, PARENT, TYPE) AS
+		WITH RECURSIVE CTE (ID, TEXT, PARENT, TYPE, USE_YN) AS
 		(
 			(
 				SELECT
@@ -11,6 +11,7 @@
 				  , A.TEXT
 				  , A.PARENT
 				  , A.TYPE
+				  , A.USE_YN
 				FROM
 					(
 						SELECT
@@ -26,6 +27,7 @@
 								  	, '#'
 								  ) AS PARENT
 							, ICON_TYPE AS TYPE
+							, USE_YN
 						FROM
 							MENU_MASTER
 					) A
@@ -39,6 +41,7 @@
 					  , B.TEXT
 					  , B.PARENT
 					  , B.TYPE
+					  , B.USE_YN
 					FROM
 						(
 							SELECT
@@ -51,6 +54,7 @@
 								  		END
 								  	) AS PARENT
 							  , ICON_TYPE AS TYPE
+							  , USE_YN
 							FROM
 								MENU_MASTER
 						) B
@@ -65,15 +69,36 @@
 		  , CTE.TEXT
 		  , CTE.PARENT
 		  , CTE.TYPE
+		  , CTE.USE_YN
 		FROM
 			CTE
 		WHERE
 				 1=1
+		<if test="schUseYn != null and schUseYn != ''">
+			AND CTE.USE_YN = #{schUseYn}
+		</if>
 		<if test="schMenuNm != null and schMenuNm != ''">
 			AND CTE.TEXT LIKE CONCAT('%', #{schMenuNm}, '%')
 		</if>
 		ORDER BY
 			CTE.ID
+	</select>
+	
+	<select id="maxLcd" resultType="String">
+		SELECT
+			MAX(MENU_LCD) AS MAX_LCD
+		FROM
+			MENU_MASTER
+	</select>
+	
+	<select id="maxScd" resultType="egovMap">
+		SELECT
+			MENU_LCD
+		  , IFNULL(MAX(MENU_SCD), '00') AS MAX_SCD
+		FROM
+			MENU_MASTER
+		GROUP BY
+			MENU_LCD
 	</select>
 	
 	<select id="selectMenu" parameterType="menuVO" resultType="egovMap">

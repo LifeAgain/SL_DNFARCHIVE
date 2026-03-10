@@ -45,6 +45,18 @@ public interface MenuMapper {
 	 * @exception Exception
 	 */
 	List<EgovMap> menuList(MenuVO menuVO) throws Exception;
+	
+	/**
+	 * 가장 최근에 만들어진 대분류코드를 조회한다.
+	 * @exception Exception
+	 */
+	String maxLcd() throws Exception;
+	
+	/**
+	 * 가장 최근에 만들어진 소분류코드를 조회한다.
+	 * @exception Exception
+	 */
+	List<EgovMap> maxScd() throws Exception;
 
 	/**
 	 * 메뉴 상세정보 조회

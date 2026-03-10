@@ -67,6 +67,26 @@ public class MenuServiceImpl extends EgovAbstractServiceImpl implements MenuServ
 	}
 	
 	/**
+	 * 최근 대분류코드 조회
+	 * @return menuMapper.maxLcd
+	 * @exception Exception
+	 */
+	@Override
+	public String maxLcd() throws Exception {
+		return menuMapper.maxLcd();
+	}
+	
+	/**
+	 * 최근 소분류코드 조회
+	 * @return menuMapper.maxScd
+	 * @exception Exception
+	 */
+	@Override
+	public List<EgovMap> maxScd() throws Exception {
+		return menuMapper.maxScd();
+	}
+	
+	/**
 	 * 메뉴 상세정보 조회
 	 * @param MenuVO
 	 * @return menuMapper.selectMenu

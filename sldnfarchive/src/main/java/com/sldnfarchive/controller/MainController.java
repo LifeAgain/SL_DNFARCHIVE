@@ -48,7 +48,7 @@ import com.sldnfarchive.service.LoginService;
  * @ 2026.02.10	 HHP          최초생성
  *
  * @author HHP
- * @since 2016.02.10
+ * @since 2026.02.10
  * @version 1.0
  * @see
  *

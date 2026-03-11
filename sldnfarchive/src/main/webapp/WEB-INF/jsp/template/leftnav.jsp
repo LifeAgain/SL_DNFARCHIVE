@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -39,6 +40,7 @@
                                 	<a class="nav-link" href="/menu/menuList.do">메뉴관리</a>
                                 	<a class="nav-link" href="/code/codeList.do">공통코드관리</a>
                                 	<a class="nav-link" href="/user/userList.do">회원관리</a>
+                                	<a class="nav-link" href="/board/boardList.do">게시판관리</a>
                                     <a class="nav-link" href="layout-static.html">Static Navigation</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>

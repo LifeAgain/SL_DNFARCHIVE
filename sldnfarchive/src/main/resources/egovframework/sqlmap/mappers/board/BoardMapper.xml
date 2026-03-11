@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sldnfarchive.service.impl.BoardMapper">
+
+	<select id="boardList" parameterType="boardVO" resultType="egovMap">
+		SELECT
+			C.RN
+		  , C.BOARD_NO
+		  , C.BOARD_TYPE
+		  , C.CODE_NM
+		  , C.BOARD_NM
+		  , C.BOARD_PATH
+		  , C.USE_YN
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY A.BOARD_NO) AS RN
+				  , A.BOARD_NO
+				  , A.BOARD_TYPE
+				  , B.CODE_NM
+				  , A.BOARD_NM
+				  , A.BOARD_PATH
+				  , A.USE_YN
+				FROM
+					BOARD_MASTER A
+					JOIN
+					CODE_MASTER B
+					ON A.BOARD_TYPE = CONCAT(B.CODE_LCD, B.CODE_SCD)
+				WHERE
+						1=1
+				<if test="schBoardType != null and schBoardType != ''">
+					AND A.BOARD_TYPE = #{schBoardType}
+				</if>
+				<if test="schUseYn != null and schUseYn != ''">
+					AND A.USE_YN = #{schUseYn}
+				</if>
+				<if test="schBoardNm != null and schBoardNm != ''">
+					AND A.BOARD_NM LIKE CONCAT('%', #{schBoardNm}, '%')
+				</if>
+				ORDER BY
+					A.BOARD_NO
+			) C
+		WHERE
+				1=1
+		<if test="curIdx != null and pageUnit != null and curPage != null">
+			AND C.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+		</if>
+		ORDER BY
+			C.RN
+		  , C.BOARD_NO
+	</select>
+	
+	<select id="boardListCnt" parameterType="boardVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			BOARD_MASTER
+		WHERE
+				1=1
+		<if test="schBoardType != null and schBoardType != ''">
+			AND BOARD_TYPE = #{schBoardType}
+		</if>
+		<if test="schUseYn != null and schUseYn != ''">
+			AND USE_YN = #{schUseYn}
+		</if>
+		<if test="schBoardNm != null and schBoardNm != ''">
+			AND BOARD_NM LIKE CONCAT('%', #{schBoardNm}, '%')
+		</if>
+	</select>
+	
+	<select id="selectBoard" parameterType="boardVO" resultType="egovMap">
+		SELECT
+			BOARD_NO
+		  , BOARD_TYPE
+		  , BOARD_NM
+		  , BOARD_PATH
+		  , USE_YN
+		  , BOARD_NOTE
+		FROM
+			BOARD_MASTER
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND BOARD_NO = #{boardNo}
+		</if>
+	</select>
+	
+	<insert id="insertBoard" parameterType="boardVO">
+		INSERT INTO BOARD_MASTER
+		(
+			BOARD_TYPE
+		  , BOARD_NM
+		  , BOARD_PATH
+		  , USE_YN
+		  , BOARD_NOTE
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{boardType}
+		  , #{boardNm}
+		  , #{boardPath}
+		  , #{useYn}
+		  , #{boardNote}
+		  , '1'
+		  , NOW()
+		  , '1'
+		  , NOW()
+		)
+	</insert>
+	
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE
+			BOARD_MASTER
+		SET
+			BOARD_TYPE = #{boardType}
+		  , BOARD_NM = #{boardNm}
+		  , BOARD_PATH = #{boardPath}
+		  , USE_YN = #{useYn}
+		  , BOARD_NOTE = #{boardNote}
+		  , UP_NO = '1'
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND BOARD_NO = #{boardNo}
+		</if>
+	</update>
+
+	<delete id="deleteBoard" parameterType="boardVO">
+		DELETE FROM
+			BOARD_MASTER
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND BOARD_NO = #{boardNo}
+		</if>
+	</delete>
+
+</mapper>

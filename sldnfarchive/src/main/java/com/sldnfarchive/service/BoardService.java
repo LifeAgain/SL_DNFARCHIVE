@@ -19,78 +19,66 @@ import java.util.List;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 
-import com.sldnfarchive.model.CodeVO;
+import com.sldnfarchive.model.BoardVO;
 
 /**
- * @Class Name : CodeService.java
- * @Description : CodeService Class
+ * @Class Name : BoardService.java
+ * @Description : BoardService Class
  * @Modification Information
  * @
  * @  수정일      수정자              수정내용
  * @ ---------   ---------   -------------------------------
- * @ 2026.02.18		HHP           최초생성
+ * @ 2026.03.11		HHP           최초생성
  *
  * @author HHP
- * @since 2026.02.18
+ * @since 2026.03.11
  * @version 1.0
  * @see
  *
  *  Copyright (C) by MOPAS All right reserved.
  */
-public interface CodeService {
+public interface BoardService {
 
 	/**
-	 * 공통코드 목록을 조회한다.
-	 * @param CodeVO
+	 * 게시판 목록을 조회한다.
+	 * @param BoardVO
 	 * @exception Exception
 	 */
-	List<EgovMap> codeList(CodeVO codeVO) throws Exception;
+	List<EgovMap> boardList(BoardVO boardVO) throws Exception;
 	
 	/**
-	 * 가장 최근에 만들어진 대분류코드를 조회한다.
+	 * 게시판 목록 개수를 조회한다.
+	 * @param BoardVO
 	 * @exception Exception
 	 */
-	String maxLcd() throws Exception;
-	
-	/**
-	 * 가장 최근에 만들어진 소분류코드를 조회한다.
-	 * @exception Exception
-	 */
-	List<EgovMap> maxScd() throws Exception;
+	int boardListCnt(BoardVO boardVO) throws Exception;
 
 	/**
-	 * 코드 상세정보 조회
-	 * @param CodeVO
+	 * 게시판 상세정보 조회
+	 * @param BoardVO
 	 * @exception
 	 */
-	EgovMap selectCode(CodeVO codeVO) throws Exception;
+	EgovMap selectBoard(BoardVO boardVO) throws Exception;
 	
 	/**
-	 * 외부 코드목록 조회
-	 * @param CodeVO
+	 * 게시판 추가
+	 * @param BoardVO
 	 * @exception
 	 */
-	List<EgovMap> outCodeList(CodeVO codeVO) throws Exception;
+	void insertBoard(BoardVO boardVO) throws Exception;
 	
 	/**
-	 * 코드 추가
-	 * @param CodeVO
+	 * 게시판 정보 수정
+	 * @param BoardVO
 	 * @exception
 	 */
-	void insertCode(CodeVO codeVO) throws Exception;
+	void updateBoard(BoardVO boardVO) throws Exception;
 	
 	/**
-	 * 메뉴 정보 수정
-	 * @param CodeVO
+	 * 게시판 삭제
+	 * @param BoardVO
 	 * @exception
 	 */
-	void updateCode(CodeVO codeVO) throws Exception;
-	
-	/**
-	 * 메뉴 삭제
-	 * @param CodeVO
-	 * @exception
-	 */
-	void deleteCode(CodeVO codeVO) throws Exception;
+	void deleteBoard(BoardVO boardVO) throws Exception;
 
 }

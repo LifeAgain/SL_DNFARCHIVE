@@ -1,26 +1,26 @@
 var flag = "";
 
 $(function() {
-	userList();
+	boardList();
 });
 
-function userList() {
-	var obj = $("#schUserFrm").serializeObject();
-	var colNamesArr = ["No.", "아이디(이메일)", "이름", "휴면여부"]
+function boardList() {
+	var obj = $("#schBoardFrm").serializeObject();
+	var colNamesArr = ["No.", "종류", "게시판명", "사용여부"]
 	var colModelArr = [
-		{name: "userIdx", index: "userIdx", align: "center", hidden: true}
-	  , {name: "userMail", index: "userMail", align: "left", width: "50%"}
-	  , {name: "userNm", index: "userNm", align: "left", width: "30%"}
-	  , {name: "userStat", index: "userStat", align: "center", width: "20%"}
+		{name: "boardNo", index: "boardNo", align: "center", hidden: true}
+	  , {name: "codeNm", index: "codeNm", align: "center", width: "30%"}
+	  , {name: "boardNm", index: "boardNm", align: "left", width: "50%"}
+	  , {name: "useYn", index: "useYn", align: "center", width: "20%"}
 	];
 	
 	obj.curIdx = 1;
 	obj.pageUnit = 10;
 	obj.curPage = 1;
 	
-	$("#userGrid").clearGridData();
-	$("#userGrid").jqGrid({
-		url: "/user/selectUserList.do"
+	$("#boardGrid").clearGridData();
+	$("#boardGrid").jqGrid({
+		url: "/board/selectBoardList.do"
 	  , postData: obj
 	  , mtype: "post"
 	  , datatype: "json"
@@ -28,17 +28,17 @@ function userList() {
 	  , colModel: colModelArr
 	  , jsonReader: {
 	  	  root: function(res) {
-	  	  	return res.userList;
+	  	  	return res.boardList;
 	  	  }
 	  	, page: "page"
 	  	, total: function(res) {
 	  		var total = res.totalCnt;
-	  		var pageSize = Math.ceil(total / res.userVO.pageUnit);
+	  		var pageSize = Math.ceil(total / res.boardVO.pageUnit);
 	  		
 	  		return pageSize;
 	  	  }
 	  	, records: function(res) {
-	  		return res.userList.length;
+	  		return res.boardList.length;
 	  	  }
 	  	, repeatitems: false
 	  }
@@ -49,13 +49,13 @@ function userList() {
 	  , rownumbers: true
 	  , pager: "#gridPager"
 	  , loadComplete: function(res) {
-	  	var records = $("#userGrid").getGridParam("records");
-	  	var arr = $("#userGrid").jqGrid("getDataIDs");
+	  	var records = $("#boardGrid").getGridParam("records");
+	  	var arr = $("#boardGrid").jqGrid("getDataIDs");
 	  	
 	  	if(records > 0) {
-	  		$("#userGrid").setSelection(arr[0]);
+	  		$("#boardGrid").setSelection(arr[0]);
 	  	} else {
-	  		var obj = $("#editFrm input[type!='button'], #editFrm textarea");
+	  		var obj = $("#editFrm select, #editFrm input[type!='button'], #editFrm textarea");
 	  		
 	  		for(var i = 0; i < obj.length; i++) {
 	  			var id = $(obj[i]).attr("id");
@@ -65,7 +65,7 @@ function userList() {
 	  	}
 	  }
 	  , onPaging: function(btn) {
-	  	var gridPage = $("#userGrid").getGridParam("page");
+	  	var gridPage = $("#boardGrid").getGridParam("page");
 	  	var totalPage = $("#sp_1_gridPager").text();
 	  	
 	  	if(btn == "next") {
@@ -88,28 +88,28 @@ function userList() {
 	  	
 		obj.curPage = gridPage;
 	  	
-	  	$("#userGrid").clearGridData();
-		$("#userGrid").setGridParam({
+	  	$("#boardGrid").clearGridData();
+		$("#boardGrid").setGridParam({
 			postData: obj
 		}).trigger("reloadGrid");
 	  }
 	  , onSelectRow: function(res) {
-	  	editUser();
+	  	editBoard();
 	  }
 	}).trigger("reloadGrid");
 }
 
-function schUser() {
-	var obj = $("#schUserFrm").serializeObject();
+function schBoard() {
+	var obj = $("#schBoardFrm").serializeObject();
 	
-	$("#userGrid").clearGridData();
-	$("#userGrid").setGridParam({
+	$("#boardGrid").clearGridData();
+	$("#boardGrid").setGridParam({
 		postData: obj
 	}).trigger("reloadGrid");
 }
 
-function insertUser() {
-	var arr = $("#userGrid").jqGrid("getDataIDs");
+function insertBoard() {
+	var arr = $("#boardGrid").jqGrid("getDataIDs");
 	
 	for(var i = 0; i < arr.length; i++) {
 		if(arr[i] == "newRow") {
@@ -123,35 +123,30 @@ function insertUser() {
 		}
 	}
 	
-	$("#userGrid").addRowData("newRow", {}, "last");
-	$("#userGrid").resetSelection();
-	$("#userGrid").setSelection("newRow");
+	$("#boardGrid").addRowData("newRow", {}, "last");
+	$("#boardGrid").resetSelection();
+	$("#boardGrid").setSelection("newRow");
 }
 
-function editUser() {
-	var id = $("#userGrid").getGridParam("selrow");
-	var idx = $("#userGrid").getRowData(id).userIdx;
+function editBoard() {
+	var id = $("#boardGrid").getGridParam("selrow");
+	var idx = $("#boardGrid").getRowData(id).boardNo;
 	
 	if(id != "newRow") {
 		flag = "U";
 		
 		$.ajax({
-			url: "/user/selectUser.do"
-		  , data: {"userIdx": idx}
+			url: "/board/selectBoard.do"
+		  , data: {"boardNo": idx}
 		  , type: "post"
 		  , dataType: "json"
 		  , async: true
 		  , success: function(res) { // 결과 성공 콜백함수
-		  		var obj = res.selectUser;
+		  		var obj = res.selectBoard;
 		  		
 		  		for(var key in obj) {
 		  			var id = "#" + key;
 		  			var val = obj[key];
-		  			
-		  			if(key == "userMail") {
-		  				$(id).addClass("bg-secondary");
-		  				$(id).attr("readonly", true);
-		  			}
 		  			
 		  			if($(id).is(":checkbox")) {
 		  				if(val == "Y") $(id).prop("checked", true);
@@ -173,15 +168,10 @@ function editUser() {
 		});
 	} else {
 		flag = "I";
-		var obj = $("#editFrm input[type!='button'], #editFrm textarea");
+		var obj = $("#editFrm select, #editFrm input[type!='button'], #editFrm textarea");
 			  		
   		for(var i = 0; i < obj.length; i++) {
   			var id = $(obj[i]).attr("id");
-  			
-  			if(id == "userMail") {
-  				$("#" + id).removeClass("bg-secondary");
-  				$("#" + id).attr("readonly", false);
-  			}
   			
   			$("#" + id).val("");
   		}
@@ -200,19 +190,15 @@ function chkChangeVal(ele) {
 	else $(ele).data("changeYn", "Y");
 } 
 
-function beforeSaveUser() {
-	var len = $("#userGrid").jqGrid("getDataIDs").length;
+function beforeSaveBoard() {
+	var len = $("#boardGrid").jqGrid("getDataIDs").length;
 	var cnt = 0;
-	var obj = $("#editFrm input[type!='button'], #editFrm textarea");
+	var obj = $("#editFrm select, #editFrm input[type!='button'], #editFrm textarea");
 	
 	if(len > 0) {
 		if(flag == "U") {
 			for(var i = 0; i < obj.length; i++) {
-				var id = $(obj[i]).attr("id");
-				
-				if(!(id == "userMail")) {
-					if($(obj[i]).data("changeYn") == "Y") cnt++;
-				}
+				cnt++;
 			}
 			
 			if(cnt <= 0) {
@@ -230,7 +216,7 @@ function beforeSaveUser() {
 			var id = $(obj[i]).attr("id");
 			var nm = $("label[for='" + id + "']").text();
 			
-			if(!(id == "userStat" || id == "userNote")) {
+			if(!(id == "useYn" || id == "boardNote")) {
 				var num = $(obj[i]).val().length;
 			
 				if(num <= 0) {
@@ -247,29 +233,29 @@ function beforeSaveUser() {
 			}
 		}
 		
-		saveUser();
+		saveBoard();
 	}
 }
 
-function saveUser() {
+function saveBoard() {
 	var url = "";
 	var obj = $("#editFrm").serializeObject();
-	var id = $("#userGrid").getGridParam("selrow");
-	var idx = $("#userGrid").getRowData(id).userIdx;
+	var id = $("#boardGrid").getGridParam("selrow");
+	var idx = $("#boardGrid").getRowData(id).boardNo;
 	
-	if($("#editFrm input[type='checkbox']").is(":checked")) obj.userStat = 'Y';
-	else obj.userStat = 'N';
+	if($("#editFrm input[type='checkbox']").is(":checked")) obj.useYn = 'Y';
+	else obj.useYn = 'N';
 	
-	if(flag == "I") url = "/user/insertUser.do";
+	if(flag == "I") url = "/board/insertBoard.do";
 	else if(flag == "U") {
-		url = "/user/updateUser.do";
-		obj.userIdx = idx;
+		url = "/board/updateBoard.do";
+		obj.boardNo = idx;
 	}
 	
 	Swal.fire({
 		icon: "question",
 		title: "저장 여부",
-		text: "회원 정보를 저장하시겠습니까?",
+		text: "게시판 정보를 저장하시겠습니까?",
 		showCancelButton: true,
 		confirmButtonText: "예",
 		cancelButtonText: "아니오"
@@ -291,12 +277,12 @@ function saveUser() {
 			  			$(id).data("changeYn", "N");
 			  		}
 			  		
-			  		userList();
+			  		boardList();
 			  		
 			        Swal.fire({
 						icon: "success",
 						title: "저장 완료",
-						text: "회원 정보를 저장했습니다."
+						text: "게시판 정보를 저장했습니다."
 					});
 			    }
 			  , error: function(req, status, err) { // 결과 에러 콜백함수
@@ -311,43 +297,43 @@ function saveUser() {
 	});
 }
 
-function beforeDeleteUser() {
-	var len = $("#userGrid").getGridParam("records");
+function beforeDeleteBoard() {
+	var len = $("#boardGrid").getGridParam("records");
 	
 	if(len > 0) {
 		Swal.fire({
 			icon: "question",
 			title: "삭제 여부",
-			text: "회원 정보를 삭제하시겠습니까?",
+			text: "게시판을 삭제하시겠습니까?",
 			showCancelButton: true,
 			confirmButtonText: "예",
 			cancelButtonText: "아니오"
 		}).then((res) => {
 			if(res.isConfirmed) {
-				deleteUser();
+				deleteBoard();
 			}
 		});
 	}
 }
 
-function deleteUser() {
-	var id = $("#userGrid").getGridParam("selrow");
-	var idx = $("#userGrid").getRowData(id).userIdx;
+function deleteBoard() {
+	var id = $("#boardGrid").getGridParam("selrow");
+	var idx = $("#boardGrid").getRowData(id).boardNo;
 	
 	if(id != "newRow") {
 		$.ajax({
-			url: "/user/deleteUser.do"
-		  , data: {"userIdx": idx}
+			url: "/board/deleteBoard.do"
+		  , data: {"boardNo": idx}
 		  , type: "post"
 		  , dataType: "json"
 		  , async: true
 		  , success: function(res) { // 결과 성공 콜백함수
-		  		userList();
+		  		boardList();
 		  		
 		        Swal.fire({
 					icon: "success",
 					title: "삭제 완료",
-					text: "회원 정보 삭제를 완료했습니다."
+					text: "게시판 삭제를 완료했습니다."
 				});
 		    }
 		  , error: function(req, status, err) { // 결과 에러 콜백함수
@@ -359,9 +345,9 @@ function deleteUser() {
 		    }
 		});
 	} else {
-		var arr = $("#userGrid").jqGrid("getDataIDs");
+		var arr = $("#boardGrid").jqGrid("getDataIDs");
 		
-		$("#userGrid").delRowData(id);
-		$("#userGrid").setSelection(arr[0]);
+		$("#boardGrid").delRowData(id);
+		$("#boardGrid").setSelection(arr[0]);
 	}
 }

@@ -33,29 +33,32 @@ package com.sldnfarchive.model;
  */
 public class BoardVO {
 	
-	/** 검색할 게시판명 */
-	private String schUserNm;
-	
 	/** 검색할 게시판 형태 */
-	private String schUserStat;
+	private String schBoardType;
 	
-	/** 회원 인덱스 번호 */
-	private int userIdx;
+	/** 사용여부 검색 */
+	private String schUseYn;
 	
-	/** 메일(아이디) */
-	private String userMail;
+	/** 검색할 게시판명 */
+	private String schBoardNm;
 	
-	/** 유저 이름(모험단) */
-	private String userNm;
+	/** 게시판 번호 */
+	private int boardNo;
 	
-	/** 비밀번호 */
-	private String userPw;
+	/** 게시판 형태 */
+	private String boardType;
 	
-	/** 유저 상태 */
-	private String userStat;
+	/** 게시판명 */
+	private String boardNm;
+	
+	/** 게시판경로 */
+	private String boardPath;
+	
+	/** 사용여부 */
+	private String useYn;
 	
 	/** 비고 */
-	private String userNote;
+	private String boardNote;
 	
 	/** 등록자 */
 	private String regNo;
@@ -78,69 +81,77 @@ public class BoardVO {
 	/** 관리 페이지 현재 인덱스 번호 */
 	private int curIdx;
 	
+
+	public String getSchBoardType() {
+		return schBoardType;
+	}
+
+	public void setSchBoardType(String schBoardType) {
+		this.schBoardType = schBoardType;
+	}
 	
-	public String getSchUserNm() {
-		return schUserNm;
+	public String getSchUseYn() {
+		return schUseYn;
 	}
 
-	public void setSchUserNm(String schUserNm) {
-		this.schUserNm = schUserNm;
+	public void setSchUseYn(String schUseYn) {
+		this.schUseYn = schUseYn;
 	}
 
-	public String getSchUserStat() {
-		return schUserStat;
+	public String getSchBoardNm() {
+		return schBoardNm;
 	}
 
-	public void setSchUserStat(String schUserStat) {
-		this.schUserStat = schUserStat;
+	public void setSchBoardNm(String schBoardNm) {
+		this.schBoardNm = schBoardNm;
 	}
 
-	public int getUserIdx() {
-		return userIdx;
+	public int getBoardNo() {
+		return boardNo;
 	}
 
-	public void setUserIdx(int userIdx) {
-		this.userIdx = userIdx;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
+	}
+	
+	public String getBoardType() {
+		return boardType;
 	}
 
-	public String getUserMail() {
-		return userMail;
+	public void setBoardType(String boardType) {
+		this.boardType = boardType;
 	}
 
-	public void setUserMail(String userMail) {
-		this.userMail = userMail;
+	public String getBoardNm() {
+		return boardNm;
 	}
 
-	public String getUserNm() {
-		return userNm;
+	public void setBoardNm(String boardNm) {
+		this.boardNm = boardNm;
 	}
 
-	public void setUserNm(String userNm) {
-		this.userNm = userNm;
+	public String getBoardPath() {
+		return boardPath;
 	}
 
-	public String getUserPw() {
-		return userPw;
+	public void setBoardPath(String boardPath) {
+		this.boardPath = boardPath;
 	}
 
-	public void setUserPw(String userPw) {
-		this.userPw = userPw;
+	public String getUseYn() {
+		return useYn;
 	}
 
-	public String getUserStat() {
-		return userStat;
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
 	}
 
-	public void setUserStat(String userStat) {
-		this.userStat = userStat;
+	public String getBoardNote() {
+		return boardNote;
 	}
 
-	public String getUserNote() {
-		return userNote;
-	}
-
-	public void setUserNote(String userNote) {
-		this.userNote = userNote;
+	public void setBoardNote(String boardNote) {
+		this.boardNote = boardNote;
 	}
 
 	public String getRegNo() {

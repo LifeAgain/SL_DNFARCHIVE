@@ -98,6 +98,17 @@ public class CodeServiceImpl extends EgovAbstractServiceImpl implements CodeServ
 	}
 	
 	/**
+	 * 외부 코드목록 조회
+	 * @param CodeVO
+	 * @return codeMapper.outCodeList
+	 * @exception
+	 */
+	@Override
+	public List<EgovMap> outCodeList(CodeVO codeVO) throws Exception {
+		return codeMapper.outCodeList(codeVO);
+	}
+	
+	/**
 	 * 공통코드 추가
 	 * @param CodeVO
 	 * @exception

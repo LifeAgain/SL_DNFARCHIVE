@@ -226,25 +226,25 @@ function beforeSaveMenu() {
 				
 				return;
 			}
-		} else if(flag == "I") {
-			for(var i = 0; i < obj.length; i++) {
-				var id = $(obj[i]).attr("id");
-				var nm = $("label[for='" + id + "']").text();
-				
-				if(!(id == "useYn" || id == "menuNote")) {
-					var num = $(obj[i]).val().length;
-				
-					if(num <= 0) {
-						$(obj[i]).focus();
-						
-						Swal.fire({
-							icon: "info",
-							title: "내용 없음",
-							text: nm + "을/를 입력해주세요."
-						});
-						
-						return;
-					}
+		}
+		
+		for(var i = 0; i < obj.length; i++) {
+			var id = $(obj[i]).attr("id");
+			var nm = $("label[for='" + id + "']").text();
+			
+			if(!(id == "useYn" || id == "menuNote")) {
+				var num = $(obj[i]).val().length;
+			
+				if(num <= 0) {
+					$(obj[i]).focus();
+					
+					Swal.fire({
+						icon: "info",
+						title: "내용 없음",
+						text: nm + "을/를 입력해주세요."
+					});
+					
+					return;
 				}
 			}
 		}

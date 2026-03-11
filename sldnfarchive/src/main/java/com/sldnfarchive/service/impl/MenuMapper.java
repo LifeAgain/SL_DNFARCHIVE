@@ -39,6 +39,7 @@ import com.sldnfarchive.model.MenuVO;
  */
 @Mapper("menuMapper")
 public interface MenuMapper {
+	
 	/**
 	 * 메뉴 리스트를 조회한다.
 	 * @param MenuVO

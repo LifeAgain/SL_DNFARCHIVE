@@ -39,6 +39,7 @@ import com.sldnfarchive.model.CodeVO;
  */
 @Mapper("codeMapper")
 public interface CodeMapper {
+	
 	/**
 	 * 공톻코드 리스트를 조회한다.
 	 * @param CodeVO
@@ -64,6 +65,13 @@ public interface CodeMapper {
 	 * @exception
 	 */
 	EgovMap selectCode(CodeVO codeVO) throws Exception;
+	
+	/**
+	 * 외부 코드목록 조회
+	 * @param CodeVO
+	 * @exception
+	 */
+	List<EgovMap> outCodeList(CodeVO codeVO) throws Exception;
 	
 	/**
 	 * 공통코드 추가

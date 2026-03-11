@@ -39,6 +39,7 @@ import com.sldnfarchive.model.UserVO;
  */
 @Mapper("userMapper")
 public interface UserMapper {
+	
 	/**
 	 * 회원 목록을 조회한다.
 	 * @param UserVO

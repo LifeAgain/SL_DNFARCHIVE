@@ -20,40 +20,66 @@ import java.util.List;
 import org.egovframe.rte.psl.dataaccess.mapper.Mapper;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 
-import com.sldnfarchive.model.UserVO;
+import com.sldnfarchive.model.BoardVO;
 
 /**
- * USER에 관한 데이터처리 매퍼 클래스
+ * 게시판에 관한 데이터처리 매퍼 클래스
  *
  * @author HHP
- * @since 2026.01.23
+ * @since 2026.03.11
  * @version 1.0
  * @see <pre>
  *  == 개정이력(Modification Information) ==
  *
  *          수정일          수정자           수정내용
  *  ----------------    ------------    ---------------------------
- *   2026.01.23        		HHP          최초 생성
+ *   2026.03.11        		HHP          최초 생성
  *
  * </pre>
  */
-@Mapper("loginMapper")
-public interface LoginMapper {
+@Mapper("boardMapper")
+public interface BoardMapper {
 	
 	/**
-	 * 로그인 정보를 조회한다.
-	 * @param UserVO
-	 * @return loginInfo
+	 * 게시판 목록을 조회한다.
+	 * @param BoardVO
 	 * @exception Exception
 	 */
-	EgovMap loginCheckAdm(UserVO userVO) throws Exception;
+	List<EgovMap> boardList(BoardVO boardVO) throws Exception;
+	
+	/**
+	 * 게시판 목록 개수를 조회한다.
+	 * @param BoardVO
+	 * @exception Exception
+	 */
+	int boardListCnt(BoardVO boardVO) throws Exception;
 
 	/**
-	 * 로그인된 계정 개수를 조회한다.
-	 * @param UserVO
-	 * @return 로그인한 계정과 일치하는 계정 개수
+	 * 게시판 상세정보 조회
+	 * @param BoardVO
 	 * @exception
 	 */
-	int loginCheckAdmCnt(UserVO userVO);
+	EgovMap selectBoard(BoardVO boardVO) throws Exception;
+	
+	/**
+	 * 게시판 추가
+	 * @param BoardVO
+	 * @exception
+	 */
+	void insertBoard(BoardVO boardVO) throws Exception;
+	
+	/**
+	 * 게시판 정보 수정
+	 * @param BoardVO
+	 * @exception
+	 */
+	void updateBoard(BoardVO boardVO) throws Exception;
+	
+	/**
+	 * 게시판 삭제
+	 * @param BoardVO
+	 * @exception
+	 */
+	void deleteBoard(BoardVO boardVO) throws Exception;
 
 }

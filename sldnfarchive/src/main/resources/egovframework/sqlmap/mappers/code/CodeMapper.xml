@@ -120,6 +120,20 @@
 		</if>
 	</select>
 	
+	<select id="outCodeList" parameterType="codeVO" resultType="egovMap">
+		SELECT
+			CONCAT(CODE_LCD, CODE_SCD) AS CODE_CD
+		  , CODE_NM
+		FROM
+			CODE_MASTER
+		WHERE
+				1=1
+		<if test="codeLcd != null and codeLcd != ''">
+			AND CODE_LCD = #{codeLcd}
+		</if>
+			AND CODE_SCD != '00'
+	</select>
+	
 	<insert id="insertCode" parameterType="codeVO">
 		INSERT INTO CODE_MASTER
 		(

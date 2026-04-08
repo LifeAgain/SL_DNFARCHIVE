@@ -11,6 +11,7 @@
 		  , C.BOARD_NM
 		  , C.BOARD_PATH
 		  , C.USE_YN
+		  , C.COMMENT_YN
 		FROM
 			(
 				SELECT
@@ -21,6 +22,7 @@
 				  , A.BOARD_NM
 				  , A.BOARD_PATH
 				  , A.USE_YN
+				  , A.COMMENT_YN
 				FROM
 					BOARD_MASTER A
 					JOIN
@@ -33,6 +35,9 @@
 				</if>
 				<if test="schUseYn != null and schUseYn != ''">
 					AND A.USE_YN = #{schUseYn}
+				</if>
+				<if test="schCommentYn != null and schCommentYn != ''">
+					AND A.COMMENT_YN = #{schCommentYn}
 				</if>
 				<if test="schBoardNm != null and schBoardNm != ''">
 					AND A.BOARD_NM LIKE CONCAT('%', #{schBoardNm}, '%')
@@ -63,6 +68,9 @@
 		<if test="schUseYn != null and schUseYn != ''">
 			AND USE_YN = #{schUseYn}
 		</if>
+		<if test="schCommentYn != null and schCommentYn != ''">
+			AND COMMENT_YN = #{schCommentYn}
+		</if>
 		<if test="schBoardNm != null and schBoardNm != ''">
 			AND BOARD_NM LIKE CONCAT('%', #{schBoardNm}, '%')
 		</if>
@@ -75,6 +83,7 @@
 		  , BOARD_NM
 		  , BOARD_PATH
 		  , USE_YN
+		  , COMMENT_YN
 		  , BOARD_NOTE
 		FROM
 			BOARD_MASTER
@@ -92,6 +101,7 @@
 		  , BOARD_NM
 		  , BOARD_PATH
 		  , USE_YN
+		  , COMMENT_YN
 		  , BOARD_NOTE
 		  , REG_NO
 		  , REG_DATE
@@ -104,6 +114,7 @@
 		  , #{boardNm}
 		  , #{boardPath}
 		  , #{useYn}
+		  , #{commentYn}
 		  , #{boardNote}
 		  , '1'
 		  , NOW()
@@ -120,6 +131,7 @@
 		  , BOARD_NM = #{boardNm}
 		  , BOARD_PATH = #{boardPath}
 		  , USE_YN = #{useYn}
+		  , COMMENT_YN = #{commentYn}
 		  , BOARD_NOTE = #{boardNote}
 		  , UP_NO = '1'
 		  , UP_DATE = NOW()

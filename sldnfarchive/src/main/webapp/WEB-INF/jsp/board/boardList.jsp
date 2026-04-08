@@ -49,6 +49,14 @@
 			            				</select>
 			            			</div>
 			            			<div class="input-group px-0 w-auto">
+			            				<label for="schCommentYn" class="input-group-text">댓글사용여부</label>
+			            				<select id="schCommentYn" name="schCommentYn" class="form-select" onchange="javascript:schBoard();">
+			            					<option value="">전체</option>
+			            					<option value="Y">사용</option>
+			            					<option value="N">미사용</option>
+			            				</select>
+			            			</div>
+			            			<div class="input-group px-0 w-auto">
 			            				<label for="schBoardNm" class="input-group-text">이름</label>
 			            				<input type="text" id="schBoardNm" name="schBoardNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schBoard();" />
 			            			</div>
@@ -112,6 +120,15 @@
 			                              				<input type="checkbox" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
+		                              		</div>
+		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+		                              			<div class="col-6 p-0 m-0">
+						                    		<div class="input-group">
+				                              			<label for="commentYn" class="col-4 p-2 text-end">댓글</label>
+			                              				<input type="checkbox" id="commentYn" name="commentYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
+				                              		</div>
+			                              		</div>
+			                              		<div class="col-6 p-0 m-0"></div>
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 				                    			<div class="input-group p-0">

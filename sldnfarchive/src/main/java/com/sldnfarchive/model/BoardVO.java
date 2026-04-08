@@ -39,6 +39,9 @@ public class BoardVO {
 	/** 사용여부 검색 */
 	private String schUseYn;
 	
+	/** 댓글기능 여부 검색 */
+	private String schCommentYn;
+	
 	/** 검색할 게시판명 */
 	private String schBoardNm;
 	
@@ -56,6 +59,9 @@ public class BoardVO {
 	
 	/** 사용여부 */
 	private String useYn;
+	
+	/** 댓글기능 사용여부 */
+	private String commentYn;
 	
 	/** 비고 */
 	private String boardNote;
@@ -96,6 +102,14 @@ public class BoardVO {
 
 	public void setSchUseYn(String schUseYn) {
 		this.schUseYn = schUseYn;
+	}	
+
+	public String getSchCommentYn() {
+		return schCommentYn;
+	}
+
+	public void setSchCommentYn(String schCommentYn) {
+		this.schCommentYn = schCommentYn;
 	}
 
 	public String getSchBoardNm() {
@@ -144,6 +158,14 @@ public class BoardVO {
 
 	public void setUseYn(String useYn) {
 		this.useYn = useYn;
+	}
+
+	public String getCommentYn() {
+		return commentYn;
+	}
+
+	public void setCommentYn(String commentYn) {
+		this.commentYn = commentYn;
 	}
 
 	public String getBoardNote() {

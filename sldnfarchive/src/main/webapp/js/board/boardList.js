@@ -6,12 +6,13 @@ $(function() {
 
 function boardList() {
 	var obj = $("#schBoardFrm").serializeObject();
-	var colNamesArr = ["No.", "종류", "게시판명", "사용여부"]
+	var colNamesArr = ["No.", "종류", "게시판명", "사용여부", "댓글여부"]
 	var colModelArr = [
 		{name: "boardNo", index: "boardNo", align: "center", hidden: true}
-	  , {name: "codeNm", index: "codeNm", align: "center", width: "30%"}
-	  , {name: "boardNm", index: "boardNm", align: "left", width: "50%"}
-	  , {name: "useYn", index: "useYn", align: "center", width: "20%"}
+	  , {name: "codeNm", index: "codeNm", align: "center", width: "25%"}
+	  , {name: "boardNm", index: "boardNm", align: "left", width: "45%"}
+	  , {name: "useYn", index: "useYn", align: "center", width: "15%"}
+	  , {name: "commentYn", index: "commentYn", align: "center", width: "15%"}
 	];
 	
 	obj.curIdx = 1;
@@ -216,7 +217,7 @@ function beforeSaveBoard() {
 			var id = $(obj[i]).attr("id");
 			var nm = $("label[for='" + id + "']").text();
 			
-			if(!(id == "useYn" || id == "boardNote")) {
+			if(!(id == "useYn" || id == "commentYn" || id == "boardNote")) {
 				var num = $(obj[i]).val().length;
 			
 				if(num <= 0) {
@@ -243,8 +244,11 @@ function saveBoard() {
 	var id = $("#boardGrid").getGridParam("selrow");
 	var idx = $("#boardGrid").getRowData(id).boardNo;
 	
-	if($("#editFrm input[type='checkbox']").is(":checked")) obj.useYn = 'Y';
+	if($("#editFrm input[type='checkbox'][id='useYn']").is(":checked")) obj.useYn = 'Y';
 	else obj.useYn = 'N';
+	
+	if($("#editFrm input[type='checkbox'][id='commentYn']").is(":checked")) obj.commentYn = 'Y';
+	else obj.commentYn = 'N';
 	
 	if(flag == "I") url = "/board/insertBoard.do";
 	else if(flag == "U") {

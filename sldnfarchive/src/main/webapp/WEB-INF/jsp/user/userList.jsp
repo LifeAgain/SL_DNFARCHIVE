@@ -56,7 +56,7 @@
 		                    </div>
 		                    
 		                    <div class="card-body">
-		                    	 <div class="col-12 m-0 text-end">
+		                    	<div class="col-12 m-0 text-end">              	 	
 		                 			<input type="button" class="btn bg-warning text-bg-warning" onclick="javascript:insertUser();" value="추가" />
 		                 			<input type="button" class="btn bg-danger text-bg-danger" onclick="javascript:beforeDeleteUser();" value="삭제" />
 	                        	</div>
@@ -68,44 +68,54 @@
 			                    			<div id="gridPager"></div>
 			                    		</div>
 			                    	</div>
-			                    	<div class="col-6 p-0 m-0">
-			                    		<form id="editFrm" onsubmit="javascript:return false;">
-				                    		<div class="row col-12 p-0 m-0">
-					                    		<div class="input-group p-0">
-			                              			<label for="userMail" class="col-2 p-2 text-end">ID</label>
-			                              			<input type="text" id="userMail" name="userMail" class="form-control bg-secondary" placeholder="메일주소" value="" readonly />
-			                              		</div>
-		                              		</div>
-		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-		                              			<div class="col-8 p-0 m-0">
-						                    		<div class="input-group">
-				                              			<label for="userNm" class="col-3 p-2 text-end">이름</label>
-				                              			<input type="text" id="userNm" name="userNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="이름(성명/모험단)" value="" />
+			                    	<div class="row col-6 p-0 m-0">
+			                    		<div class="col-4 p-0 m-0">
+			                    			<div class="col-12 ps-2 pe-0 py-0">
+			                    				<img id="profileImg" class="col-12 p-0 m-0" src="/images/img_nouser.png" />
+			                    			</div>
+			                    		</div>
+			                    		<div class="col-8 p-0 m-0">
+				                    		<form id="editFrm" onsubmit="javascript:return false;">
+					                    		<input type="file" id="uploadFile" name="uploadFile" class="d-none" accept="image/*" onchange="javascript:fileCheck(this);" />
+					                    		
+					                    		<div class="row col-12 p-0 m-0">
+						                    		<div class="input-group p-0">
+				                              			<label for="userMail" class="col-2 p-2 text-end">ID</label>
+				                              			<input type="text" id="userMail" name="userMail" class="form-control bg-secondary" placeholder="메일주소" value="" readonly />
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-4 p-0 m-0">
-			                              			<div class="input-group">
-				                              			<label for="userStat" class="col-8 p-2 text-end">휴면여부</label>
-			                              				<input type="checkbox" id="userStat" name="userStat" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
+			                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+			                              			<div class="col-6 p-0 m-0">
+							                    		<div class="input-group">
+					                              			<label for="userNm" class="col-4 p-2 text-end">이름</label>
+					                              			<input type="text" id="userNm" name="userNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="이름(성명/모험단)" value="" />
+					                              		</div>
+				                              		</div>
+				                              		<div class="col-6 p-0 m-0">
+				                              			<div class="input-group">
+					                              			<label for="userStat" class="col-8 p-2 text-end">휴면여부</label>
+				                              				<input type="checkbox" id="userStat" name="userStat" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
+					                              		</div>
 				                              		</div>
 			                              		</div>
-		                              		</div>
-		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-			                              		<div class="input-group p-0">
-			                              			<label for="userPw" class="col-2 p-2 text-end">PW</label>
-			                              			<input type="password" id="userPw" name="userPw" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="비밀번호" value="" />
+			                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+				                              		<div class="input-group p-0">
+				                              			<label for="userPw" class="col-2 p-2 text-end">PW</label>
+				                              			<input type="password" id="userPw" name="userPw" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="비밀번호" value="" />
+				                              		</div>
 			                              		</div>
-		                              		</div>
-		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-				                    			<div class="input-group p-0">
-			                              			<label for="userNote" class="col-2 p-2 text-end">비고</label>
-			                              			<textarea id="userNote" name="userNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);"></textarea>
+			                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+					                    			<div class="input-group p-0">
+				                              			<label for="userNote" class="col-2 p-2 text-end">비고</label>
+				                              			<textarea id="userNote" name="userNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);"></textarea>
+				                              		</div>
 			                              		</div>
-		                              		</div>
-		                              		<div class="col-12 p-0 mx-0 mt-3 mb-1 text-end">
-		                              			<input type="button" class="btn btn-primary" onclick="javascript:beforeSaveUser();" value="저장" />
-		                              		</div>
-	                              		</form>
+			                              		<div class="col-12 p-0 mx-0 mt-3 mb-1 text-end">
+			                              			<label for="uploadFile" class="btn bg-secondary text-bg-secondary">프로필이미지</label>
+			                              			<input type="button" class="btn btn-primary" onclick="javascript:beforeSaveUser();" value="저장" />
+			                              		</div>
+		                              		</form>
+		                              	</div>
 			                    	</div>
 		                    	</div>
 		                    </div>
@@ -118,4 +128,5 @@
             </div>
         </div>
         <script src="/js/user/userList.js"></script>
+        <script src="/js/util/file.js"></script>
 <%@include file="/WEB-INF/jsp/template/footer.jsp" %>

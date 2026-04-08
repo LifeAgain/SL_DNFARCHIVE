@@ -57,6 +57,12 @@ public class UserVO {
 	/** 비고 */
 	private String userNote;
 	
+	/** 파일명 */
+	private String fileNm;
+	
+	/** 업로드파일명 */
+	private String uploadFileNm;
+	
 	/** 등록자 */
 	private String regNo;
 	
@@ -141,6 +147,22 @@ public class UserVO {
 
 	public void setUserNote(String userNote) {
 		this.userNote = userNote;
+	}
+
+	public String getFileNm() {
+		return fileNm;
+	}
+
+	public void setFileNm(String fileNm) {
+		this.fileNm = fileNm;
+	}
+
+	public String getUploadFileNm() {
+		return uploadFileNm;
+	}
+
+	public void setUploadFileNm(String uploadFileNm) {
+		this.uploadFileNm = uploadFileNm;
 	}
 
 	public String getRegNo() {

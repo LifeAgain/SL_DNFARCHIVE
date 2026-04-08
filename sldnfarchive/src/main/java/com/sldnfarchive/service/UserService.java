@@ -61,6 +61,13 @@ public interface UserService {
 	EgovMap selectUser(UserVO userVO) throws Exception;
 	
 	/**
+	 * 파일 추가
+	 * @param UserVO
+	 * @exception
+	 */
+	void insertFile(UserVO userVO) throws Exception;
+	
+	/**
 	 * 회원 추가
 	 * @param UserVO
 	 * @exception

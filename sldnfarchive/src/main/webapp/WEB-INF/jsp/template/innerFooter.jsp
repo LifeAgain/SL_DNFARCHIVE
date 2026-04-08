@@ -21,7 +21,7 @@
 				<footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; 2025 SL_DNF ARCHIVE All Rights Reserved.</div>
+                            <div class="text-muted">Copyright &copy; 2025 <a class="text-muted text-decoration-none" href="/login/loginAdm.do">SL_DNF ARCHIVE</a> All Rights Reserved.</div>
                         </div>
                     </div>
                 </footer>

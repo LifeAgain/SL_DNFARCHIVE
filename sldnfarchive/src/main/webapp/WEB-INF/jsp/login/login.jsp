@@ -32,13 +32,10 @@
                                     </div>
                                     
                                    	<div class="card-body">
-                                           <div class="mb-3 text-center">
+                                           <div class="text-center">
 	                                       		<a class="btn p-0 border-0">
 	                                           		<img src="/images/kakao_login_medium_wide.png" />
 	                                           	</a>
-                                           </div>
-                                           <div class="text-center">
-                                               <input type="button" class="btn btn-primary btn-login" onclick="javascript:location.href='/login/loginAdm.do'" value="관리자 로그인" />
                                            </div>
                                    	</div>
                                    	

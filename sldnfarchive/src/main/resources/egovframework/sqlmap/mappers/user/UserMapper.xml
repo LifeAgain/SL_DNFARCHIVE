@@ -57,20 +57,45 @@
 	
 	<select id="selectUser" parameterType="userVO" resultType="egovMap">
 		SELECT
-			USER_IDX
-		  , USER_MAIL
-		  , USER_NM
-		  , USER_PW
-		  , USER_STAT
-		  , USER_NOTE
+			UM.USER_IDX
+		  , UM.USER_MAIL
+		  , UM.USER_NM
+		  , UM.USER_PW
+		  , UM.USER_STAT
+		  , UM.USER_NOTE
+		  , FM.FILE_NM_DTL
 		FROM
-			USER_MASTER
+			USER_MASTER AS UM
+			LEFT OUTER JOIN
+			FILE_MASTER AS FM
+			ON UM.PROFILE_IMG = FM.FILE_NO
 		WHERE
 				1=1
 		<if test="userIdx != null and userIdx != ''">
-			AND USER_IDX = #{userIdx}
+			AND UM.USER_IDX = #{userIdx}
 		</if>
 	</select>
+	
+	<insert id="insertFile" parameterType="userVO">
+		INSERT INTO FILE_MASTER
+		(
+			FILE_NM
+		  , FILE_NM_DTL
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{fileNm}
+		  , #{uploadFileNm}
+		  , '1'
+		  , NOW()
+		  , '1'
+		  , NOW()
+		)
+	</insert>
 	
 	<insert id="insertUser" parameterType="userVO">
 		INSERT INTO USER_MASTER
@@ -80,6 +105,9 @@
 		  , USER_PW
 		  , USER_STAT
 		  , USER_NOTE
+		  <if test="fileNm != null and fileNm != ''">
+		  	, PROFILE_IMG
+		  </if>
 		  , REG_NO
 		  , REG_DATE
 		  , UP_NO
@@ -92,6 +120,14 @@
 		  , #{userPw}
 		  , #{userStat}
 		  , #{userNote}
+		  <if test="fileNm != null and fileNm != ''">
+			  , (
+			  		SELECT
+			  			MAX(FILE_NO)
+			  		FROM
+			  			FILE_MASTER
+			  	)
+		  </if>
 		  , '1'
 		  , NOW()
 		  , '1'
@@ -108,6 +144,14 @@
 		  , USER_PW = #{userPw}
 		  , USER_STAT = #{userStat}
 		  , USER_NOTE = #{userNote}
+		  <if test="fileNm != null and fileNm != ''">
+		  	, PROFILE_IMG = (
+						  		SELECT
+						  			MAX(FILE_NO)
+						  		FROM
+						  			FILE_MASTER
+						  	)
+		  </if>
 		  , UP_NO = '1'
 		  , UP_DATE = NOW()
 		WHERE

@@ -15,6 +15,10 @@
  */
 package com.sldnfarchive.controller;
 
+import java.io.File;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -37,8 +41,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import com.sldnfarchive.model.CodeVO;
 import com.sldnfarchive.model.UserVO;
 import com.sldnfarchive.service.UserService;
 
@@ -82,7 +88,7 @@ public class UserController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/userList.do")
-	public String userList() throws Exception {
+	public String userList(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {		
 		System.out.println("============================");
 		System.out.println("Success - userList.do");
 		System.out.println("============================");
@@ -136,16 +142,52 @@ public class UserController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/insertUser.do")
-	public String insertUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
+	public String insertUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model, @RequestParam("uploadFile") MultipartFile[] uploadFile) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		String uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
+		
 		System.out.println("============================");
 		System.out.println("Success - insertUser.do");
 		System.out.println("============================");
+		
+		for(MultipartFile multipartFile: uploadFile) {
+			if(!multipartFile.isEmpty()) {
+				String orgFileNm = multipartFile.getOriginalFilename();
+				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
+				
+				String[] fileNmArr = orgFileNm.split("\\.");
+				String fileNm = fileNmArr[0];
+				String ext = fileNmArr[1];
+				
+				Date now = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String nowTime = sdf.format(now);
+				String uploadFileNm = fileNm + nowTime + "." + ext;
+				
+				File saveFolder = new File(uploadPath);
+				File saveFile = new File(uploadPath, uploadFileNm);
+				
+				try {
+					if(!saveFolder.exists()) {
+						if(saveFolder.mkdirs()) System.out.println(saveFolder + " 폴더가 성공적으로 생성되었습니다.");
+						else System.out.println("폴더 생성에 실패했습니다.");
+					}
+					
+					multipartFile.transferTo(saveFile);
+					
+					userVO.setFileNm(orgFileNm);
+					userVO.setUploadFileNm(uploadFileNm);
+					userService.insertFile(userVO);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		userService.insertUser(userVO);
 		txManager.commit(txStatus);
@@ -159,16 +201,52 @@ public class UserController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/updateUser.do")
-	public String updateUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
+	public String updateUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model, @RequestParam("uploadFile") MultipartFile[] uploadFile) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		String uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
+		
 		System.out.println("============================");
 		System.out.println("Success - updateUser.do");
 		System.out.println("============================");
+		
+		for(MultipartFile multipartFile: uploadFile) {
+			if(!multipartFile.isEmpty()) {
+				String orgFileNm = multipartFile.getOriginalFilename();
+				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
+				
+				String[] fileNmArr = orgFileNm.split("\\.");
+				String fileNm = fileNmArr[0];
+				String ext = fileNmArr[1];
+				
+				Date now = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String nowTime = sdf.format(now);
+				String uploadFileNm = fileNm + nowTime + "." + ext;
+				
+				File saveFolder = new File(uploadPath);
+				File saveFile = new File(uploadPath, uploadFileNm);
+				
+				try {
+					if(!saveFolder.exists()) {
+						if(saveFolder.mkdirs()) System.out.println(saveFolder + " 폴더가 성공적으로 생성되었습니다.");
+						else System.out.println("폴더 생성에 실패했습니다.");
+					}
+					
+					multipartFile.transferTo(saveFile);
+					
+					userVO.setFileNm(orgFileNm);
+					userVO.setUploadFileNm(uploadFileNm);
+					userService.insertFile(userVO);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		userService.updateUser(userVO);
 		txManager.commit(txStatus);

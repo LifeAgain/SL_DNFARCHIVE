@@ -89,6 +89,16 @@ public class UserServiceImpl extends EgovAbstractServiceImpl implements UserServ
 	}
 	
 	/**
+	 * 파일 추가
+	 * @param UserVO
+	 * @exception
+	 */
+	@Override
+	public void insertFile(UserVO userVO) throws Exception {
+		userMapper.insertFile(userVO);
+	}
+	
+	/**
 	 * 회원 추가
 	 * @param UserVO
 	 * @exception

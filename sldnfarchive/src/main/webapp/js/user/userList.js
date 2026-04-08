@@ -1,4 +1,5 @@
 var flag = "";
+var orgFileNm = "";
 
 $(function() {
 	userList();
@@ -143,6 +144,7 @@ function editUser() {
 		  , async: true
 		  , success: function(res) { // 결과 성공 콜백함수
 		  		var obj = res.selectUser;
+		  		orgFileNm = obj.fileNmDtl;
 		  		
 		  		for(var key in obj) {
 		  			var id = "#" + key;
@@ -162,6 +164,11 @@ function editUser() {
 		  				$(id).data("orgVal", val);
 		  			}
 		  		}
+		  		
+		  		if(orgFileNm) $("#profileImg").attr("src", "/images/upload/" + encodeURIComponent(orgFileNm));
+		  		else $("#profileImg").attr("src", "/images/img_nouser.png");
+		  		
+		  		$("#uploadFile").val("");
 		    }
 		  , error: function(req, status, err) { // 결과 에러 콜백함수
 		        Swal.fire({
@@ -174,7 +181,8 @@ function editUser() {
 	} else {
 		flag = "I";
 		var obj = $("#editFrm input[type!='button'], #editFrm textarea");
-			  		
+		
+		$("#profileImg").attr("src", "/images/img_nouser.png");
   		for(var i = 0; i < obj.length; i++) {
   			var id = $(obj[i]).attr("id");
   			
@@ -198,12 +206,13 @@ function chkChangeVal(ele) {
 	
 	if(orgVal == curVal) $(ele).data("changeYn", "N");
 	else $(ele).data("changeYn", "Y");
-} 
+}
 
 function beforeSaveUser() {
-	var len = $("#userGrid").jqGrid("getDataIDs").length;
+	var arr = $("#userGrid").jqGrid("getDataIDs");
+	var len = arr.length;
 	var cnt = 0;
-	var obj = $("#editFrm input[type!='button'], #editFrm textarea");
+	var obj = $("#editFrm input[type!='button'][type!='file'], #editFrm textarea");
 	
 	if(len > 0) {
 		if(flag == "U") {
@@ -211,7 +220,7 @@ function beforeSaveUser() {
 				var id = $(obj[i]).attr("id");
 				
 				if(!(id == "userMail")) {
-					if($(obj[i]).data("changeYn") == "Y") cnt++;
+					if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile")[0].files.length > 0) cnt++;
 				}
 			}
 			
@@ -247,24 +256,42 @@ function beforeSaveUser() {
 			}
 		}
 		
+		for(var i = 0; i < (len - 1); i++) {
+			var inputUserMailVal = $("#userMail").val();
+			var userMail = $("#userGrid").getRowData(arr[i]).userMail;
+			
+			if(inputUserMailVal == userMail) {
+				$("#userMail").focus();
+					
+				Swal.fire({
+					icon: "info",
+					title: "아이디 중복",
+					text: "이미 존재하는 아이디입니다."
+				});
+				
+				return;
+			}
+		}
+		
 		saveUser();
 	}
 }
 
 function saveUser() {
 	var url = "";
-	var obj = $("#editFrm").serializeObject();
+	var obj = new FormData($("#editFrm")[0]);
+	var file = $("#uploadFile")[0].files;
 	var id = $("#userGrid").getGridParam("selrow");
 	var idx = $("#userGrid").getRowData(id).userIdx;
-	
-	if($("#editFrm input[type='checkbox']").is(":checked")) obj.userStat = 'Y';
-	else obj.userStat = 'N';
 	
 	if(flag == "I") url = "/user/insertUser.do";
 	else if(flag == "U") {
 		url = "/user/updateUser.do";
-		obj.userIdx = idx;
+		obj.append("userIdx", idx);
 	}
+	
+	if($("#editFrm input[type='checkbox']").is(":checked")) obj.set("userStat", "Y");
+	else obj.set("userStat", "N");
 	
 	Swal.fire({
 		icon: "question",
@@ -279,16 +306,18 @@ function saveUser() {
 				url: url
 			  , data: obj
 			  , type: "post"
-			  , dataType: "json"
-			  , async: true
+			  , processData: false
+			  , contentType: false
 			  , success: function(res) { // 결과 성공 콜백함수
-			  		for(var key in obj) {
-			  			var id = "#" + key;
-			  			var val = obj[key];
+			  		for(var pair of obj.entries()) {
+			  			var id = "#" + pair[0];
+			  			var val = pair[1];
 			  			
-			  			$(id).val(val);
-			  			$(id).data("orgVal", val);
-			  			$(id).data("changeYn", "N");
+			  			if(pair[0] != "uploadFile") {
+				  			$(id).val(val);
+				  			$(id).data("orgVal", val);
+				  			$(id).data("changeYn", "N");
+				  		}
 			  		}
 			  		
 			  		userList();

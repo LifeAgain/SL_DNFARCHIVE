@@ -61,6 +61,13 @@ public interface BoardService {
 	EgovMap selectBoard(BoardVO boardVO) throws Exception;
 	
 	/**
+	 * 상위메뉴 조회
+	 * @param BoardVO
+	 * @exception
+	 */
+	List<EgovMap> parentMenuList() throws Exception;
+	
+	/**
 	 * 게시판 추가
 	 * @param BoardVO
 	 * @exception

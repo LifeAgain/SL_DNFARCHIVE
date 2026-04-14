@@ -91,7 +91,7 @@
 				                    		<div class="row col-12 p-0 m-0">
 				                    			<div class="col-6 p-0 m-0">
 						                    		<div class="input-group">
-				                              			<label for="boardType" class="col-4 p-2 text-end">종류</label>
+				                              			<label for="boardType" class="col-5 p-2 text-end">종류</label>
 				                              			<select id="boardType" name="boardType" class="form-select" onchange="javascript:chkChangeVal(this);">
 							            					<option value="">- 선택 -</option>
 							            					<c:forEach var="codeList" items="${codeList}" varStatus="status">
@@ -110,16 +110,31 @@
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 			                              		<div class="col-6 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="useYn" class="col-4 p-2 text-end">사용</label>
-			                              				<input type="checkbox" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
+				                              			<label for="parentCd" class="col-5 p-2 text-end">상위메뉴</label>
+				                              			<select id="parentCd" name="parentCd" class="form-select" onchange="javascript:chkChangeVal(this);">
+							            					<option value="">- 선택 -</option>
+							            					<c:forEach var="parentMenuList" items="${parentMenuList}" varStatus="status">
+							            						<option value="${parentMenuList.parentCd}">${parentMenuList.menuNm}</option>
+							            					</c:forEach>
+							            				</select>
+			                              				<input type="text" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
 			                              		<div class="col-6 p-0 m-0">
-						                    		<div class="input-group">
+			                              			<div class="input-group">
+				                              			<label for="useYn" class="col-5 p-2 text-end">사용여부</label>
+			                              				<input type="checkbox" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
+				                              		</div>
+			                              		</div>
+		                              		</div>
+		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+			                              		<div class="col-6 p-0 m-0">
+			                              			<div class="input-group">
 				                              			<label for="commentYn" class="col-5 p-2 text-end">댓글기능</label>
 			                              				<input type="checkbox" id="commentYn" name="commentYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
+			                              		<div class="col-6 p-0 m-0"></div>
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 				                    			<div class="input-group p-0">

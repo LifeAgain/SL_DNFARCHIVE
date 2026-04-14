@@ -54,6 +54,9 @@ public class BoardVO {
 	/** 게시판명 */
 	private String boardNm;
 	
+	/** 상위메뉴코드 */
+	private String parentCd;
+	
 	/** 사용여부 */
 	private String useYn;
 	
@@ -139,6 +142,14 @@ public class BoardVO {
 
 	public void setBoardNm(String boardNm) {
 		this.boardNm = boardNm;
+	}
+
+	public String getParentCd() {
+		return parentCd;
+	}
+
+	public void setParentCd(String parentCd) {
+		this.parentCd = parentCd;
 	}
 
 	public String getUseYn() {

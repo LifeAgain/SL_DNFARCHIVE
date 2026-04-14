@@ -89,6 +89,17 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	}
 	
 	/**
+	 * 상위메뉴목록 조회
+	 * @param BoardVO
+	 * @return boardMapper.parentMenuList
+	 * @exception
+	 */
+	@Override
+	public List<EgovMap> parentMenuList() throws Exception {
+		return boardMapper.parentMenuList();
+	}
+	
+	/**
 	 * 게시판 추가
 	 * @param BoardVO
 	 * @exception

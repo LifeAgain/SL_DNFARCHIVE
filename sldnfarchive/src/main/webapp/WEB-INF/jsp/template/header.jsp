@@ -40,4 +40,5 @@
 		<script src="/js/util/jquery-ui.js"></script>
 		<script src="/js/util/jqGrid.js"></script>
 		<script src="/js/util/jqGrid_locale-en.js"></script>
+		<script src="/js/util/movejs.js"></script>
     </head>

@@ -37,10 +37,10 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="/menu/menuList.do">메뉴관리</a>
-                                	<a class="nav-link" href="/code/codeList.do">공통코드관리</a>
-                                	<a class="nav-link" href="/user/userList.do">회원관리</a>
-                                	<a class="nav-link" href="/board/boardList.do">게시판관리</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(1);">메뉴관리</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(2);">공통코드관리</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(3);">회원관리</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(4);">게시판관리</a>
                                     <a class="nav-link" href="layout-static.html">Static Navigation</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>

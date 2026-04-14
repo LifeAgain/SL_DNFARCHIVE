@@ -108,27 +108,18 @@
 			                              		</div>
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-		                              			<div class="col-6 p-0 m-0">
-						                    		<div class="input-group">
-				                              			<label for="boardPath" class="col-4 p-2 text-end">경로</label>
-				                              			<input type="text" id="boardPath" name="boardPath" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="경로" value="" />
-				                              		</div>
-			                              		</div>
 			                              		<div class="col-6 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="useYn" class="col-5 p-2 text-end">사용여부</label>
+				                              			<label for="useYn" class="col-4 p-2 text-end">사용</label>
 			                              				<input type="checkbox" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
-		                              		</div>
-		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-		                              			<div class="col-6 p-0 m-0">
+			                              		<div class="col-6 p-0 m-0">
 						                    		<div class="input-group">
-				                              			<label for="commentYn" class="col-4 p-2 text-end">댓글</label>
+				                              			<label for="commentYn" class="col-5 p-2 text-end">댓글기능</label>
 			                              				<input type="checkbox" id="commentYn" name="commentYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-6 p-0 m-0"></div>
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 				                    			<div class="input-group p-0">

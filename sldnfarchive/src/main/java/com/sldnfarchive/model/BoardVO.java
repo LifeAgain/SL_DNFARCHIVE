@@ -54,9 +54,6 @@ public class BoardVO {
 	/** 게시판명 */
 	private String boardNm;
 	
-	/** 게시판경로 */
-	private String boardPath;
-	
 	/** 사용여부 */
 	private String useYn;
 	
@@ -142,14 +139,6 @@ public class BoardVO {
 
 	public void setBoardNm(String boardNm) {
 		this.boardNm = boardNm;
-	}
-
-	public String getBoardPath() {
-		return boardPath;
-	}
-
-	public void setBoardPath(String boardPath) {
-		this.boardPath = boardPath;
 	}
 
 	public String getUseYn() {

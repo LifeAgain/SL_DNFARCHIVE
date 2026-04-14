@@ -36,6 +36,9 @@ public class BoardVO {
 	/** 검색할 게시판 형태 */
 	private String schBoardType;
 	
+	/** 상위메뉴 검색 */
+	private String schParentCd;
+	
 	/** 사용여부 검색 */
 	private String schUseYn;
 	
@@ -96,6 +99,14 @@ public class BoardVO {
 		this.schBoardType = schBoardType;
 	}
 	
+	public String getSchParentCd() {
+		return schParentCd;
+	}
+
+	public void setSchParentCd(String schParentCd) {
+		this.schParentCd = schParentCd;
+	}
+
 	public String getSchUseYn() {
 		return schUseYn;
 	}

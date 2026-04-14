@@ -4,14 +4,15 @@
 
 	<select id="boardList" parameterType="boardVO" resultType="egovMap">
 		SELECT
-			C.RN
-		  , C.BOARD_NO
-		  , C.BOARD_TYPE
-		  , C.CODE_NM
-		  , C.BOARD_NM
-		  , C.PARENT_CD
-		  , C.USE_YN
-		  , C.COMMENT_YN
+			D.RN
+		  , D.BOARD_NO
+		  , D.BOARD_TYPE
+		  , D.CODE_NM
+		  , D.BOARD_NM
+		  , D.PARENT_CD
+		  , D.MENU_NM
+		  , D.USE_YN
+		  , D.COMMENT_YN
 		FROM
 			(
 				SELECT
@@ -21,6 +22,7 @@
 				  , B.CODE_NM
 				  , A.BOARD_NM
 				  , A.PARENT_CD
+				  , C.MENU_NM
 				  , A.USE_YN
 				  , A.COMMENT_YN
 				FROM
@@ -28,10 +30,24 @@
 					JOIN
 					CODE_MASTER B
 					ON A.BOARD_TYPE = CONCAT(B.CODE_LCD, B.CODE_SCD)
+					JOIN
+					(
+						SELECT
+							MENU_LCD
+						  , MENU_NM
+						FROM
+							MENU_MASTER
+						WHERE
+							MENU_SCD = "00"
+					) C
+					ON LEFT(A.PARENT_CD, 1) = C.MENU_LCD
 				WHERE
 						1=1
 				<if test="schBoardType != null and schBoardType != ''">
 					AND A.BOARD_TYPE = #{schBoardType}
+				</if>
+				<if test="schParentCd != null and schParentCd != ''">
+					AND A.PARENT_CD = #{schParentCd}
 				</if>
 				<if test="schUseYn != null and schUseYn != ''">
 					AND A.USE_YN = #{schUseYn}
@@ -44,15 +60,15 @@
 				</if>
 				ORDER BY
 					A.BOARD_NO
-			) C
+			) D
 		WHERE
 				1=1
 		<if test="curIdx != null and pageUnit != null and curPage != null">
-			AND C.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+			AND D.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
 		</if>
 		ORDER BY
-			C.RN
-		  , C.BOARD_NO
+			D.RN
+		  , D.BOARD_NO
 	</select>
 	
 	<select id="boardListCnt" parameterType="boardVO" resultType="int">
@@ -64,6 +80,9 @@
 				1=1
 		<if test="schBoardType != null and schBoardType != ''">
 			AND BOARD_TYPE = #{schBoardType}
+		</if>
+		<if test="schParentCd != null and schParentCd != ''">
+			AND PARENT_CD = #{schParentCd}
 		</if>
 		<if test="schUseYn != null and schUseYn != ''">
 			AND USE_YN = #{schUseYn}

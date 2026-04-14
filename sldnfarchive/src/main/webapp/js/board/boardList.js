@@ -6,13 +6,14 @@ $(function() {
 
 function boardList() {
 	var obj = $("#schBoardFrm").serializeObject();
-	var colNamesArr = ["No.", "종류", "게시판명", "사용여부", "댓글여부"]
+	var colNamesArr = ["No.", "종류", "게시판명", "상위메뉴", "사용여부", "댓글여부"]
 	var colModelArr = [
 		{name: "boardNo", index: "boardNo", align: "center", hidden: true}
-	  , {name: "codeNm", index: "codeNm", align: "center", width: "25%"}
-	  , {name: "boardNm", index: "boardNm", align: "left", width: "45%"}
-	  , {name: "useYn", index: "useYn", align: "center", width: "15%"}
-	  , {name: "commentYn", index: "commentYn", align: "center", width: "15%"}
+	  , {name: "codeNm", index: "codeNm", align: "center", width: "20%"}
+	  , {name: "boardNm", index: "boardNm", align: "left", width: "30%"}
+	  , {name: "menuNm", index: "menuNm", align: "left", width: "30%"}
+	  , {name: "useYn", index: "useYn", align: "center", width: "10%"}
+	  , {name: "commentYn", index: "commentYn", align: "center", width: "10%"}
 	];
 	
 	obj.curIdx = 1;

@@ -40,6 +40,15 @@
 			            					</c:forEach>
 			            				</select>
 			            			</div>
+			            			<div class="input-group px-0 w-auto">
+			            				<label for="schParentCd" class="input-group-text">상위메뉴</label>
+			            				<select id="schParentCd" name="schParentCd" class="form-select" onchange="javascript:schBoard();">
+			            					<option value="">전체</option>
+			            					<c:forEach var="parentMenuList" items="${parentMenuList}" varStatus="status">
+			            						<option value="${parentMenuList.parentCd}">${parentMenuList.menuNm}</option>
+			            					</c:forEach>
+			            				</select>
+			            			</div>
 		            				<div class="input-group px-0 w-auto">
 			            				<label for="schUseYn" class="input-group-text">사용여부</label>
 			            				<select id="schUseYn" name="schUseYn" class="form-select" onchange="javascript:schBoard();">
@@ -60,8 +69,8 @@
 			            				<label for="schBoardNm" class="input-group-text">이름</label>
 			            				<input type="text" id="schBoardNm" name="schBoardNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schBoard();" />
 			            			</div>
+			            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schUser();" value="검색" />
 		            			</div>
-		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schUser();" value="검색" />
 		            		</form>
 		            	</div>
 		            	
@@ -117,7 +126,6 @@
 							            						<option value="${parentMenuList.parentCd}">${parentMenuList.menuNm}</option>
 							            					</c:forEach>
 							            				</select>
-			                              				<input type="text" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
 			                              		<div class="col-6 p-0 m-0">

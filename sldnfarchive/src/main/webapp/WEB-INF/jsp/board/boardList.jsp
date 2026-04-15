@@ -98,28 +98,26 @@
 			                    	<div class="col-6 p-0 m-0">
 			                    		<form id="editFrm" onsubmit="javascript:return false;">
 				                    		<div class="row col-12 p-0 m-0">
-				                    			<div class="col-6 p-0 m-0">
-						                    		<div class="input-group">
-				                              			<label for="boardType" class="col-5 p-2 text-end">종류</label>
-				                              			<select id="boardType" name="boardType" class="form-select" onchange="javascript:chkChangeVal(this);">
-							            					<option value="">- 선택 -</option>
-							            					<c:forEach var="codeList" items="${codeList}" varStatus="status">
-							            						<option value="${codeList.codeCd}">${codeList.codeNm}</option>
-							            					</c:forEach>
-							            				</select>
-				                              		</div>
-			                              		</div>
-			                              		<div class="col-6 p-0 m-0">
-			                              			<div class="input-group">
-				                              			<label for="boardNm" class="col-5 p-2 text-end">이름</label>
-				                              			<input type="text" id="boardNm" name="boardNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="이름" value="" />
-				                              		</div>
+					                    		<div class="input-group p-0">
+			                              			<label for="boardType" class="col-3 p-2 text-end">종류</label>
+			                              			<select id="boardType" name="boardType" class="form-select" onchange="javascript:chkChangeVal(this);">
+						            					<option value="">- 선택 -</option>
+						            					<c:forEach var="codeList" items="${codeList}" varStatus="status">
+						            						<option value="${codeList.codeCd}">${codeList.codeNm}</option>
+						            					</c:forEach>
+						            				</select>
 			                              		</div>
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+		                              			<div class="col-6 p-0 m-0">
+			                              			<div class="input-group">
+				                              			<label for="boardNm" class="col-6 p-2 text-end">이름</label>
+				                              			<input type="text" id="boardNm" name="boardNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="이름" value="" />
+				                              		</div>
+			                              		</div>
 			                              		<div class="col-6 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="parentCd" class="col-5 p-2 text-end">상위메뉴</label>
+				                              			<label for="parentCd" class="col-6 p-2 text-end">상위메뉴</label>
 				                              			<select id="parentCd" name="parentCd" class="form-select" onchange="javascript:chkChangeVal(this);">
 							            					<option value="">- 선택 -</option>
 							            					<c:forEach var="parentMenuList" items="${parentMenuList}" varStatus="status">
@@ -128,25 +126,24 @@
 							            				</select>
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-6 p-0 m-0">
+		                              		</div>
+		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+		                              			<div class="col-6 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="useYn" class="col-5 p-2 text-end">사용여부</label>
+				                              			<label for="useYn" class="col-6 p-2 text-end">사용여부</label>
 			                              				<input type="checkbox" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
-		                              		</div>
-		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 			                              		<div class="col-6 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="commentYn" class="col-5 p-2 text-end">댓글기능</label>
+				                              			<label for="commentYn" class="col-6 p-2 text-end">댓글기능</label>
 			                              				<input type="checkbox" id="commentYn" name="commentYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-6 p-0 m-0"></div>
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 				                    			<div class="input-group p-0">
-			                              			<label for="boardNote" class="col-2 p-2 text-end">비고</label>
+			                              			<label for="boardNote" class="col-3 p-2 text-end">비고</label>
 			                              			<textarea id="boardNote" name="boardNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);"></textarea>
 			                              		</div>
 		                              		</div>

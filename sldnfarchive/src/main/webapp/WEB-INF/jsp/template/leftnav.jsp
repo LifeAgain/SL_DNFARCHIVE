@@ -41,6 +41,10 @@
                                 	<a class="nav-link" href="#" onclick="javascript:movejs_menu(2);">공통코드관리</a>
                                 	<a class="nav-link" href="#" onclick="javascript:movejs_menu(3);">회원관리</a>
                                 	<a class="nav-link" href="#" onclick="javascript:movejs_menu(4);">게시판관리</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(5);">공지사항</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(6);">자유게시판</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(7);">추천공략</a>
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(8);">데미지계산기</a>
                                     <a class="nav-link" href="layout-static.html">Static Navigation</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>

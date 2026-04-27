@@ -13,9 +13,19 @@ function movejs_menu(num) {
 	} else if(num == 4) {
 		path = "/board/boardList.do";
 		js = "/js/board/boardList.js";
+	} else if(num == 5) {
+		path = "/board/postList.do";
+		js = "/js/board/postList.js";
+	} else if(num == 6) {
+		
+	} else if(num == 7) {
+		
+	} else if(num == 8) {
+		
 	}
+	
 	$("#layoutSidenav_content").children().remove();
-	$("#layoutSidenav_content").load(path + " main", function() {
+	$("#layoutSidenav_content").load(path + " main, footer", function() {
 		$.getScript(js);
 	});
 }

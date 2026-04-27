@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sldnfarchive.service.impl.PostMapper">
+
+	<select id="postList" parameterType="postVO" resultType="egovMap">
+		SELECT
+			C.RN
+		  , C.POST_NO
+		  , C.TITLE
+		  , C.USER_NM
+		  , C.FM_REG_DATE
+		  , C.VIEW_CNT
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY A.POST_NO DESC) AS RN
+				  , A.POST_NO
+				  , A.TITLE
+				  , B.USER_NM
+				  , DATE_FORMAT(A.REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
+				  , A.VIEW_CNT
+				FROM
+					POST_MASTER A
+					JOIN
+					USER_MASTER B
+					ON A.REG_NO = B.USER_IDX
+				WHERE
+						1=1
+				<if test="boardNo != null and boardNo != ''">
+					AND A.BOARD_NO = #{boardNo}
+				</if>
+				<if test="schAuthor != null and schAuthor != ''">
+					AND B.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
+				</if>
+				<if test="schKeyword != null and schKeyword != ''">
+					AND (
+							   A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
+							OR A.CONTENT LIKE CONCAT('%', #{schKeyword}, '%')
+						)
+				</if>
+				ORDER BY
+					A.POST_NO DESC
+			) C
+		WHERE
+				1=1
+		<if test="curIdx != null and pageUnit != null and curPage != null">
+			AND C.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+		</if>
+		ORDER BY
+			C.RN
+		  , C.POST_NO DESC
+	</select>
+	
+	<select id="postListCnt" parameterType="postVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			POST_MASTER A
+			JOIN
+			USER_MASTER B
+			ON A.REG_NO = B.USER_IDX
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND A.BOARD_NO = #{boardNo}
+		</if>
+		<if test="schAuthor != null and schAuthor != ''">
+			AND B.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
+		</if>
+		<if test="schKeyword != null and schKeyword != ''">
+			AND (
+					   A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
+					OR A.CONTENT LIKE CONCAT('%', #{schKeyword}, '%')
+				)
+		</if>
+	</select>
+	
+	<select id="selectPost" parameterType="postVO" resultType="egovMap">
+		SELECT
+			A.POST_NO
+		  , A.BOARD_NO
+		  , A.TITLE
+		  , A.CONTENT
+		  , A.REG_NO
+		  , B.USER_NM
+		  , A.REG_DATE
+		  , A.VIEW_CNT
+		FROM
+			POST_MASTER A
+			JOIN
+			USER_MASTER B
+			ON A.REG_NO = B.USER_IDX
+		WHERE
+				1=1
+		<if test="postNo != null and postNo != ''">
+			AND A.POST_NO = #{postNo}
+		</if>
+	</select>
+	
+	<insert id="insertPost" parameterType="postVO">
+		INSERT INTO BOARD_MASTER
+		(
+			BOARD_TYPE
+		  , BOARD_NM
+		  , BOARD_PATH
+		  , USE_YN
+		  , COMMENT_YN
+		  , BOARD_NOTE
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{boardType}
+		  , #{boardNm}
+		  , #{boardPath}
+		  , #{useYn}
+		  , #{commentYn}
+		  , #{boardNote}
+		  , '1'
+		  , NOW()
+		  , '1'
+		  , NOW()
+		)
+	</insert>
+	
+	<update id="updatePost" parameterType="postVO">
+		UPDATE
+			BOARD_MASTER
+		SET
+			BOARD_TYPE = #{boardType}
+		  , BOARD_NM = #{boardNm}
+		  , BOARD_PATH = #{boardPath}
+		  , USE_YN = #{useYn}
+		  , COMMENT_YN = #{commentYn}
+		  , BOARD_NOTE = #{boardNote}
+		  , UP_NO = '1'
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND BOARD_NO = #{boardNo}
+		</if>
+	</update>
+
+	<delete id="deletePost" parameterType="postVO">
+		DELETE FROM
+			BOARD_MASTER
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND BOARD_NO = #{boardNo}
+		</if>
+	</delete>
+	
+	<select id="commentList" parameterType="postVO" resultType="egovMap">
+		SELECT
+			C.RN
+		  , C.POST_NO
+		  , C.TITLE
+		  , C.USER_NM
+		  , C.VIEW_CNT
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY A.POST_NO DESC) AS RN
+				  , A.POST_NO
+				  , A.TITLE
+				  , B.USER_NM
+				  , A.VIEW_CNT
+				FROM
+					POST_MASTER A
+					JOIN
+					USER_MASTER B
+					ON A.REG_NO = B.USER_IDX
+				WHERE
+						1=1
+				<if test="boardNo != null and boardNo != ''">
+					AND A.BOARD_NO = #{boardNo}
+				</if>
+				<if test="schWriter != null and schWriter != ''">
+					AND B.USER_NM LIKE CONCAT('%', #{schWriter}, '%')
+				</if>
+				<if test="schKeyword != null and schKeyword != ''">
+					AND (
+							   A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
+							OR A.CONTENT LIKE CONCAT('%', #{schKeyword}, '%')
+						)
+				</if>
+				ORDER BY
+					A.POST_NO DESC
+			) C
+		WHERE
+				1=1
+		<if test="curIdx != null and pageUnit != null and curPage != null">
+			AND C.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+		</if>
+		ORDER BY
+			C.RN
+		  , C.POST_NO DESC
+	</select>
+	
+	<select id="commentListCnt" parameterType="postVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			POST_MASTER A
+			JOIN
+			USER_MASTER B
+			ON A.REG_NO = B.USER_IDX
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND A.BOARD_NO = #{boardNo}
+		</if>
+		<if test="schWriter != null and schWriter != ''">
+			AND B.USER_NM LIKE CONCAT('%', #{schWriter}, '%')
+		</if>
+		<if test="schKeyword != null and schKeyword != ''">
+			AND (
+					   A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
+					OR A.CONTENT LIKE CONCAT('%', #{schKeyword}, '%')
+				)
+		</if>
+	</select>
+	
+	<insert id="insertComment" parameterType="postVO">
+		INSERT INTO BOARD_MASTER
+		(
+			BOARD_TYPE
+		  , BOARD_NM
+		  , BOARD_PATH
+		  , USE_YN
+		  , COMMENT_YN
+		  , BOARD_NOTE
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{boardType}
+		  , #{boardNm}
+		  , #{boardPath}
+		  , #{useYn}
+		  , #{commentYn}
+		  , #{boardNote}
+		  , '1'
+		  , NOW()
+		  , '1'
+		  , NOW()
+		)
+	</insert>
+	
+	<update id="updateComment" parameterType="postVO">
+		UPDATE
+			BOARD_MASTER
+		SET
+			BOARD_TYPE = #{boardType}
+		  , BOARD_NM = #{boardNm}
+		  , BOARD_PATH = #{boardPath}
+		  , USE_YN = #{useYn}
+		  , COMMENT_YN = #{commentYn}
+		  , BOARD_NOTE = #{boardNote}
+		  , UP_NO = '1'
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND BOARD_NO = #{boardNo}
+		</if>
+	</update>
+
+	<delete id="deleteComment" parameterType="postVO">
+		DELETE FROM
+			BOARD_MASTER
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND BOARD_NO = #{boardNo}
+		</if>
+	</delete>
+
+</mapper>

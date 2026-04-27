@@ -10,5 +10,6 @@
 		<typeAlias alias="menuVO" type="com.sldnfarchive.model.MenuVO" />
 		<typeAlias alias="codeVO" type="com.sldnfarchive.model.CodeVO" />
 		<typeAlias alias="boardVO" type="com.sldnfarchive.model.BoardVO" />
+		<typeAlias alias="postVO" type="com.sldnfarchive.model.PostVO" />
     </typeAliases>
 </configuration>

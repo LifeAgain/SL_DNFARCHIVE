@@ -11247,3 +11247,17 @@ body {
 	height: 45px;
 	font-size: 0.875rem;
 }
+
+.board-list table tr:first-child {
+	border-top: 2px solid var(--bs-card-border-color);
+	border-bottom: var(--bs-card-border-width) solid rgba(0, 0, 0, .35);
+}
+
+.board-list table tr:not(:first-child) {
+	border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+}
+
+.board-pager a {
+	color: #000;
+	text-decoration: none;
+}

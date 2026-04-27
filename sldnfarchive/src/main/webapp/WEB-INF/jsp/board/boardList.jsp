@@ -69,7 +69,7 @@
 			            				<label for="schBoardNm" class="input-group-text">이름</label>
 			            				<input type="text" id="schBoardNm" name="schBoardNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schBoard();" />
 			            			</div>
-			            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schUser();" value="검색" />
+			            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schBoard();" value="검색" />
 		            			</div>
 		            		</form>
 		            	</div>

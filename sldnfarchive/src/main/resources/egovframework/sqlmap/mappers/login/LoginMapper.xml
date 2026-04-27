@@ -35,5 +35,23 @@
 			AND USER_PW = #{userPw}
 		</if>
 	</select>
+	
+	<select id="loginCheckAdm1" parameterType="userVO" resultType="egovMap">
+		SELECT
+			USER_MAIL
+		  , USER_NM
+		  , USER_PW
+		FROM
+			USER_MASTER
+		WHERE
+				1=1
+			AND USER_STAT = 'Y'
+		<if test="userMail != null and userMail != ''">
+			AND USER_MAIL = #{userMail}
+		</if>
+		<if test="userPw != null and userPw != ''">
+			AND USER_PW = #{userPw}
+		</if>
+	</select>
 
 </mapper>

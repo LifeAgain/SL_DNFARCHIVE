@@ -40,8 +40,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import com.sldnfarchive.model.BoardVO;
+import com.sldnfarchive.model.PostVO;
 import com.sldnfarchive.model.CodeVO;
 import com.sldnfarchive.service.BoardService;
+import com.sldnfarchive.service.PostService;
 import com.sldnfarchive.service.CodeService;
 
 /**
@@ -69,6 +71,10 @@ public class BoardController {
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
 	
+	/** EgovPropertyService */
+	@Resource(name = "propertiesService")
+	protected EgovPropertyService propertiesService;
+	
 	/** txManager */
 	@Resource(name = "txManager")
 	protected DataSourceTransactionManager txManager;
@@ -76,6 +82,10 @@ public class BoardController {
 	/** BoardService */
 	@Resource(name = "boardService")
 	private BoardService boardService;
+	
+	/** PostService */
+	@Resource(name = "postService")
+	private PostService postService;
 	
 	/** CodeService */
 	@Resource(name = "codeService")
@@ -93,12 +103,14 @@ public class BoardController {
 		codeVO.setCodeLcd("A");
 		
 		List<EgovMap> codeList = codeService.outCodeList(codeVO);
+		List<EgovMap> parentMenuList = boardService.parentMenuList();
 		
 		System.out.println("============================");
 		System.out.println("Success - boardList.do");
 		System.out.println("============================");
 		
 		model.addAttribute("codeList", codeList);
+		model.addAttribute("parentMenuList", parentMenuList);
 		
 		return "board/boardList";
 	}
@@ -212,6 +224,254 @@ public class BoardController {
 		
 		return "jsonView";
 		
+	}
+	
+	/**
+	 * 게시판 조회
+	 * @return "board/postList"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/postList.do")
+	public String postList(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		postVO.setBoardNo(1);
+		
+		List<EgovMap> postList = postService.postList(postVO);
+		int totalCnt = postService.postListCnt(postVO);
+		
+		/** EgovPropertyService.sample */
+		postVO.setPageUnit(propertiesService.getInt("pageUnit"));
+		postVO.setPageSize(propertiesService.getInt("pageSize"));
+
+		/** paging setting */
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setTotalRecordCount(totalCnt);
+		paginationInfo.setCurrentPageNo(postVO.getCurPage());
+		paginationInfo.setRecordCountPerPage(postVO.getPageUnit());
+		paginationInfo.setPageSize(postVO.getPageSize());
+		
+		System.out.println("============================");
+		System.out.println("Success - postList.do");
+		System.out.println("============================");
+		
+		model.addAttribute("postList", postList);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
+		
+		return "board/postList";
+	}
+	
+	/**
+	 * 게시판 조회(리스트)
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/selectPostList.do")
+	public String selectPostList(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		List<EgovMap> postList = postService.postList(postVO);
+		int totalCnt = postService.postListCnt(postVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - selectPostList.do");
+		System.out.println("============================");
+		
+		model.addAttribute("postList", postList);
+		model.addAttribute("totalCnt", totalCnt);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 글쓰기 폼
+	 * @return "board/postFrm"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/postFrm.do")
+	public String postFrm() throws Exception {
+		System.out.println("============================");
+		System.out.println("Success - postFrm.do");
+		System.out.println("============================");
+		
+		return "board/postFrm";
+	}
+	
+	/**
+	 * 게시글 상세 조회
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/selectPost.do")
+	public String selectPost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		
+		EgovMap selectPost = postService.selectPost(postVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - selectBoard.do");
+		System.out.println("============================");
+		
+		model.addAttribute("selectPost", selectPost);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 게시글 추가
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/insertPost.do")
+	public String insertPost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - insertPost.do");
+		System.out.println("============================");
+		
+		postService.insertPost(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 게시판 정보 수정
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updatePost.do")
+	public String updatePost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - updatePost.do");
+		System.out.println("============================");
+		
+		postService.updatePost(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+		
+	}
+	
+	/**
+	 * 게시판 삭제
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/deletePost.do")
+	public String deletePost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - deletePost.do");
+		System.out.println("============================");
+		
+		postService.deletePost(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 댓글 조회(리스트)
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/commentList.do")
+	public String commentList(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		
+		List<EgovMap> commentList = postService.commentList(postVO);
+		int totalCnt = postService.commentListCnt(postVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - commentList.do");
+		System.out.println("============================");
+		
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("totalCnt", totalCnt);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 게시글 추가
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/insertComment.do")
+	public String insertComment(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - insertComment.do");
+		System.out.println("============================");
+		
+		postService.insertComment(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 게시판 정보 수정
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updateComment.do")
+	public String updateComment(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - updateComment.do");
+		System.out.println("============================");
+		
+		postService.updateComment(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+		
+	}
+	
+	/**
+	 * 게시판 삭제
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/deleteComment.do")
+	public String deleteComment(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - deleteComment.do");
+		System.out.println("============================");
+		
+		postService.deleteComment(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
 	}
 
 }

@@ -45,8 +45,8 @@
 	                		<form:form modelAttribute="postVO" id="postFrm" name="postFrm" method="post" onsubmit="javascript: return false;">
 	                		<div class="card-header">
 		                        <ol class="breadcrumb mb-0 pt-2">
-		                        	<li class="breadcrumb-item"><h5>커뮤니티</h5></li>
-		                            <li class="breadcrumb-item active">공지사항</li>
+		                        	<li class="breadcrumb-item"><h5>${postInfo.parentNm}</h5></li>
+		                            <li class="breadcrumb-item active">${postInfo.boardNm}</li>
 		                        </ol>
 		                    </div>
 		                    
@@ -64,7 +64,7 @@
 			                    		<c:forEach var="postList" items="${postList}" varStatus="status">
 			                    		<tr>
 			                    			<td class="text-center py-2">${postList.rn}</td>
-			                    			<td><a href="#" class="text-decoration-none text-black py-2" onclick="javascript:goDetail()">${postList.title}</a></td>
+			                    			<td><a id="postTitle${postList.postNo}" href="#" class="text-decoration-none text-black py-2" onclick="javascript:goDetail(${postList.postNo})">${postList.title}</a></td>
 			                    			<td class="text-center py-2">${postList.userNm}</td>
 			                    			<td class="text-center py-2">${postList.fmRegDate}</td>
 			                    			<td class="text-center py-2">${postList.viewCnt}</td>
@@ -78,11 +78,12 @@
 		                    			</c:if>
 			                    	</table>
 		                    	</div>
-		                    	<div id="postBtn" class="col-12 p-0 mx-0 mb-0 mt-1 text-end">
+		                    	<div id="postBtn" class="col-12 p-0 mx-0 mb-0 mt-2 text-end">
 		                    		<input type="button" class="btn btn-primary" value="작성" onclick="javascript:goPost();" />
 		                    	</div>
 		                    	<div id="postPager" class="board-pager col-12 p-0 mx-0 mb-0 mt-2 text-center">
 		                    		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="schPost" />
+		                    		<form:hidden path="boardNo" />
 		                    	</div>
 		                    </div>
 		                    

@@ -70,13 +70,13 @@ public class BoardVO {
 	private String boardNote;
 	
 	/** 등록자 */
-	private String regNo;
+	private int regNo;
 	
 	/** 등록일자 */
 	private String regDate;
 	
 	/** 수정자 */
-	private String upNo;
+	private int upNo;
 	
 	/** 수정일자 */
 	private String upDate;
@@ -187,11 +187,11 @@ public class BoardVO {
 		this.boardNote = boardNote;
 	}
 
-	public String getRegNo() {
+	public int getRegNo() {
 		return regNo;
 	}
 
-	public void setRegNo(String regNo) {
+	public void setRegNo(int regNo) {
 		this.regNo = regNo;
 	}
 
@@ -203,11 +203,11 @@ public class BoardVO {
 		this.regDate = regDate;
 	}
 
-	public String getUpNo() {
+	public int getUpNo() {
 		return upNo;
 	}
 
-	public void setUpNo(String upNo) {
+	public void setUpNo(int upNo) {
 		this.upNo = upNo;
 	}
 

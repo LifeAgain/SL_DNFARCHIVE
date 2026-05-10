@@ -123,6 +123,7 @@ public class CodeServiceImpl extends EgovAbstractServiceImpl implements CodeServ
 	 * @param CodeVO
 	 * @exception
 	 */
+	@Override
 	public void updateCode(CodeVO codeVO) throws Exception {
 		codeMapper.updateCode(codeVO);
 	}
@@ -132,6 +133,7 @@ public class CodeServiceImpl extends EgovAbstractServiceImpl implements CodeServ
 	 * @param CodeVO
 	 * @exception
 	 */
+	@Override
 	public void deleteCode(CodeVO codeVO) throws Exception {
 		codeMapper.deleteCode(codeVO);
 	}

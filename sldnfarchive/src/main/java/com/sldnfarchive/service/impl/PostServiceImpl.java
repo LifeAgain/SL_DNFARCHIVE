@@ -56,6 +56,16 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	private PostMapper postMapper;
 	
 	/**
+	 * 게시판 정보 조회
+	 * @param PostVO
+	 * @exception
+	 */
+	@Override
+	public EgovMap postInfo(PostVO postVO) throws Exception {
+		return postMapper.postInfo(postVO);
+	}
+	
+	/**
 	 * 게시글 조회
 	 * @param PostVO
 	 * @return postMapper.postList
@@ -89,6 +99,28 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	}
 	
 	/**
+	 * 게시글-파일 조회
+	 * @param PostVO
+	 * @return postMapper.fileList
+	 * @exception
+	 */
+	@Override
+	public List<EgovMap> fileList(PostVO postVO) throws Exception {
+		return postMapper.fileList(postVO);
+	}
+	
+	/**
+	 * 게시글-파일 개수 조회
+	 * @param PostVO
+	 * @return postMapper.fileListCnt
+	 * @exception
+	 */
+	@Override
+	public int fileListCnt(PostVO postVO) throws Exception {
+		return postMapper.fileListCnt(postVO);
+	}
+	
+	/**
 	 * 게시글 추가
 	 * @param PostVO
 	 * @exception
@@ -96,6 +128,16 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	@Override
 	public void insertPost(PostVO postVO) throws Exception {
 		postMapper.insertPost(postVO);
+	}
+	
+	/**
+	 * 파일 추가
+	 * @param PostVO
+	 * @exception
+	 */
+	@Override
+	public void insertFile(PostVO postVO) throws Exception {
+		postMapper.insertFile(postVO);
 	}
 	
 	/**
@@ -113,8 +155,29 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	 * @param PostVO
 	 * @exception
 	 */
+	@Override
 	public void updatePost(PostVO postVO) throws Exception {
 		postMapper.updatePost(postVO);
+	}
+	
+	/**
+	 * 조회수 +1
+	 * @param PostVO
+	 * @exception
+	 */
+	@Override
+	public void updateViewCnt(PostVO postVO) throws Exception {
+		postMapper.updateViewCnt(postVO);
+	}
+	
+	/**
+	 * 게시글-파일 맵핑 수정
+	 * @param PostVO
+	 * @exception
+	 */
+	@Override
+	public void updateMapping(PostVO postVO) throws Exception {
+		postMapper.updateMapping(postVO);
 	}
 	
 	/**
@@ -122,8 +185,19 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	 * @param PostVO
 	 * @exception
 	 */
+	@Override
 	public void deletePost(PostVO postVO) throws Exception {
 		postMapper.deletePost(postVO);
+	}
+	
+	/**
+	 * 매핑 삭제
+	 * @param PostVO
+	 * @exception
+	 */
+	@Override
+	public void deleteMapping(PostVO postVO) throws Exception {
+		postMapper.deleteMapping(postVO);
 	}
 	
 	/**
@@ -163,6 +237,7 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	 * @param PostVO
 	 * @exception
 	 */
+	@Override
 	public void updateComment(PostVO postVO) throws Exception {
 		postMapper.updateComment(postVO);
 	}
@@ -172,6 +247,7 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	 * @param PostVO
 	 * @exception
 	 */
+	@Override
 	public void deleteComment(PostVO postVO) throws Exception {
 		postMapper.deleteComment(postVO);
 	}

@@ -14,10 +14,11 @@ function movejs_menu(num) {
 		path = "/board/boardList.do";
 		js = "/js/board/boardList.js";
 	} else if(num == 5) {
-		path = "/board/postList.do";
+		path = "/board/postList.do?boardNo=1";
 		js = "/js/board/postList.js";
 	} else if(num == 6) {
-		
+		path = "/board/postList.do?boardNo=3";
+		js = "/js/board/postList.js";
 	} else if(num == 7) {
 		
 	} else if(num == 8) {

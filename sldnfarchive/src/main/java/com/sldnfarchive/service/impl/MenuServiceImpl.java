@@ -112,6 +112,7 @@ public class MenuServiceImpl extends EgovAbstractServiceImpl implements MenuServ
 	 * @param MenuVO
 	 * @exception
 	 */
+	@Override
 	public void updateMenu(MenuVO menuVO) throws Exception {
 		menuMapper.updateMenu(menuVO);
 	}
@@ -121,6 +122,7 @@ public class MenuServiceImpl extends EgovAbstractServiceImpl implements MenuServ
 	 * @param MenuVO
 	 * @exception
 	 */
+	@Override
 	public void deleteMenu(MenuVO menuVO) throws Exception {
 		menuMapper.deleteMenu(menuVO);
 	}

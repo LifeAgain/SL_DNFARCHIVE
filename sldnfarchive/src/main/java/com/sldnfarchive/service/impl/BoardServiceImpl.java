@@ -114,6 +114,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @param BoardVO
 	 * @exception
 	 */
+	@Override
 	public void updateBoard(BoardVO boardVO) throws Exception {
 		boardMapper.updateBoard(boardVO);
 	}
@@ -123,6 +124,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @param BoardVO
 	 * @exception
 	 */
+	@Override
 	public void deleteBoard(BoardVO boardVO) throws Exception {
 		boardMapper.deleteBoard(boardVO);
 	}

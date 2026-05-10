@@ -38,7 +38,13 @@ import com.sldnfarchive.model.PostVO;
  *  Copyright (C) by MOPAS All right reserved.
  */
 public interface PostService {
-
+	/**
+	 * 게시판 정보 조회
+	 * @param PostVO
+	 * @exception
+	 */
+	EgovMap postInfo(PostVO postVO) throws Exception;
+	
 	/**
 	 * 게시글 목록을 조회한다.
 	 * @param PostVO
@@ -61,11 +67,32 @@ public interface PostService {
 	EgovMap selectPost(PostVO postVO) throws Exception;
 	
 	/**
+	 * 게시글-파일 조회
+	 * @param PostVO
+	 * @exception
+	 */
+	List<EgovMap> fileList(PostVO postVO) throws Exception;
+	
+	/**
+	 * 게시글-파일 개수 조회
+	 * @param PostVO
+	 * @exception
+	 */
+	int fileListCnt(PostVO postVO) throws Exception;
+	
+	/**
 	 * 게시글 추가
 	 * @param PostVO
 	 * @exception
 	 */
 	void insertPost(PostVO postVO) throws Exception;
+	
+	/**
+	 * 파일 추가
+	 * @param PostVO
+	 * @exception
+	 */
+	void insertFile(PostVO postVO) throws Exception;
 	
 	/**
 	 * 게시글-파일 맵핑
@@ -82,11 +109,32 @@ public interface PostService {
 	void updatePost(PostVO postVO) throws Exception;
 	
 	/**
+	 * 조회수 +1
+	 * @param PostVO
+	 * @exception
+	 */
+	void updateViewCnt(PostVO postVO) throws Exception;
+	
+	/**
+	 * 게시글-파일 맵핑 수정
+	 * @param PostVO
+	 * @exception
+	 */
+	void updateMapping(PostVO postVO) throws Exception;
+	
+	/**
 	 * 게시글 삭제
-	 * @param BoardVO
+	 * @param PostVO
 	 * @exception
 	 */
 	void deletePost(PostVO postVO) throws Exception;
+	
+	/**
+	 * 매핑 삭제
+	 * @param PostVO
+	 * @exception
+	 */
+	void deleteMapping(PostVO postVO) throws Exception;
 	
 	/**
 	 * 댓글 목록을 조회한다.

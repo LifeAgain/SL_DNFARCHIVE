@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sldnfarchive.service.impl.PostMapper">
-
+	
+	<select id="postInfo" parameterType="postVO" resultType="egovMap">
+		SELECT
+			A.BOARD_NO
+		  , B.MENU_NM AS PARENT_NM
+		  , A.BOARD_NM
+		  , A.COMMENT_YN
+		FROM
+			BOARD_MASTER A
+			JOIN
+			MENU_MASTER B
+			ON A.PARENT_CD = CONCAT(B.MENU_LCD, "00")
+		WHERE
+				1=1
+		<if test="boardNo != null and boardNo != ''">
+			AND A.BOARD_NO = #{boardNo}
+		</if>
+	</select>
+	
 	<select id="postList" parameterType="postVO" resultType="egovMap">
 		SELECT
 			C.RN
@@ -81,7 +99,7 @@
 		  , A.BOARD_NO
 		  , A.TITLE
 		  , A.CONTENT
-		  , A.REG_NO
+		  , DATE_FORMAT(A.REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
 		  , B.USER_NM
 		  , A.REG_DATE
 		  , A.VIEW_CNT
@@ -97,15 +115,52 @@
 		</if>
 	</select>
 	
-	<insert id="insertPost" parameterType="postVO">
-		INSERT INTO BOARD_MASTER
+	<select id="fileList" parameterType="postVO" resultType="egovMap">
+		SELECT
+			C.RN
+		  , C.FILE_NO
+		  , C.FILE_NM
+		  , C.FILE_NM_DTL
+		  , C.EXT
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY A.MAP_NO ASC) AS RN
+				  , A.POST_NO
+				  , A.FILE_NO
+				  , B.FILE_NM
+				  , B.FILE_NM_DTL
+				  , SUBSTRING_INDEX(B.FILE_NM_DTL, '.', -1) AS EXT 
+				FROM
+					FILE_POST_MAPPER A
+					JOIN
+					FILE_MASTER B
+					ON A.FILE_NO = B.FILE_NO
+			) C	
+		WHERE
+				1=1
+		<if test="postNo != null and postNo != ''">
+			AND C.POST_NO = #{postNo}
+		</if>
+	</select>
+	
+	<select id="fileListCnt" parameterType="postVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			FILE_POST_MAPPER
+		WHERE
+				1=1
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
+		</if>
+	</select>
+	
+	<insert id="insertFile" parameterType="userVO">
+		INSERT INTO FILE_MASTER
 		(
-			BOARD_TYPE
-		  , BOARD_NM
-		  , BOARD_PATH
-		  , USE_YN
-		  , COMMENT_YN
-		  , BOARD_NOTE
+			FILE_NM
+		  , FILE_NM_DTL
 		  , REG_NO
 		  , REG_DATE
 		  , UP_NO
@@ -113,128 +168,187 @@
 		)
 		VALUES
 		(
-			#{boardType}
-		  , #{boardNm}
-		  , #{boardPath}
-		  , #{useYn}
-		  , #{commentYn}
-		  , #{boardNote}
+			#{fileNm}
+		  , #{uploadFileNm}
 		  , '1'
 		  , NOW()
 		  , '1'
+		  , NOW()
+		)
+	</insert>
+	
+	<insert id="insertPost" parameterType="postVO">
+		INSERT INTO POST_MASTER
+		(
+			BOARD_NO
+		  , TITLE
+		  , CONTENT
+		  , VIEW_CNT
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{boardNo}
+		  , #{title}
+		  , #{content}
+		  , 0
+		  , #{regNo}
+		  , NOW()
+		  , #{upNo}
+		  , NOW()
+		)
+	</insert>
+	
+	<insert id="insertMapping" parameterType="postVO">
+		INSERT INTO FILE_POST_MAPPER
+		(
+			FILE_NO
+		  , POST_NO
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			(
+				SELECT
+					MAX(FILE_NO)
+				FROM
+					FILE_MASTER
+			)
+		  <if test="postNo == '' or postNo == null or postNo &lt;= 0">
+		  , (
+		  		SELECT
+		  			MAX(POST_NO) + 1
+		  		FROM
+		  			POST_MASTER
+		  	)
+		  </if>
+		  <if test="postNo > 0">
+		  , #{postNo}
+		  </if>
+		  , #{regNo}
+		  , NOW()
+		  , #{upNo}
 		  , NOW()
 		)
 	</insert>
 	
 	<update id="updatePost" parameterType="postVO">
 		UPDATE
-			BOARD_MASTER
+			POST_MASTER
 		SET
-			BOARD_TYPE = #{boardType}
-		  , BOARD_NM = #{boardNm}
-		  , BOARD_PATH = #{boardPath}
-		  , USE_YN = #{useYn}
-		  , COMMENT_YN = #{commentYn}
-		  , BOARD_NOTE = #{boardNote}
-		  , UP_NO = '1'
+			TITLE = #{title}
+		  , CONTENT = #{content}
+		  <if test="boardNo != null and boardNo != ''">
+		  	  , BOARD_NO = #{boardNo}
+		  </if>
+		  , UP_NO = #{upNo}
 		  , UP_DATE = NOW()
 		WHERE
 				1=1
-		<if test="boardNo != null and boardNo != ''">
-			AND BOARD_NO = #{boardNo}
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
+		</if>
+	</update>
+	
+	<update id="updateViewCnt" parameterType="postVO">
+		UPDATE
+			POST_MASTER
+		SET
+			VIEW_CNT = #{viewCnt} + 1
+		WHERE
+				1=1
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
+		</if>
+	</update>
+	
+	<update id="updateMapping" parameterType="postVO">
+		UPDATE
+			FILE_POST_MAPPER
+		SET
+			FILE_NO = (
+						SELECT
+							MAX(FILE_NO)
+						FROM
+							FILE_MASTER
+					  )
+		  , UP_NO = #{upNo}
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
+		</if>
+		<if test="fileNo != null and fileNo != ''">
+			AND FILE_NO = #{fileNo}
 		</if>
 	</update>
 
 	<delete id="deletePost" parameterType="postVO">
 		DELETE FROM
-			BOARD_MASTER
+			POST_MASTER
 		WHERE
 				1=1
-		<if test="boardNo != null and boardNo != ''">
-			AND BOARD_NO = #{boardNo}
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
+		</if>
+	</delete>
+	
+	<delete id="deleteMapping" parameterType="postVO">
+		DELETE FROM
+			FILE_POST_MAPPER
+		WHERE
+				1=1
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
 		</if>
 	</delete>
 	
 	<select id="commentList" parameterType="postVO" resultType="egovMap">
 		SELECT
-			C.RN
-		  , C.POST_NO
-		  , C.TITLE
-		  , C.USER_NM
-		  , C.VIEW_CNT
+			A.COMMENT_NO
+		  , A.POST_NO
+		  , A.CONTENT
+		  , A.REG_NO
+		  , B.USER_NM
+		  , DATE_FORMAT(A.REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
 		FROM
-			(
-				SELECT
-					ROW_NUMBER() OVER(ORDER BY A.POST_NO DESC) AS RN
-				  , A.POST_NO
-				  , A.TITLE
-				  , B.USER_NM
-				  , A.VIEW_CNT
-				FROM
-					POST_MASTER A
-					JOIN
-					USER_MASTER B
-					ON A.REG_NO = B.USER_IDX
-				WHERE
-						1=1
-				<if test="boardNo != null and boardNo != ''">
-					AND A.BOARD_NO = #{boardNo}
-				</if>
-				<if test="schWriter != null and schWriter != ''">
-					AND B.USER_NM LIKE CONCAT('%', #{schWriter}, '%')
-				</if>
-				<if test="schKeyword != null and schKeyword != ''">
-					AND (
-							   A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
-							OR A.CONTENT LIKE CONCAT('%', #{schKeyword}, '%')
-						)
-				</if>
-				ORDER BY
-					A.POST_NO DESC
-			) C
+			COMMENT_MASTER A
+			JOIN
+			USER_MASTER B
+			ON A.REG_NO = B.USER_IDX
 		WHERE
 				1=1
-		<if test="curIdx != null and pageUnit != null and curPage != null">
-			AND C.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+		<if test="postNo != null and postNo != ''">
+			AND A.POST_NO = #{postNo}
 		</if>
 		ORDER BY
-			C.RN
-		  , C.POST_NO DESC
+			A.COMMENT_NO DESC
 	</select>
 	
 	<select id="commentListCnt" parameterType="postVO" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
-			POST_MASTER A
-			JOIN
-			USER_MASTER B
-			ON A.REG_NO = B.USER_IDX
+			COMMENT_MASTER
 		WHERE
 				1=1
-		<if test="boardNo != null and boardNo != ''">
-			AND A.BOARD_NO = #{boardNo}
-		</if>
-		<if test="schWriter != null and schWriter != ''">
-			AND B.USER_NM LIKE CONCAT('%', #{schWriter}, '%')
-		</if>
-		<if test="schKeyword != null and schKeyword != ''">
-			AND (
-					   A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
-					OR A.CONTENT LIKE CONCAT('%', #{schKeyword}, '%')
-				)
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
 		</if>
 	</select>
 	
 	<insert id="insertComment" parameterType="postVO">
-		INSERT INTO BOARD_MASTER
+		INSERT INTO COMMENT_MASTER
 		(
-			BOARD_TYPE
-		  , BOARD_NM
-		  , BOARD_PATH
-		  , USE_YN
-		  , COMMENT_YN
-		  , BOARD_NOTE
+			POST_NO
+		  , CONTENT
 		  , REG_NO
 		  , REG_DATE
 		  , UP_NO
@@ -242,45 +356,39 @@
 		)
 		VALUES
 		(
-			#{boardType}
-		  , #{boardNm}
-		  , #{boardPath}
-		  , #{useYn}
-		  , #{commentYn}
-		  , #{boardNote}
-		  , '1'
+			#{postNo}
+		  , #{content}
+		  , #{regNo}
 		  , NOW()
-		  , '1'
+		  , #{upNo}
 		  , NOW()
 		)
 	</insert>
 	
 	<update id="updateComment" parameterType="postVO">
 		UPDATE
-			BOARD_MASTER
+			COMMENT_MASTER
 		SET
-			BOARD_TYPE = #{boardType}
-		  , BOARD_NM = #{boardNm}
-		  , BOARD_PATH = #{boardPath}
-		  , USE_YN = #{useYn}
-		  , COMMENT_YN = #{commentYn}
-		  , BOARD_NOTE = #{boardNote}
-		  , UP_NO = '1'
+			CONTENT = #{content}
+		  , UP_NO = #{upNo}
 		  , UP_DATE = NOW()
 		WHERE
 				1=1
-		<if test="boardNo != null and boardNo != ''">
-			AND BOARD_NO = #{boardNo}
+		<if test="commentNo != null and commentNo != ''">
+			AND COMMENT_NO = #{commentNo}
 		</if>
 	</update>
 
 	<delete id="deleteComment" parameterType="postVO">
 		DELETE FROM
-			BOARD_MASTER
+			COMMENT_MASTER
 		WHERE
 				1=1
-		<if test="boardNo != null and boardNo != ''">
-			AND BOARD_NO = #{boardNo}
+		<if test="postNo != null and postNo != ''">
+			AND POST_NO = #{postNo}
+		</if>
+		<if test="commentNo != null and commentNo != ''">
+			AND COMMENT_NO = #{commentNo}
 		</if>
 	</delete>
 

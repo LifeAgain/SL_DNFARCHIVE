@@ -28,61 +28,88 @@
 		    <div id="layoutSidenav_content">
 		        <main>
 		            <div class="container-fluid px-4">
-		            	<div class="card card-header mt-4">
-		            		<form id="schPostFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
-		            			<div class="row col-auto gap-2">
-		            				<select id="schType" name="schType" class="form-select w-auto" onchange="javascript:changeSchType();">
-		            					<option value="schKeyword">제목+내용</option>
-		            					<option value="schAuthor">작성자</option>
-		            				</select>
-			            			<input type="text" id="schKeyword" name="schKeyword" class="form-control w-auto" value="" onkeyup="javascript:if(event.keyCode == 13) schPost(1);" />
-		            			</div>
-		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schPost(1);" value="검색" />
-		            		</form>
-		            	</div>
-		            	
 	                	<div class="card my-4">
-	                		<form:form modelAttribute="postVO" id="postFrm" name="postFrm" method="post" onsubmit="javascript: return false;">
+	                		<form:form modelAttribute="postVO" id="detailFrm" name="detailFrm" method="post" onsubmit="javascript: return false;">
 	                		<div class="card-header">
 		                        <ol class="breadcrumb mb-0 pt-2">
-		                        	<li class="breadcrumb-item"><h5>커뮤니티</h5></li>
-		                            <li class="breadcrumb-item active">공지사항</li>
+		                        	<li class="breadcrumb-item"><h5>${postInfo.parentNm}</h5></li>
+		                            <li class="breadcrumb-item active">${postInfo.boardNm}</li>
 		                        </ol>
 		                    </div>
 		                    
 		                    <div class="card-body">
-		                    	<div id="postList" class="board-list">
-			                    	<table class="col-12 p-0 m-0">
-			                    		<tr>
-			                    			<th width="10%" class="text-center py-1">번호</th>
-			                    			<th width="45%" class="text-center py-1">제목</th>
-			                    			<th width="15%" class="text-center py-1">작성자</th>
-			                    			<th width="15%" class="text-center py-1">작성일자</th>
-			                    			<th width="15%" class="text-center py-1">조회수</th>
-			                    		</tr>
-			                    		<c:if test="${totalCnt > 0}">
-			                    		<c:forEach var="postList" items="${postList}" varStatus="status">
-			                    		<tr>
-			                    			<td class="text-center py-2">${postList.rn}</td>
-			                    			<td><a href="#" class="text-decoration-none text-black py-2" onclick="javascript:goDetail()">${postList.title}</a></td>
-			                    			<td class="text-center py-2">${postList.userNm}</td>
-			                    			<td class="text-center py-2">${postList.fmRegDate}</td>
-			                    			<td class="text-center py-2">${postList.viewCnt}</td>
-			                    		</tr>
-			                    		</c:forEach>
-			                    		</c:if>
-			                    		<c:if test="${totalCnt <= 0}">
+		                    	<div id="postDetail" class="board-detail">
+		                    		<table class="col-12 p-0 m-0">
 		                    			<tr>
-		                    				<td colspan="5" class="text-center py-3">게시글이 존재하지 않습니다.</td>
+		                    				<td colspan="2" class="text-center py-3"><strong>${selectPost.title}</strong></td>
 		                    			</tr>
-		                    			</c:if>
-			                    	</table>
-		                    	</div>
-		                    	<div id="postBtn" class="col-12 p-0 mx-0 mb-0 mt-1 text-end">
-		                    		<input type="button" class="btn btn-primary" value="작성" onclick="javascript:goPost();" />
-		                    	</div>
-		                    	<div id="postPager" class="board-pager col-12 p-0 mx-0 mb-0 mt-2 text-center">
-		                    		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="schPost" />
+		                    			<tr>
+		                    				<td colspan="2" class="text-center py-2">
+		                    					<ul class="m-0">
+		                    						<li><strong>작성자</strong> ${selectPost.userNm}</li>
+		                    						<li><strong>작성일자</strong> ${selectPost.fmRegDate}</li>
+		                    						<li><strong>조회수</strong> ${selectPost.viewCnt}</li>
+		                    					</ul>
+		                    				</td>
+		                    			</tr>
+		                    			<tr>
+		                    				<td colspan="2" class="py-5">${selectPost.content}</td>
+		                    			</tr>
+		                    			<c:forEach var="fileList" items="${fileList}" varStatus="status">
+			                    			<tr id="files${fileList.rn}">
+			                    				<td class="py-1"><strong>첨부${fileList.rn}</strong></td>
+			                    				<td class="py-1">
+			                    					<c:if test="${fileList.ext eq 'jpg' or fileList.ext eq 'gif' or fileList.ext eq 'png' or fileList.ext eq 'jpeg' or fileList.ext eq 'bmp' or fileList.ext eq 'tif'}">
+			                    						<a href="/images/upload/${fileList.fileNmDtl}" class="text-decoration-none text-black" download>${fileList.fileNm}</a>
+			                    					</c:if>
+			                    					<c:if test="${not(fileList.ext eq 'jpg' or fileList.ext eq 'gif' or fileList.ext eq 'png' or fileList.ext eq 'jpeg' or fileList.ext eq 'bmp' or fileList.ext eq 'tif')}">
+			                    						<a href="/upload/${fileList.fileNmDtl}" class="text-decoration-none text-black" download>${fileList.fileNm}</a>
+			                    					</c:if>
+			                    				</td>
+			                    			</tr>
+		                    			</c:forEach>
+		                    			<tr>
+		                    				<td colspan="2" class="py-2"><strong>댓글(${commentCnt})</strong></td>
+		                    			</tr>
+		                    			<c:forEach var="commentList" items="${commentList}" varStatus="status">
+		                    			<tr id="comment${commentList.commentNo}">
+		                    				<td class="py-1">${commentList.userNm}</td>
+		                    				<td class="py-1">
+		                    					<div class="comment-container row col-12 p-0 m-0">
+		                    						<div class="comment-content col-11 ps-0 pe-2 py-0 m-0">${commentList.content}</div>
+													<div class="col-1 p-0 m-0">
+		                    							<i class="fa-solid fa-pencil ms-2" onclick="javascript:updateComment(this);"></i>
+		                    							<i class="fa-solid fa-x ms-2" onclick="javascript:beforeDeleteComment(this);"></i>
+		                    						</div>
+		                    					</div>
+		                    				</td>
+		                    			</tr>
+		                    			</c:forEach>
+		                    			<tr id="comment0">
+		                    				<td class="py-1">admin</td>
+		                    				<td class="py-1">
+		                    					<div class="row col-12 p-0 m-0">
+		                    						<div class="col-11 ps-0 pe-2 py-0 m-0">
+		                    							<textarea id="content0" name="content0" class="form-control m-0"></textarea>
+		                    						</div>
+		                    						<div class="col-1 p-0 m-0">
+		                    							<div class="row col-12 h-100 p-0 m-0 align-items-center">
+		                    								<input type="button" class="btn btn-secondary" onclick="javascript:beforeSaveComment(0);" value="작성" />
+		                    							</div>
+		                    						</div>
+		                    					</div>
+		                    				</td>
+		                    			</tr>
+		                    			<tr>
+		                    				<td colspan="2" class="text-end py-2">
+		                    					<input type="button" class="btn btn-warning" value="수정" onclick="javascript:goPost();" />
+		                    					<input type="button" class="btn btn-danger" value="삭제" onclick="javascript:beforeDeletePost();" />
+		                    					<input type="button" class="btn btn-primary" value="목록" onclick="javascript:goList();" />
+		                    					<form:hidden path="boardNo" />
+		                    					<form:hidden path="postNo" />
+		                    				</td>
+		                    			</tr>
+		                    		</table>
 		                    	</div>
 		                    </div>
 		                    
@@ -94,5 +121,5 @@
 	            <%@include file="/WEB-INF/jsp/template/innerFooter.jsp" %>
             </div>
         </div>
-        <script src="/js/board/postList.js"></script>
+        <script src="/js/board/postDetail.js"></script>
 <%@include file="/WEB-INF/jsp/template/footer.jsp" %>

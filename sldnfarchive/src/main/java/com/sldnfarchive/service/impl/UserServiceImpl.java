@@ -113,6 +113,7 @@ public class UserServiceImpl extends EgovAbstractServiceImpl implements UserServ
 	 * @param UserVO
 	 * @exception
 	 */
+	@Override
 	public void updateUser(UserVO userVO) throws Exception {
 		userMapper.updateUser(userVO);
 	}
@@ -122,6 +123,7 @@ public class UserServiceImpl extends EgovAbstractServiceImpl implements UserServ
 	 * @param UserVO
 	 * @exception
 	 */
+	@Override
 	public void deleteUser(UserVO userVO) throws Exception {
 		userMapper.deleteUser(userVO);
 	}

@@ -51,6 +51,9 @@ public class PostVO {
 	/** 내용 */
 	private String content;
 	
+	/** 파일 인덱스번호 */
+	private int fileNo;
+	
 	/** 파일명 */
 	private String fileNm;
 	
@@ -64,13 +67,13 @@ public class PostVO {
 	private int commentNo;
 	
 	/** 등록자 */
-	private String regNo;
+	private int regNo;
 	
 	/** 등록일자 */
 	private String regDate;
 	
 	/** 수정자 */
-	private String upNo;
+	private int upNo;
 	
 	/** 수정일자 */
 	private String upDate;
@@ -135,6 +138,14 @@ public class PostVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public int getFileNo() {
+		return fileNo;
+	}
+
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
+	}
 
 	public String getFileNm() {
 		return fileNm;
@@ -168,11 +179,11 @@ public class PostVO {
 		this.commentNo = commentNo;
 	}
 
-	public String getRegNo() {
+	public int getRegNo() {
 		return regNo;
 	}
 
-	public void setRegNo(String regNo) {
+	public void setRegNo(int regNo) {
 		this.regNo = regNo;
 	}
 
@@ -184,11 +195,11 @@ public class PostVO {
 		this.regDate = regDate;
 	}
 
-	public String getUpNo() {
+	public int getUpNo() {
 		return upNo;
 	}
 
-	public void setUpNo(String upNo) {
+	public void setUpNo(int upNo) {
 		this.upNo = upNo;
 	}
 

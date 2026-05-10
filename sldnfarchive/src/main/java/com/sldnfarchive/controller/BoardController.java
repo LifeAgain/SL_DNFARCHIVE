@@ -15,6 +15,9 @@
  */
 package com.sldnfarchive.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -22,6 +25,7 @@ import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
@@ -37,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import com.sldnfarchive.model.BoardVO;
@@ -232,9 +237,12 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/postList.do")
-	public String postList(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
-		postVO.setBoardNo(1);
+	public String postList(@ModelAttribute("postVO") PostVO postVO, HttpServletRequest req, ModelMap model) throws Exception {
+		int boardNo = Integer.valueOf(req.getParameter("boardNo"));
 		
+		postVO.setBoardNo(boardNo);
+		
+		EgovMap postInfo = postService.postInfo(postVO);
 		List<EgovMap> postList = postService.postList(postVO);
 		int totalCnt = postService.postListCnt(postVO);
 		
@@ -253,6 +261,7 @@ public class BoardController {
 		System.out.println("Success - postList.do");
 		System.out.println("============================");
 		
+		model.addAttribute("postInfo", postInfo);
 		model.addAttribute("postList", postList);
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
@@ -261,56 +270,63 @@ public class BoardController {
 	}
 	
 	/**
-	 * 게시판 조회(리스트)
-	 * @return "jsonView"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = "/selectPostList.do")
-	public String selectPostList(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
-		List<EgovMap> postList = postService.postList(postVO);
-		int totalCnt = postService.postListCnt(postVO);
-		
-		System.out.println("============================");
-		System.out.println("Success - selectPostList.do");
-		System.out.println("============================");
-		
-		model.addAttribute("postList", postList);
-		model.addAttribute("totalCnt", totalCnt);
-		
-		return "jsonView";
-	}
-	
-	/**
 	 * 글쓰기 폼
 	 * @return "board/postFrm"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/postFrm.do")
-	public String postFrm() throws Exception {
+	public String postFrm(@ModelAttribute("postVO") PostVO postVO, HttpServletRequest req, ModelMap model) throws Exception {
+		int postNo = Integer.valueOf(req.getParameter("postNo"));
+		String flag = "";
+		EgovMap postInfo = postService.postInfo(postVO);
+		
+		if(postNo > 0) {
+			flag = "U";
+			EgovMap selectPost = postService.selectPost(postVO);
+			List<EgovMap> fileList = postService.fileList(postVO);
+			
+			model.addAttribute("selectPost", selectPost);
+			model.addAttribute("fileList", fileList);
+		} else {
+			flag = "I";
+		}
+		
 		System.out.println("============================");
 		System.out.println("Success - postFrm.do");
 		System.out.println("============================");
+		
+		model.addAttribute("postInfo", postInfo);
+		model.addAttribute("flag", flag);
 		
 		return "board/postFrm";
 	}
 	
 	/**
 	 * 게시글 상세 조회
-	 * @return "jsonView"
+	 * @return "board/postDetail"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/selectPost.do")
 	public String selectPost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
-		
+		EgovMap postInfo = postService.postInfo(postVO);
 		EgovMap selectPost = postService.selectPost(postVO);
+		List<EgovMap> fileList = postService.fileList(postVO);
+		List<EgovMap> commentList = postService.commentList(postVO);
+		int fileListCnt = postService.fileListCnt(postVO);
+		int commentCnt = postService.commentListCnt(postVO);
 		
 		System.out.println("============================");
 		System.out.println("Success - selectBoard.do");
 		System.out.println("============================");
 		
+		model.addAttribute("postInfo", postInfo);
 		model.addAttribute("selectPost", selectPost);
+		model.addAttribute("fileList", fileList);
+		model.addAttribute("fileListCnt", fileListCnt);
+		model.addAttribute("commentList", commentList);
+		model.addAttribute("commentCnt", commentCnt);
 		
-		return "jsonView";
+		return "board/postDetail";
 	}
 	
 	/**
@@ -319,16 +335,67 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/insertPost.do")
-	public String insertPost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+	public String insertPost(@ModelAttribute("postVO") PostVO postVO, @RequestParam("uploadFile1") MultipartFile uploadFile1, @RequestParam("uploadFile2") MultipartFile uploadFile2, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		String uploadPath = "";
+		
 		System.out.println("============================");
 		System.out.println("Success - insertPost.do");
 		System.out.println("============================");
+		
+		postVO.setRegNo(1);
+		postVO.setUpNo(1);
+		
+		for(int i = 0; i < 2; i++) {
+			MultipartFile uploadFile = null;
+			
+			if(i == 0) uploadFile = uploadFile1;
+			else if(i == 1) uploadFile = uploadFile2;
+			
+			if(!uploadFile.isEmpty()) {
+				String orgFileNm = uploadFile.getOriginalFilename();
+				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
+				
+				String[] fileNmArr = orgFileNm.split("\\.");
+				String fileNm = fileNmArr[0];
+				String ext = fileNmArr[1];
+				
+				if(!(ext.equals("jpg") && ext.equals("gif") && ext.equals("png") && ext.equals("jpeg") && ext.equals("bmp") && ext.equals("tif"))) {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
+				} else {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/upload";
+				}
+				
+				Date now = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String nowTime = sdf.format(now);
+				String uploadFileNm = fileNm + nowTime + "." + ext;
+				
+				File saveFolder = new File(uploadPath);
+				File saveFile = new File(uploadPath, uploadFileNm);
+				
+				try {
+					if(!saveFolder.exists()) {
+						if(saveFolder.mkdirs()) System.out.println(saveFolder + " 폴더가 성공적으로 생성되었습니다.");
+						else System.out.println("폴더 생성에 실패했습니다.");
+					}
+					
+					uploadFile.transferTo(saveFile);
+					
+					postVO.setFileNm(orgFileNm);
+					postVO.setUploadFileNm(uploadFileNm);
+					postService.insertFile(postVO);
+					postService.insertMapping(postVO);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		postService.insertPost(postVO);
 		txManager.commit(txStatus);
@@ -337,21 +404,79 @@ public class BoardController {
 	}
 	
 	/**
-	 * 게시판 정보 수정
+	 * 게시글 수정
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/updatePost.do")
-	public String updatePost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+	public String updatePost(@ModelAttribute("postVO") PostVO postVO, @RequestParam("uploadFile1") MultipartFile uploadFile1, @RequestParam("uploadFile2") MultipartFile uploadFile2, HttpServletRequest req, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		String uploadPath = "";
+		
 		System.out.println("============================");
 		System.out.println("Success - updatePost.do");
 		System.out.println("============================");
+		
+		postVO.setRegNo(1);
+		postVO.setUpNo(1);
+		
+		for(int i = 0; i < 2; i++) {
+			MultipartFile uploadFile = null;
+			int fileNo = 0;
+			
+			if(i == 0) {
+				uploadFile = uploadFile1;
+				fileNo = Integer.valueOf(req.getParameter("fileNo1"));
+			} else if(i == 1) {
+				uploadFile = uploadFile2;
+				fileNo = Integer.valueOf(req.getParameter("fileNo2"));
+			}
+			
+			if(!uploadFile.isEmpty()) {
+				String orgFileNm = uploadFile.getOriginalFilename();
+				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
+				
+				String[] fileNmArr = orgFileNm.split("\\.");
+				String fileNm = fileNmArr[0];
+				String ext = fileNmArr[1];
+				
+				if(!(ext.equals("jpg") && ext.equals("gif") && ext.equals("png") && ext.equals("jpeg") && ext.equals("bmp") && ext.equals("tif"))) {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
+				} else {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/upload";
+				}
+				
+				Date now = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String nowTime = sdf.format(now);
+				String uploadFileNm = fileNm + nowTime + "." + ext;
+				
+				File saveFolder = new File(uploadPath);
+				File saveFile = new File(uploadPath, uploadFileNm);
+				
+				try {
+					if(!saveFolder.exists()) {
+						if(saveFolder.mkdirs()) System.out.println(saveFolder + " 폴더가 성공적으로 생성되었습니다.");
+						else System.out.println("폴더 생성에 실패했습니다.");
+					}
+					
+					uploadFile.transferTo(saveFile);
+					
+					postVO.setFileNm(orgFileNm);
+					postVO.setUploadFileNm(uploadFileNm);
+					postService.insertFile(postVO);
+					postVO.setFileNo(fileNo);
+					postService.updateMapping(postVO);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		postService.updatePost(postVO);
 		txManager.commit(txStatus);
@@ -361,12 +486,40 @@ public class BoardController {
 	}
 	
 	/**
-	 * 게시판 삭제
+	 * 조회수 +1
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updateViewCnt.do")
+	public String updateViewCnt(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - updateViewCnt.do");
+		System.out.println("============================");
+		
+		postVO.setUpNo(1);
+		
+		postService.updateViewCnt(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+		
+	}
+	
+	/**
+	 * 게시글 삭제
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/deletePost.do")
 	public String deletePost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		int totalCnt = postService.commentListCnt(postVO);
+		
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
@@ -376,6 +529,8 @@ public class BoardController {
 		System.out.println("============================");
 		System.out.println("Success - deletePost.do");
 		System.out.println("============================");
+		
+		if(totalCnt > 0) postService.deleteComment(postVO);
 		
 		postService.deletePost(postVO);
 		txManager.commit(txStatus);
@@ -421,6 +576,9 @@ public class BoardController {
 		System.out.println("Success - insertComment.do");
 		System.out.println("============================");
 		
+		postVO.setRegNo(1);
+		postVO.setUpNo(1);
+		
 		postService.insertComment(postVO);
 		txManager.commit(txStatus);
 		
@@ -443,6 +601,8 @@ public class BoardController {
 		System.out.println("============================");
 		System.out.println("Success - updateComment.do");
 		System.out.println("============================");
+		
+		postVO.setUpNo(1);
 		
 		postService.updateComment(postVO);
 		txManager.commit(txStatus);

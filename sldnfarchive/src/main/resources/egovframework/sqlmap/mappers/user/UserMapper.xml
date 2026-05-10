@@ -90,9 +90,9 @@
 		(
 			#{fileNm}
 		  , #{uploadFileNm}
-		  , '1'
+		  , 1
 		  , NOW()
-		  , '1'
+		  , 1
 		  , NOW()
 		)
 	</insert>
@@ -128,9 +128,9 @@
 			  			FILE_MASTER
 			  	)
 		  </if>
-		  , '1'
+		  , 1
 		  , NOW()
-		  , '1'
+		  , 1
 		  , NOW()
 		)
 	</insert>
@@ -152,7 +152,7 @@
 						  			FILE_MASTER
 						  	)
 		  </if>
-		  , UP_NO = '1'
+		  , UP_NO = 1
 		  , UP_DATE = NOW()
 		WHERE
 				1=1

@@ -1,6 +1,9 @@
 $(function() {
 	if($("#files1").length > 0 || $("#files2").length > 0) {
 		$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
+		$(".board-detail table tr").eq(4).css("backgroundColor", "#efefef");
+	} else if($("#files1").length > 0 && $("#files2").length > 0) {
+		$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
 		$(".board-detail table tr").eq(5).css("backgroundColor", "#efefef");
 	}
 });

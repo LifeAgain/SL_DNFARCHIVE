@@ -136,12 +136,16 @@
 					JOIN
 					FILE_MASTER B
 					ON A.FILE_NO = B.FILE_NO
+				WHERE
+						1=1
+				<if test="postNo != null and postNo != ''">
+					AND A.POST_NO = #{postNo}
+				</if>
 			) C	
 		WHERE
-				1=1
-		<if test="postNo != null and postNo != ''">
-			AND C.POST_NO = #{postNo}
-		</if>
+			1=1
+		ORDER BY
+			C.RN
 	</select>
 	
 	<select id="fileListCnt" parameterType="postVO" resultType="int">

@@ -78,7 +78,7 @@
 			                    		</tr>
 			                    		<tr>
 				                    		<td colspan="2" class="text-end py-2">
-				                    			<input type="button" class="btn btn-primary" onclick="javascript:beforeSavePost();" value="작성" />
+				                    			<input type="button" class="btn btn-primary btn-save" onclick="javascript:beforeSavePost();" value="작성" />
 				                    			<input type="button" class="btn btn-secondary" onclick="javascript:goList();" value="취소" />
 				                    			<form:hidden path="boardNo" />
 				                    			<form:hidden path="postNo" />

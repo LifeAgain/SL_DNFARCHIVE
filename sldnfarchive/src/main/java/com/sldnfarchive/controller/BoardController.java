@@ -427,15 +427,18 @@ public class BoardController {
 		
 		for(int i = 0; i < 2; i++) {
 			MultipartFile uploadFile = null;
+			String fileNoStr = "";
 			int fileNo = 0;
 			
 			if(i == 0) {
 				uploadFile = uploadFile1;
-				fileNo = Integer.valueOf(req.getParameter("fileNo1"));
+				fileNoStr = req.getParameter("fileNo1");
 			} else if(i == 1) {
 				uploadFile = uploadFile2;
-				fileNo = Integer.valueOf(req.getParameter("fileNo2"));
+				fileNoStr = req.getParameter("fileNo2");
 			}
+			
+			if(!fileNoStr.isEmpty()) fileNo = Integer.valueOf(fileNoStr);
 			
 			if(!uploadFile.isEmpty()) {
 				String orgFileNm = uploadFile.getOriginalFilename();
@@ -470,8 +473,13 @@ public class BoardController {
 					postVO.setFileNm(orgFileNm);
 					postVO.setUploadFileNm(uploadFileNm);
 					postService.insertFile(postVO);
-					postVO.setFileNo(fileNo);
-					postService.updateMapping(postVO);
+					
+					if(!fileNoStr.isEmpty()) {
+						postVO.setFileNo(fileNo);
+						postService.updateMapping(postVO);
+					} else {
+						postService.insertMapping(postVO);
+					}
 				} catch(Exception e) {
 					e.printStackTrace();
 				}

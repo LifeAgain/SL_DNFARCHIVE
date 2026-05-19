@@ -1,3 +1,10 @@
+$(function() {
+	var postNo = $("#postNo").val();
+	
+	if(postNo <= 0) $(".btn-save").val("작성");
+	else $(".btn-save").val("수정");
+});
+
 function goList() {
 	var boardNo = $("#boardNo").val();
 	var path = "/board/postList.do?boardNo=" + boardNo;
@@ -24,7 +31,7 @@ function chkChangeVal(ele) {
 function beforeSavePost() {
 	var postNo = $("#postNo").val();
 	var cnt = 0;
-	var obj = $("#postForm input[type!='button'][type!='file'], #postForm textarea");
+	var obj = $("#postForm input[type!='button'][type!='file'][type!='hidden'], #postForm textarea");
 	
 	if(postNo > 0) {
 		for(var i = 0; i < obj.length; i++) {
@@ -67,13 +74,19 @@ function beforeSavePost() {
 
 function savePost() {
 	var url = "";
+	var txt = "";
 	var obj = new FormData($("#postForm")[0]);
 	var file1 = $("#uploadFile1")[0].files;
 	var file2 = $("#uploadFile2")[0].files;
 	var postNo = $("#postNo").val();
 	
-	if(postNo <= 0) url = "/board/insertPost.do";
-	else url = "/board/updatePost.do";
+	if(postNo <= 0) {
+		url = "/board/insertPost.do";
+		txt = "작성";
+	} else {
+		url = "/board/updatePost.do";
+		txt = "수정";
+	}
 	
 	for(var pair of obj.entries()) {
 		var id = "#" + pair[0];
@@ -83,7 +96,7 @@ function savePost() {
 	Swal.fire({
 		icon: "question",
 		title: "작성 여부",
-		text: "게시글 작성을 완료하시겠습니까?",
+		text: "게시글 " + txt + "을 완료하시겠습니까?",
 		showCancelButton: true,
 		confirmButtonText: "예",
 		cancelButtonText: "아니오"

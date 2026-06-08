@@ -66,9 +66,15 @@
 			                    			<td class="text-end pe-2 py-2"><label for="uploadFile1"><strong>첨부1</strong></label></td>
 			                    			<td class="p-2">
 			                    				<input type="hidden" id="fileNo1" name="fileNo1" value="${fileList[0].fileNo}" />
+			                    				<c:if test="${postInfo.boardType eq 'A01'}">
 			                    				<input type="file" id="uploadFile1" name="uploadFile1" />
+			                    				</c:if>
+			                    				<c:if test="${postInfo.boardType eq 'A02'}">
+			                    				<input type="file" id="uploadFile1" name="uploadFile1" accept="image/*" onchange="javascript:fileCheck(this);" multiple />
+			                    				</c:if>
 			                    			</td>
 			                    		</tr>
+			                    		<c:if test="${postInfo.boardType eq 'A01'}">
 			                    		<tr>
 			                    			<td class="text-end pe-2 py-2"><label for="uploadFile2"><strong>첨부2</strong></label></td>
 			                    			<td class="p-2">
@@ -76,10 +82,11 @@
 			                    				<input type="file" id="uploadFile2" name="uploadFile2" />
 			                    			</td>
 			                    		</tr>
+			                    		</c:if>
 			                    		<tr>
 				                    		<td colspan="2" class="text-end py-2">
 				                    			<input type="button" class="btn btn-primary btn-save" onclick="javascript:beforeSavePost();" value="작성" />
-				                    			<input type="button" class="btn btn-secondary" onclick="javascript:goList();" value="취소" />
+				                    			<input type="button" class="btn btn-secondary" onclick="javascript:cancel();" value="취소" />
 				                    			<form:hidden path="boardNo" />
 				                    			<form:hidden path="postNo" />
 				                    		</td>
@@ -97,4 +104,5 @@
             </div>
         </div>
         <script src="/js/board/postFrm.js"></script>
+        <script src="/js/util/file.js"></script>
 <%@include file="/WEB-INF/jsp/template/footer.jsp" %>

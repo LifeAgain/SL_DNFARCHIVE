@@ -38,7 +38,14 @@ function goDetail(postNo) {
 	var boardNo = $("#boardNo").val();
 	var path = "/board/selectPost.do?boardNo=" + boardNo + "&postNo=" + postNo;
 	var js = "/js/board/postDetail.js";
-	var val = $("#postTitle" + postNo).closest("tr").children().eq(4).text();
+	var boardType = "";
+	var val = 0;
+	
+	if($(".board-list").length > 0) boardType = "A01";
+	else if($(".board-gallery").length > 0) boardType = "A02";
+	
+	if(boardType == "A01") val = $("#postTitle" + postNo).closest("tr").children().eq(4).text();
+	else if(boardType == "A02") val = $("#postInfo" + postNo).find(".view-cnt").text().trim();
 	
 	$.ajax({
 		url: "/board/updateViewCnt.do"
@@ -69,9 +76,16 @@ function goPost() {
 	var boardNo = $("#boardNo").val();
 	var path = "/board/postFrm.do?boardNo=" + boardNo + "&postNo=0";
 	var js = "/js/board/postFrm.js";
+	var filejs = "/js/util/file.js";
+	var boardType = "";
+	
+	if($(".board-list").length > 0) boardType = "A01";
+	else if($(".board-gallery").length > 0) boardType = "A02";
 	
 	$("#layoutSidenav_content").children().remove();
 	$("#layoutSidenav_content").load(path + " main, footer", function() {
 		$.getScript(js);
+		
+		if(boardType == "A02") $.getScript(filejs);
 	});
 }

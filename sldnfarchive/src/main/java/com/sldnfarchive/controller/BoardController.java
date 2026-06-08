@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import com.sldnfarchive.model.BoardVO;
@@ -335,14 +336,19 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/insertPost.do")
-	public String insertPost(@ModelAttribute("postVO") PostVO postVO, @RequestParam("uploadFile1") MultipartFile uploadFile1, @RequestParam("uploadFile2") MultipartFile uploadFile2, ModelMap model) throws Exception {
+	public String insertPost(@ModelAttribute("postVO") PostVO postVO, @RequestParam("uploadFile1") MultipartFile[] uploadFile1, MultipartHttpServletRequest mreq, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		String boardType = String.valueOf(postService.postInfo(postVO).get("boardType"));
 		String uploadPath = "";
+
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String nowTime = sdf.format(now);
 		
 		System.out.println("============================");
 		System.out.println("Success - insertPost.do");
@@ -351,29 +357,23 @@ public class BoardController {
 		postVO.setRegNo(1);
 		postVO.setUpNo(1);
 		
-		for(int i = 0; i < 2; i++) {
-			MultipartFile uploadFile = null;
-			
-			if(i == 0) uploadFile = uploadFile1;
-			else if(i == 1) uploadFile = uploadFile2;
-			
-			if(!uploadFile.isEmpty()) {
-				String orgFileNm = uploadFile.getOriginalFilename();
+		postService.insertPost(postVO);
+		
+		for(MultipartFile multipartFile: uploadFile1) {
+			if(!multipartFile.isEmpty()) {
+				String orgFileNm = multipartFile.getOriginalFilename();
 				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
 				
 				String[] fileNmArr = orgFileNm.split("\\.");
 				String fileNm = fileNmArr[0];
 				String ext = fileNmArr[1];
 				
-				if(!(ext.equals("jpg") && ext.equals("gif") && ext.equals("png") && ext.equals("jpeg") && ext.equals("bmp") && ext.equals("tif"))) {
+				if(ext.equals("jpg") || ext.equals("gif") || ext.equals("png") || ext.equals("jpeg") || ext.equals("bmp") || ext.equals("tif")) {
 					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
 				} else {
 					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/upload";
 				}
 				
-				Date now = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String nowTime = sdf.format(now);
 				String uploadFileNm = fileNm + nowTime + "." + ext;
 				
 				File saveFolder = new File(uploadPath);
@@ -385,7 +385,7 @@ public class BoardController {
 						else System.out.println("폴더 생성에 실패했습니다.");
 					}
 					
-					uploadFile.transferTo(saveFile);
+					multipartFile.transferTo(saveFile);
 					
 					postVO.setFileNm(orgFileNm);
 					postVO.setUploadFileNm(uploadFileNm);
@@ -397,66 +397,23 @@ public class BoardController {
 			}
 		}
 		
-		postService.insertPost(postVO);
-		txManager.commit(txStatus);
-		
-		return "jsonView";
-	}
-	
-	/**
-	 * 게시글 수정
-	 * @return "jsonView"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = "/updatePost.do")
-	public String updatePost(@ModelAttribute("postVO") PostVO postVO, @RequestParam("uploadFile1") MultipartFile uploadFile1, @RequestParam("uploadFile2") MultipartFile uploadFile2, HttpServletRequest req, ModelMap model) throws Exception {
-		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
-		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		
-		// txStatus
-		TransactionStatus txStatus = txManager.getTransaction(txDef);
-		
-		String uploadPath = "";
-		
-		System.out.println("============================");
-		System.out.println("Success - updatePost.do");
-		System.out.println("============================");
-		
-		postVO.setRegNo(1);
-		postVO.setUpNo(1);
-		
-		for(int i = 0; i < 2; i++) {
-			MultipartFile uploadFile = null;
-			String fileNoStr = "";
-			int fileNo = 0;
+		if(boardType.equals("A01")) {
+			MultipartFile uploadFile2 = mreq.getFile("uploadFile2");
 			
-			if(i == 0) {
-				uploadFile = uploadFile1;
-				fileNoStr = req.getParameter("fileNo1");
-			} else if(i == 1) {
-				uploadFile = uploadFile2;
-				fileNoStr = req.getParameter("fileNo2");
-			}
-			
-			if(!fileNoStr.isEmpty()) fileNo = Integer.valueOf(fileNoStr);
-			
-			if(!uploadFile.isEmpty()) {
-				String orgFileNm = uploadFile.getOriginalFilename();
+			if(!uploadFile2.isEmpty()) {
+				String orgFileNm = uploadFile2.getOriginalFilename();
 				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
 				
 				String[] fileNmArr = orgFileNm.split("\\.");
 				String fileNm = fileNmArr[0];
 				String ext = fileNmArr[1];
 				
-				if(!(ext.equals("jpg") && ext.equals("gif") && ext.equals("png") && ext.equals("jpeg") && ext.equals("bmp") && ext.equals("tif"))) {
+				if(ext.equals("jpg") || ext.equals("gif") || ext.equals("png") || ext.equals("jpeg") || ext.equals("bmp") || ext.equals("tif")) {
 					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
 				} else {
 					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/upload";
 				}
 				
-				Date now = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String nowTime = sdf.format(now);
 				String uploadFileNm = fileNm + nowTime + "." + ext;
 				
 				File saveFolder = new File(uploadPath);
@@ -468,7 +425,135 @@ public class BoardController {
 						else System.out.println("폴더 생성에 실패했습니다.");
 					}
 					
-					uploadFile.transferTo(saveFile);
+					uploadFile2.transferTo(saveFile);
+					
+					postVO.setFileNm(orgFileNm);
+					postVO.setUploadFileNm(uploadFileNm);
+					postService.insertFile(postVO);
+					postService.insertMapping(postVO);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 게시글 수정
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updatePost.do")
+	public String updatePost(@ModelAttribute("postVO") PostVO postVO, @RequestParam("uploadFile1") MultipartFile[] uploadFile1, MultipartHttpServletRequest mreq, HttpServletRequest req, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		String boardType = String.valueOf(postService.postInfo(postVO).get("boardType"));
+		String fileNoStr = "";
+		int fileNo = 0;
+		String uploadPath = "";
+		
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String nowTime = sdf.format(now);
+		
+		System.out.println("============================");
+		System.out.println("Success - updatePost.do");
+		System.out.println("============================");
+		
+		postVO.setRegNo(1);
+		postVO.setUpNo(1);
+		
+		postService.updatePost(postVO);
+		
+		for(MultipartFile multipartFile: uploadFile1) {
+			if(!multipartFile.isEmpty()) {
+				fileNoStr = req.getParameter("fileNo1");
+				if(!fileNoStr.isEmpty()) fileNo = Integer.valueOf(fileNoStr);
+				
+				String orgFileNm = multipartFile.getOriginalFilename();
+				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
+				
+				String[] fileNmArr = orgFileNm.split("\\.");
+				String fileNm = fileNmArr[0];
+				String ext = fileNmArr[1];
+				String uploadFileNm = fileNm + nowTime + "." + ext;
+				
+				if(ext.equals("jpg") || ext.equals("gif") || ext.equals("png") || ext.equals("jpeg") || ext.equals("bmp") || ext.equals("tif")) {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
+				} else {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/upload";
+				}
+				
+				File saveFolder = new File(uploadPath);
+				File saveFile = new File(uploadPath, uploadFileNm);
+				
+				try {
+					if(!saveFolder.exists()) {
+						if(saveFolder.mkdirs()) System.out.println(saveFolder + " 폴더가 성공적으로 생성되었습니다.");
+						else System.out.println("폴더 생성에 실패했습니다.");
+					}
+					
+					multipartFile.transferTo(saveFile);
+					
+					postVO.setFileNm(orgFileNm);
+					postVO.setUploadFileNm(uploadFileNm);
+					postService.insertFile(postVO);
+					
+					if(boardType.equals("A01")) {
+						if(!fileNoStr.isEmpty()) {
+							postVO.setFileNo(fileNo);
+							postService.updateMapping(postVO);
+						} else {
+							postService.insertMapping(postVO);
+						}
+					} else if(boardType.equals("A02")) {
+						postService.insertMapping(postVO);
+					}
+					
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	
+		if(boardType.equals("A01")) {
+			MultipartFile uploadFile2 = mreq.getFile("uploadFile2");	
+			
+			if(!uploadFile2.isEmpty()) {
+				fileNoStr = req.getParameter("fileNo2");
+				if(!fileNoStr.isEmpty()) fileNo = Integer.valueOf(fileNoStr);
+				String orgFileNm = uploadFile2.getOriginalFilename();
+				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
+				
+				String[] fileNmArr = orgFileNm.split("\\.");
+				String fileNm = fileNmArr[0];
+				String ext = fileNmArr[1];
+				
+				if(ext.equals("jpg") || ext.equals("gif") || ext.equals("png") || ext.equals("jpeg") || ext.equals("bmp") || ext.equals("tif")) {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
+				} else {
+					uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/upload";
+				}
+				
+				String uploadFileNm = fileNm + nowTime + "." + ext;
+				
+				File saveFolder = new File(uploadPath);
+				File saveFile = new File(uploadPath, uploadFileNm);
+				
+				try {
+					if(!saveFolder.exists()) {
+						if(saveFolder.mkdirs()) System.out.println(saveFolder + " 폴더가 성공적으로 생성되었습니다.");
+						else System.out.println("폴더 생성에 실패했습니다.");
+					}
+					
+					uploadFile2.transferTo(saveFile);
 					
 					postVO.setFileNm(orgFileNm);
 					postVO.setUploadFileNm(uploadFileNm);
@@ -486,7 +571,6 @@ public class BoardController {
 			}
 		}
 		
-		postService.updatePost(postVO);
 		txManager.commit(txStatus);
 		
 		return "jsonView";
@@ -540,7 +624,31 @@ public class BoardController {
 		
 		if(totalCnt > 0) postService.deleteComment(postVO);
 		
+		postService.deleteMapping(postVO);
 		postService.deletePost(postVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 맵핑 삭제
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/deleteMapping.do")
+	public String deleteMapping(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - deleteMapping.do");
+		System.out.println("============================");
+		
+		postService.deleteMapping(postVO);
 		txManager.commit(txStatus);
 		
 		return "jsonView";

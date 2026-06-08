@@ -7,6 +7,7 @@
 			A.BOARD_NO
 		  , B.MENU_NM AS PARENT_NM
 		  , A.BOARD_NM
+		  , A.BOARD_TYPE
 		  , A.COMMENT_YN
 		FROM
 			BOARD_MASTER A
@@ -22,33 +23,49 @@
 	
 	<select id="postList" parameterType="postVO" resultType="egovMap">
 		SELECT
-			C.RN
-		  , C.POST_NO
-		  , C.TITLE
-		  , C.USER_NM
-		  , C.FM_REG_DATE
-		  , C.VIEW_CNT
+			F.RN
+		  , F.POST_NO
+		  , F.TITLE
+		  , F.USER_NM
+		  , F.FM_REG_DATE
+		  , F.VIEW_CNT
+		  , F.FILE_NM_DTL
 		FROM
 			(
 				SELECT
 					ROW_NUMBER() OVER(ORDER BY A.POST_NO DESC) AS RN
 				  , A.POST_NO
 				  , A.TITLE
-				  , B.USER_NM
+				  , E.USER_NM
 				  , DATE_FORMAT(A.REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
 				  , A.VIEW_CNT
+				  , D.FILE_NM_DTL
 				FROM
 					POST_MASTER A
+					LEFT OUTER JOIN
+					(
+						SELECT
+							B.POST_NO
+						  , C.FILE_NM_DTL
+						FROM
+							FILE_POST_MAPPER AS B
+							JOIN
+							FILE_MASTER C
+							ON B.FILE_NO = C.FILE_NO
+						GROUP BY
+							B.POST_NO
+					) D
+					ON A.POST_NO = D.POST_NO
 					JOIN
-					USER_MASTER B
-					ON A.REG_NO = B.USER_IDX
+					USER_MASTER E
+					ON A.REG_NO = E.USER_IDX
 				WHERE
 						1=1
 				<if test="boardNo != null and boardNo != ''">
 					AND A.BOARD_NO = #{boardNo}
 				</if>
 				<if test="schAuthor != null and schAuthor != ''">
-					AND B.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
+					AND E.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
 				</if>
 				<if test="schKeyword != null and schKeyword != ''">
 					AND (
@@ -58,15 +75,15 @@
 				</if>
 				ORDER BY
 					A.POST_NO DESC
-			) C
+			) F
 		WHERE
 				1=1
 		<if test="curIdx != null and pageUnit != null and curPage != null">
-			AND C.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+			AND F.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
 		</if>
 		ORDER BY
-			C.RN
-		  , C.POST_NO DESC
+			F.RN
+		  , F.POST_NO DESC
 	</select>
 	
 	<select id="postListCnt" parameterType="postVO" resultType="int">
@@ -226,11 +243,11 @@
 			)
 		  <if test="postNo == '' or postNo == null or postNo &lt;= 0">
 		  , (
-		  		SELECT
-		  			MAX(POST_NO) + 1
-		  		FROM
-		  			POST_MASTER
-		  	)
+				SELECT
+					MAX(POST_NO)
+				FROM
+					POST_MASTER
+			)
 		  </if>
 		  <if test="postNo > 0">
 		  , #{postNo}
@@ -311,6 +328,9 @@
 				1=1
 		<if test="postNo != null and postNo != ''">
 			AND POST_NO = #{postNo}
+		</if>
+		<if test="fileNo != null and fileNo != ''">
+			AND FILE_NO = #{fileNo}
 		</if>
 	</delete>
 	

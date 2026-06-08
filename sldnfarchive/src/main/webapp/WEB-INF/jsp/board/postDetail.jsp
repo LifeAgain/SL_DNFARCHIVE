@@ -53,8 +53,24 @@
 		                    				</td>
 		                    			</tr>
 		                    			<tr>
+		                    				<c:if test="${postInfo.boardType eq 'A01'}">
 		                    				<td colspan="2" class="py-5">${selectPost.content}</td>
+		                    				</c:if>
+		                    				<c:if test="${postInfo.boardType eq 'A02'}">
+		                    				<td colspan="2" class="py-5">
+		                    					<c:forEach var="fileList" items="${fileList}" varStatus="status">
+		                    						<div class="text-center mb-4">
+		                    							<p id="contentImg${fileList.fileNo}" class="content-img">
+		                    								<img src="/images/upload/${fileList.fileNmDtl}" />
+		                    								<i class="fa-solid fa-x" onclick="javascript:beforeDeleteMapping(this);"></i>
+	                    								</p>
+		                    						</div>
+		                    					</c:forEach>
+		                    					<p class="text-start">${selectPost.content}</p>
+		                    				</td>
+		                    				</c:if>
 		                    			</tr>
+		                    			<c:if test="${postInfo.boardType eq 'A01'}">
 		                    			<c:forEach var="fileList" items="${fileList}" varStatus="status">
 			                    			<tr id="files${fileList.rn}">
 			                    				<td class="py-1"><strong>첨부${fileList.rn}</strong></td>
@@ -68,6 +84,7 @@
 			                    				</td>
 			                    			</tr>
 		                    			</c:forEach>
+		                    			</c:if>
 		                    			<tr>
 		                    				<td colspan="2" class="py-2"><strong>댓글(${commentCnt})</strong></td>
 		                    			</tr>

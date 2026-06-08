@@ -29,6 +29,7 @@ function chkChangeVal(ele) {
 }
 
 function beforeSavePost() {
+	var boardNo = $("#boardNo").val();
 	var postNo = $("#postNo").val();
 	var cnt = 0;
 	var obj = $("#postForm input[type!='button'][type!='file'][type!='hidden'], #postForm textarea");
@@ -37,7 +38,11 @@ function beforeSavePost() {
 		for(var i = 0; i < obj.length; i++) {
 			var id = $(obj[i]).attr("id");
 			
-			if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile1")[0].files.length > 0 || $("#uploadFile2")[0].files.length > 0) cnt++;
+			if(boardNo == 1) {
+				if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile1")[0].files.length > 0 || $("#uploadFile2")[0].files.length > 0) cnt++;
+			} else if(boardNo == 3) {
+				if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile1")[0].files.length > 0) cnt++;
+			}
 		}
 		
 		if(cnt <= 0) {
@@ -76,8 +81,7 @@ function savePost() {
 	var url = "";
 	var txt = "";
 	var obj = new FormData($("#postForm")[0]);
-	var file1 = $("#uploadFile1")[0].files;
-	var file2 = $("#uploadFile2")[0].files;
+	var boardNo = $("#boardNo").val();
 	var postNo = $("#postNo").val();
 	
 	if(postNo <= 0) {
@@ -86,11 +90,6 @@ function savePost() {
 	} else {
 		url = "/board/updatePost.do";
 		txt = "수정";
-	}
-	
-	for(var pair of obj.entries()) {
-		var id = "#" + pair[0];
-		var val = pair[1];
 	}
 	
 	Swal.fire({
@@ -118,9 +117,16 @@ function savePost() {
 				  			$(id).data("orgVal", val);
 				  			$(id).data("changeYn", "N");
 				  		}
+				  		
+				  		if(boardNo == 3 && !(pair[0] == "uploadFile1")) {
+				  			$(id).val(val);
+				  			$(id).data("orgVal", val);
+				  			$(id).data("changeYn", "N");
+				  		}
 			  		}
 			  		
-			  		goList();
+			  		if(postNo > 0) goDetail(postNo);
+			  		else goList();
 			  		
 			        Swal.fire({
 						icon: "success",
@@ -138,4 +144,11 @@ function savePost() {
 			});
 		}
 	});
+}
+
+function cancel() {
+	var postNo = $("#postNo").val();
+	
+	if(postNo > 0) goDetail(postNo);
+	else goList();
 }

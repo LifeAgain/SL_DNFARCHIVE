@@ -2,8 +2,12 @@ $(function() {
 	if($("#files1").length > 0 || $("#files2").length > 0) {
 		$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
 		$(".board-detail table tr").eq(4).css("backgroundColor", "#efefef");
-	} else if($("#files1").length > 0 && $("#files2").length > 0) {
+		$(".board-detail table tr").eq(5).css("backgroundColor", "#ffffff");
+	}
+	
+	if($("#files1").length > 0 && $("#files2").length > 0) {
 		$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
+		$(".board-detail table tr").eq(4).css("backgroundColor", "#ffffff");
 		$(".board-detail table tr").eq(5).css("backgroundColor", "#efefef");
 	}
 });
@@ -24,10 +28,17 @@ function goPost() {
 	var postNo = $("#postNo").val();
 	var path = "/board/postFrm.do?boardNo=" + boardNo + "&postNo=" + postNo;
 	var js = "/js/board/postFrm.js";
+	var filejs = "/js/util/file.js";
+	var boardType = "";
+	
+	if($(".board-list").length > 0) boardType = "A01";
+	else if($(".board-gallery").length > 0) boardType = "A02";
 	
 	$("#layoutSidenav_content").children().remove();
 	$("#layoutSidenav_content").load(path + " main, footer", function() {
 		$.getScript(js);
+		
+		if(boardType == "A02") $.getScript(filejs);
 	});
 }
 
@@ -80,6 +91,57 @@ function deletePost() {
 			});
 			
 	  		goList();
+	    }
+	  , error: function(req, status, err) { // 결과 에러 콜백함수
+	        Swal.fire({
+				icon: "error",
+				title: "에러 발생",
+				text: "관리자에게 문의해주세요."
+			});
+	    }
+	});
+}
+
+function beforeDeleteMapping(e) {
+	var postNo = $("#postNo").val();
+	var fileNo = $(e).closest(".content-img").attr("id").replace("contentImg", "");
+	var pLen = postNo.length;
+	var fLen = fileNo.length;
+	
+	if(pLen > 0 && fLen > 0) {
+		Swal.fire({
+			icon: "question",
+			title: "삭제 여부",
+			text: "사진을 삭제하시겠습니까?",
+			showCancelButton: true,
+			confirmButtonText: "예",
+			cancelButtonText: "아니오"
+		}).then((res) => {
+			if(res.isConfirmed) {
+				deleteMapping(fileNo);
+			}
+		});
+	}
+}
+
+function deleteMapping(fileNo) {
+	var obj = $("#detailFrm").serializeObject();
+	var postNo = obj.postNo;
+	
+	$.ajax({
+		url: "/board/deleteMapping.do"
+	  , data: {"postNo": postNo, "fileNo": fileNo}
+	  , type: "post"
+	  , dataType: "json"
+	  , async: true
+	  , success: function(res) { // 결과 성공 콜백함수
+	  		Swal.fire({
+				icon: "success",
+				title: "삭제 완료",
+				text: "게시글 삭제를 완료했습니다."
+			});
+			
+	  		goDetail(postNo);
 	    }
 	  , error: function(req, status, err) { // 결과 에러 콜백함수
 	        Swal.fire({

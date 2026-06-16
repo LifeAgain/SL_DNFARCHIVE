@@ -1,5 +1,7 @@
 function movejs_menu(num) {
 	var path = "";
+	var js = "";
+	var util = "";
 	
 	if(num == 1) {
 		path = "/menu/menuList.do";
@@ -10,6 +12,7 @@ function movejs_menu(num) {
 	} else if(num == 3) {
 		path = "/user/userList.do";
 		js = "/js/user/userList.js";
+		util = "/js/util/file.js";
 	} else if(num == 4) {
 		path = "/board/boardList.do";
 		js = "/js/board/boardList.js";
@@ -20,7 +23,8 @@ function movejs_menu(num) {
 		path = "/board/postList.do?boardNo=3";
 		js = "/js/board/postList.js";
 	} else if(num == 7) {
-		
+		path = "/video/videoList.do";
+		js = "/js/video/videoList.js";
 	} else if(num == 8) {
 		
 	}
@@ -28,5 +32,7 @@ function movejs_menu(num) {
 	$("#layoutSidenav_content").children().remove();
 	$("#layoutSidenav_content").load(path + " main, footer", function() {
 		$.getScript(js);
+		
+		if(util.length > 0) $.getScript(util);
 	});
 }

@@ -15,6 +15,9 @@
  */
 package com.sldnfarchive.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -22,8 +25,13 @@ import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,10 +41,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 import com.sldnfarchive.model.UserVO;
 import com.sldnfarchive.service.LoginService;
+import com.sldnfarchive.service.UserService;
 
 /**
  * @Class Name : MainController.java
@@ -62,6 +72,14 @@ public class MainController {
 	/** LoginService */
 	@Resource(name = "loginService")
 	private LoginService loginService;
+	
+	/** userService */
+	@Resource(name = "userService")
+	private UserService userService;
+	
+	/** txManager */
+	@Resource(name = "txManager")
+	protected DataSourceTransactionManager txManager;
 
 	/** Validator */
 	@Resource(name = "beanValidator")
@@ -79,6 +97,116 @@ public class MainController {
 		System.out.println("============================");
 		
 		return "main/main";
+	}
+	
+	/**
+	 * 메인화면
+	 * @return "main/main"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/profile.do")
+	public String profile(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
+		
+		userVO.setUserIdx(2);
+		
+		EgovMap selectUser = userService.selectUser(userVO);
+		
+		System.out.println("============================");
+		System.out.println("Success - profile.do");
+		System.out.println("============================");
+		
+		model.addAttribute("selectUser", selectUser);
+		
+		return "main/profile";
+	}
+	
+	/**
+	 * 회원 정보 수정
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/updateProfile.do")
+	public String updateProfile(@ModelAttribute("userVO") UserVO userVO, HttpServletRequest req, ModelMap model, @RequestParam("uploadFile") MultipartFile[] uploadFile) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		String uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
+		
+		System.out.println("============================");
+		System.out.println("Success - updateProfile.do");
+		System.out.println("============================");
+		
+		userVO.setUserIdx(2);
+		userVO.setUpNo(2);
+		
+		for(MultipartFile multipartFile: uploadFile) {
+			if(!multipartFile.isEmpty()) {
+				String orgFileNm = multipartFile.getOriginalFilename();
+				orgFileNm = orgFileNm.substring(orgFileNm.lastIndexOf("\\") + 1);
+				
+				String[] fileNmArr = orgFileNm.split("\\.");
+				String fileNm = fileNmArr[0];
+				String ext = fileNmArr[1];
+				
+				Date now = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String nowTime = sdf.format(now);
+				String uploadFileNm = fileNm + nowTime + "." + ext;
+				
+				File saveFolder = new File(uploadPath);
+				File saveFile = new File(uploadPath, uploadFileNm);
+				
+				try {
+					if(!saveFolder.exists()) {
+						if(saveFolder.mkdirs()) System.out.println(saveFolder + " 폴더가 성공적으로 생성되었습니다.");
+						else System.out.println("폴더 생성에 실패했습니다.");
+					}
+					
+					multipartFile.transferTo(saveFile);
+					
+					userVO.setFileNm(orgFileNm);
+					userVO.setUploadFileNm(uploadFileNm);
+					userService.insertFile(userVO);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		userService.updateUser(userVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+		
+	}
+	
+	/**
+	 * 회원 정보 삭제
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/deleteProfile.do")
+	public String deleteProfile(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		
+		// txStatus
+		TransactionStatus txStatus = txManager.getTransaction(txDef);
+		
+		System.out.println("============================");
+		System.out.println("Success - deleteProfile.do");
+		System.out.println("============================");
+		
+		userVO.setUserIdx(2);
+		
+		userService.deleteUser(userVO);
+		txManager.commit(txStatus);
+		
+		return "jsonView";
+		
 	}
 
 }

@@ -260,7 +260,7 @@ function beforeSaveUser() {
 			var inputUserMailVal = $("#userMail").val();
 			var userMail = $("#userGrid").getRowData(arr[i]).userMail;
 			
-			if(inputUserMailVal == userMail) {
+			if(flag == "I" && inputUserMailVal == userMail) {
 				$("#userMail").focus();
 					
 				Swal.fire({

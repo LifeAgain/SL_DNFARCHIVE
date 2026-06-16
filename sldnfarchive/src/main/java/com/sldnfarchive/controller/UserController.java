@@ -26,6 +26,7 @@ import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
@@ -201,7 +202,7 @@ public class UserController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/updateUser.do")
-	public String updateUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model, @RequestParam("uploadFile") MultipartFile[] uploadFile) throws Exception {
+	public String updateUser(@ModelAttribute("userVO") UserVO userVO, HttpServletRequest req, ModelMap model, @RequestParam("uploadFile") MultipartFile[] uploadFile) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
@@ -213,6 +214,8 @@ public class UserController {
 		System.out.println("============================");
 		System.out.println("Success - updateUser.do");
 		System.out.println("============================");
+		
+		userVO.setUpNo(1);
 		
 		for(MultipartFile multipartFile: uploadFile) {
 			if(!multipartFile.isEmpty()) {

@@ -37,9 +37,13 @@ function fileCheck(e) {
 function imgChange(id) {
 	var file = $("#" + id)[0].files;
 	var reader = new FileReader();
+	var tg = "";
+	
+	if(id == "uploadFile") tg = "#profileImg";
+	else if(id == "myUploadFile") tg = "#myProfileImg";
 	
 	reader.onload = function(e) {
-		$("#profileImg").attr("src", e.target.result);
+		$(tg).attr("src", e.target.result);
 	}
 	
 	reader.readAsDataURL(file[0]);

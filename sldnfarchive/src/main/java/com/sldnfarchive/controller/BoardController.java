@@ -676,7 +676,7 @@ public class BoardController {
 	}
 	
 	/**
-	 * 게시글 추가
+	 * 댓글 추가
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
@@ -702,7 +702,7 @@ public class BoardController {
 	}
 	
 	/**
-	 * 게시판 정보 수정
+	 * 댓글 수정
 	 * @return "jsonView"
 	 * @exception Exception
 	 */
@@ -728,7 +728,7 @@ public class BoardController {
 	}
 	
 	/**
-	 * 게시판 삭제
+	 * 댓글 삭제
 	 * @return "jsonView"
 	 * @exception Exception
 	 */

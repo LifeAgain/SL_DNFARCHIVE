@@ -33,10 +33,28 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Profile</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="javascript:openModal();">Profile</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="/login/login.do">Logout</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
+        
+        <div class="modal" tabindex="-1">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">내 정보</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="javascript:closeModal();"></button>
+		      </div>
+		      <div class="modal-body">
+		      	
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" onclick="javascript:beforeSaveProfile();">저장</button>
+		        <button type="button" class="btn btn-danger" onclick="javascript:beforeDeleteProfile();">탈퇴</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>

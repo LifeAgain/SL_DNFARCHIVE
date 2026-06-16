@@ -16,6 +16,7 @@ function editProfile() {
 	if($("#myUserStat").is(":checkbox")) {
 		if(len > 0) $("#myUserStat").prop("checked", true);
 		else $("#myUserStat").prop("checked", false);
+		
 		$("#myUserStat").data("orgVal", $("#myUserStat").prop("checked"));
 	}
 }
@@ -27,9 +28,6 @@ function chkChangeVal(ele) {
 	
 	if(type == "checkbox") curVal = $(ele).prop("checked");
 	else curVal = $(ele).val();
-	
-	console.log(orgVal);
-	console.log(curVal);
 	
 	if(orgVal == curVal) $(ele).data("changeYn", "N");
 	else $(ele).data("changeYn", "Y");
@@ -93,7 +91,9 @@ function saveProfile() {
 		
 		if(pair[0] != "myUploadFile") obj.append(orgId, val);
   		else if(pair[0] == "myUploadFile") obj.append("uploadFile", val);
-  		else if(pair[0] == "myUserStat") obj.append("userStat", val);
+  		
+  		if($("#myFrm input[type='checkbox']").is(":checked")) obj.set("userStat", "Y");
+		else obj.set("userStat", "N");
 	}
 	
 	Swal.fire({
@@ -120,6 +120,9 @@ function saveProfile() {
 				  			$(id).val(val);
 				  			$(id).data("orgVal", val);
 				  			$(id).data("changeYn", "N");
+				  		} else if(pair[0] == "myUserStat") {
+				  			if(val == "Y") $(id).attr("checked", "checked");
+				  			else $(id).attr("checked", "");
 				  		}
 			  		}
 			  		

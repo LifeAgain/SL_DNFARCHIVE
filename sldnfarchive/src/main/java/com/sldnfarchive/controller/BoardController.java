@@ -26,6 +26,7 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
@@ -247,6 +248,9 @@ public class BoardController {
 		List<EgovMap> postList = postService.postList(postVO);
 		int totalCnt = postService.postListCnt(postVO);
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		/** EgovPropertyService.sample */
 		postVO.setPageUnit(propertiesService.getInt("pageUnit"));
 		postVO.setPageSize(propertiesService.getInt("pageSize"));
@@ -262,6 +266,7 @@ public class BoardController {
 		System.out.println("Success - postList.do");
 		System.out.println("============================");
 		
+		model.addAttribute("userIdx", idx);
 		model.addAttribute("postInfo", postInfo);
 		model.addAttribute("postList", postList);
 		model.addAttribute("totalCnt", totalCnt);
@@ -308,13 +313,16 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/selectPost.do")
-	public String selectPost(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+	public String selectPost(@ModelAttribute("postVO") PostVO postVO, HttpServletRequest req, ModelMap model) throws Exception {
 		EgovMap postInfo = postService.postInfo(postVO);
 		EgovMap selectPost = postService.selectPost(postVO);
 		List<EgovMap> fileList = postService.fileList(postVO);
 		List<EgovMap> commentList = postService.commentList(postVO);
 		int fileListCnt = postService.fileListCnt(postVO);
 		int commentCnt = postService.commentListCnt(postVO);
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		String userNm = (String) session.getAttribute("userNm");
 		
 		System.out.println("============================");
 		System.out.println("Success - selectBoard.do");
@@ -326,6 +334,8 @@ public class BoardController {
 		model.addAttribute("fileListCnt", fileListCnt);
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("commentCnt", commentCnt);
+		model.addAttribute("userIdx", idx);
+		model.addAttribute("userNm", userNm);
 		
 		return "board/postDetail";
 	}
@@ -336,7 +346,7 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/insertPost.do")
-	public String insertPost(@ModelAttribute("postVO") PostVO postVO, @RequestParam("uploadFile1") MultipartFile[] uploadFile1, MultipartHttpServletRequest mreq, ModelMap model) throws Exception {
+	public String insertPost(@ModelAttribute("postVO") PostVO postVO, HttpServletRequest req, @RequestParam("uploadFile1") MultipartFile[] uploadFile1, MultipartHttpServletRequest mreq, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
@@ -350,12 +360,15 @@ public class BoardController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String nowTime = sdf.format(now);
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		System.out.println("============================");
 		System.out.println("Success - insertPost.do");
 		System.out.println("============================");
 		
-		postVO.setRegNo(1);
-		postVO.setUpNo(1);
+		postVO.setRegNo(idx);
+		postVO.setUpNo(idx);
 		
 		postService.insertPost(postVO);
 		
@@ -463,12 +476,15 @@ public class BoardController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String nowTime = sdf.format(now);
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		System.out.println("============================");
 		System.out.println("Success - updatePost.do");
 		System.out.println("============================");
 		
-		postVO.setRegNo(1);
-		postVO.setUpNo(1);
+		postVO.setRegNo(idx);
+		postVO.setUpNo(idx);
 		
 		postService.updatePost(postVO);
 		
@@ -583,18 +599,21 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/updateViewCnt.do")
-	public String updateViewCnt(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+	public String updateViewCnt(@ModelAttribute("postVO") PostVO postVO, HttpServletRequest req, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		System.out.println("============================");
 		System.out.println("Success - updateViewCnt.do");
 		System.out.println("============================");
 		
-		postVO.setUpNo(1);
+		postVO.setUpNo(idx);
 		
 		postService.updateViewCnt(postVO);
 		txManager.commit(txStatus);
@@ -681,19 +700,22 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/insertComment.do")
-	public String insertComment(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+	public String insertComment(@ModelAttribute("postVO") PostVO postVO, HttpServletRequest req, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		System.out.println("============================");
 		System.out.println("Success - insertComment.do");
 		System.out.println("============================");
 		
-		postVO.setRegNo(1);
-		postVO.setUpNo(1);
+		postVO.setRegNo(idx);
+		postVO.setUpNo(idx);
 		
 		postService.insertComment(postVO);
 		txManager.commit(txStatus);
@@ -707,18 +729,21 @@ public class BoardController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/updateComment.do")
-	public String updateComment(@ModelAttribute("postVO") PostVO postVO, ModelMap model) throws Exception {
+	public String updateComment(@ModelAttribute("postVO") PostVO postVO, HttpServletRequest req, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		System.out.println("============================");
 		System.out.println("Success - updateComment.do");
 		System.out.println("============================");
 		
-		postVO.setUpNo(1);
+		postVO.setUpNo(idx);
 		
 		postService.updateComment(postVO);
 		txManager.commit(txStatus);

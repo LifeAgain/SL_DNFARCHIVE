@@ -39,14 +39,9 @@
                                                 <input class="form-control" id="userPw" name="userPw" type="password" placeholder="Password" onkeyup="javascript:if(event.keyCode==13) login();" />
                                                 <label for="userPw">PW</label>
                                             </div>
-                                            <div class="d-flex align-items-center justify-content-between mb-3">
-	                                            <div class="form-check">
-	                                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-	                                                <label class="form-check-label" for="inputRememberPassword">비밀번호 기억</label>
-	                                            </div>
-	                                            <div>
-	                                            	<a class="btn btn-primary" href="#" onclick="javascript:login();">Login</a>
-	                                            </div>
+                                            <div class="text-center mb-3">
+                                            	<a class="btn btn-secondary" href="/login/login.do">일반로그인</a>
+                                            	<a class="btn btn-primary" href="#" onclick="javascript:login();">Login</a>
 	                                        </div>
                                         </form>
                                     </div>

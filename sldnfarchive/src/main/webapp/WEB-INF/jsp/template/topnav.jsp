@@ -35,7 +35,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#" onclick="javascript:openModal();">Profile</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="/login/login.do">Logout</a></li>
+                        <li><a class="dropdown-item" href="/login/logout.do">Logout</a></li>
                     </ul>
                 </li>
             </ul>

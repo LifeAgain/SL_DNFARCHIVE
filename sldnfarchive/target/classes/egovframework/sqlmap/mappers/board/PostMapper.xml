@@ -117,6 +117,7 @@
 		  , A.TITLE
 		  , A.CONTENT
 		  , DATE_FORMAT(A.REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
+		  , A.REG_NO
 		  , B.USER_NM
 		  , A.REG_DATE
 		  , A.VIEW_CNT

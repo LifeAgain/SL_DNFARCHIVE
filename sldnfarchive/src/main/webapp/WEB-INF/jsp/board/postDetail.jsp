@@ -5,8 +5,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%
   /**
-  * @Class Name : postList.jsp
-  * @Description : 게시판 모듈
+  * @Class Name : postDetail.jsp
+  * @Description : 게시글 상세 모듈
   * @Modification Information
   *
   *   수정일         수정자                   수정내용
@@ -73,8 +73,8 @@
 		                    			<c:if test="${postInfo.boardType eq 'A01'}">
 		                    			<c:forEach var="fileList" items="${fileList}" varStatus="status">
 			                    			<tr id="files${fileList.rn}">
-			                    				<td class="py-1"><strong>첨부${fileList.rn}</strong></td>
-			                    				<td class="py-1">
+			                    				<td width="10%" class="py-1"><strong>첨부${fileList.rn}</strong></td>
+			                    				<td width="90%" class="py-1">
 			                    					<c:if test="${fileList.ext eq 'jpg' or fileList.ext eq 'gif' or fileList.ext eq 'png' or fileList.ext eq 'jpeg' or fileList.ext eq 'bmp' or fileList.ext eq 'tif'}">
 			                    						<a href="/images/upload/${fileList.fileNmDtl}" class="text-decoration-none text-black" download>${fileList.fileNm}</a>
 			                    					</c:if>
@@ -85,26 +85,27 @@
 			                    			</tr>
 		                    			</c:forEach>
 		                    			</c:if>
+		                    			<c:if test="${postInfo.commentYn eq 'Y'}">
 		                    			<tr>
 		                    				<td colspan="2" class="py-2"><strong>댓글(${commentCnt})</strong></td>
 		                    			</tr>
 		                    			<c:forEach var="commentList" items="${commentList}" varStatus="status">
 		                    			<tr id="comment${commentList.commentNo}">
-		                    				<td class="py-1">${commentList.userNm}</td>
-		                    				<td class="py-1">
+		                    				<td width="10%" class="py-1">${commentList.userNm}</td>
+		                    				<td width="90%" class="py-1">
 		                    					<div class="comment-container row col-12 p-0 m-0">
 		                    						<div class="comment-content col-11 ps-0 pe-2 py-0 m-0">${commentList.content}</div>
-													<div class="col-1 p-0 m-0">
-		                    							<i class="fa-solid fa-pencil ms-2" onclick="javascript:updateComment(this);"></i>
-		                    							<i class="fa-solid fa-x ms-2" onclick="javascript:beforeDeleteComment(this);"></i>
-		                    						</div>
+													<div class="col-1 p-0 m-0 h-100 text-end">
+                    									<i class="col-auto fa-solid fa-pencil ms-2" onclick="javascript:updateComment(this);"></i>
+                    									<i class="col-auto fa-solid fa-x ms-2" onclick="javascript:beforeDeleteComment(this);"></i>
+	                    							</div>
 		                    					</div>
 		                    				</td>
 		                    			</tr>
 		                    			</c:forEach>
 		                    			<tr id="comment0">
-		                    				<td class="py-1">admin</td>
-		                    				<td class="py-1">
+		                    				<td width="10%" class="py-1">${userNm}</td>
+		                    				<td width="90%" class="py-1">
 		                    					<div class="row col-12 p-0 m-0">
 		                    						<div class="col-11 ps-0 pe-2 py-0 m-0">
 		                    							<textarea id="content0" name="content0" class="form-control m-0"></textarea>
@@ -117,10 +118,13 @@
 		                    					</div>
 		                    				</td>
 		                    			</tr>
+		                    			</c:if>
 		                    			<tr>
 		                    				<td colspan="2" class="text-end py-2">
+		                    					<c:if test="${(postInfo.boardNo eq 1 and userIdx eq 1) or (postInfo.boardNo ne 1 and selectPost.regNo eq userIdx)}">
 		                    					<input type="button" class="btn btn-warning" value="수정" onclick="javascript:goPost();" />
 		                    					<input type="button" class="btn btn-danger" value="삭제" onclick="javascript:beforeDeletePost();" />
+		                    					</c:if>
 		                    					<input type="button" class="btn btn-primary" value="목록" onclick="javascript:goList();" />
 		                    					<form:hidden path="boardNo" />
 		                    					<form:hidden path="postNo" />

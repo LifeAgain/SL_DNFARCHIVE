@@ -22,6 +22,7 @@
         <property name="interceptors">
             <list>
                 <ref bean="localeChangeInterceptor" />
+                <ref bean="authenticInterceptor" />
             </list>
         </property>
     </bean>
@@ -31,7 +32,9 @@
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="language" />
     </bean>
-
+    
+    <bean id="authenticInterceptor" class="com.sldnfarchive.cmmn.Interceptor" />
+	
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="cmmn/egovError"/>
         <property name="exceptionMappings">

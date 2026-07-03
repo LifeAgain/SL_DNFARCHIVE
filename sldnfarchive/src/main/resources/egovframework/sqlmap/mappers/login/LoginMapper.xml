@@ -4,7 +4,8 @@
 	
 	<select id="loginCheckAdm" parameterType="userVO" resultType="egovMap">
 		SELECT
-			USER_MAIL
+			USER_IDX
+		  , USER_MAIL
 		  , USER_NM
 		  , USER_PW
 		FROM
@@ -38,7 +39,8 @@
 	
 	<select id="loginCheckAdm1" parameterType="userVO" resultType="egovMap">
 		SELECT
-			USER_MAIL
+			USER_IDX
+		  , USER_MAIL
 		  , USER_NM
 		  , USER_PW
 		FROM

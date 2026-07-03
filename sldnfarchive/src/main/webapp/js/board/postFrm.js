@@ -29,7 +29,7 @@ function chkChangeVal(ele) {
 }
 
 function beforeSavePost() {
-	var boardNo = $("#boardNo").val();
+	var boardType = $(".board-frm").attr("class").split(" ")[1].replace("post", "");
 	var postNo = $("#postNo").val();
 	var cnt = 0;
 	var obj = $("#postForm input[type!='button'][type!='file'][type!='hidden'], #postForm textarea");
@@ -38,9 +38,9 @@ function beforeSavePost() {
 		for(var i = 0; i < obj.length; i++) {
 			var id = $(obj[i]).attr("id");
 			
-			if(boardNo == 1) {
+			if(boardType == "A01") {
 				if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile1")[0].files.length > 0 || $("#uploadFile2")[0].files.length > 0) cnt++;
-			} else if(boardNo == 3) {
+			} else if(boardType == "A02") {
 				if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile1")[0].files.length > 0) cnt++;
 			}
 		}
@@ -81,7 +81,7 @@ function savePost() {
 	var url = "";
 	var txt = "";
 	var obj = new FormData($("#postForm")[0]);
-	var boardNo = $("#boardNo").val();
+	var boardType = $(".board-frm").attr("class").split(" ")[1].replace("post", "");
 	var postNo = $("#postNo").val();
 	
 	if(postNo <= 0) {
@@ -118,7 +118,7 @@ function savePost() {
 				  			$(id).data("changeYn", "N");
 				  		}
 				  		
-				  		if(boardNo == 3 && !(pair[0] == "uploadFile1")) {
+				  		if(boardType == "A02" && !(pair[0] == "uploadFile1")) {
 				  			$(id).val(val);
 				  			$(id).data("orgVal", val);
 				  			$(id).data("changeYn", "N");

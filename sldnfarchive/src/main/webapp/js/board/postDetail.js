@@ -1,14 +1,32 @@
 $(function() {
-	if($("#files1").length > 0 || $("#files2").length > 0) {
-		$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
-		$(".board-detail table tr").eq(4).css("backgroundColor", "#efefef");
-		$(".board-detail table tr").eq(5).css("backgroundColor", "#ffffff");
-	}
+	var content = $("#postDetail table tr").eq(2).children().eq(0).text();
+	content = content.replace(/(?:\r\n|\r|\n)/g, "<br/>");
+	var len = $("#comment0").length;
 	
-	if($("#files1").length > 0 && $("#files2").length > 0) {
+	$("#postDetail table tr").eq(2).children().eq(0).html(content);
+	
+	if(len > 0) {
+		if($("#files1").length <= 0 && $("#files2").length <= 0) {
+			$(".board-detail table tr").eq(3).css("backgroundColor", "#efefef");
+			$(".board-detail table tr").eq(4).css("backgroundColor", "#ffffff");
+			$(".board-detail table tr").eq(5).css("backgroundColor", "#ffffff");
+		}
+		
+		if($("#files1").length > 0 || $("#files2").length > 0) {
+			$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
+			$(".board-detail table tr").eq(4).css("backgroundColor", "#efefef");
+			$(".board-detail table tr").eq(5).css("backgroundColor", "#ffffff");
+		}
+		
+		if($("#files1").length > 0 && $("#files2").length > 0) {
+			$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
+			$(".board-detail table tr").eq(4).css("backgroundColor", "#ffffff");
+			$(".board-detail table tr").eq(5).css("backgroundColor", "#efefef");
+		}
+	} else {
 		$(".board-detail table tr").eq(3).css("backgroundColor", "#ffffff");
 		$(".board-detail table tr").eq(4).css("backgroundColor", "#ffffff");
-		$(".board-detail table tr").eq(5).css("backgroundColor", "#efefef");
+		$(".board-detail table tr").eq(5).css("backgroundColor", "#ffffff");
 	}
 });
 

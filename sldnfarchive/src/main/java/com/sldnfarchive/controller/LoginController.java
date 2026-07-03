@@ -22,6 +22,10 @@ import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -103,7 +107,7 @@ public class LoginController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/loginCheckAdm.do")
-	public String loginCheckAdm(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
+	public String loginCheckAdm(@ModelAttribute("userVO") UserVO userVO, HttpServletRequest req, ModelMap model) throws Exception {
 		EgovMap loginInfo = loginService.loginCheckAdm(userVO);
 		int loginCnt = loginService.loginCheckAdmCnt(userVO);
 		
@@ -111,10 +115,47 @@ public class LoginController {
 		System.out.println("Success - loginCheckAdm.do");
 		System.out.println("============================");
 		
+		if(loginInfo != null && loginInfo.get("userIdx") != null) {
+			HttpSession oldSession = req.getSession(false);
+			if(oldSession != null) oldSession.invalidate();
+			
+			HttpSession newSession = req.getSession();
+			int idx = Integer.parseInt(loginInfo.get("userIdx").toString());
+			String userNm = loginInfo.get("userNm").toString();
+			
+			newSession.setAttribute("userIdx", idx);
+			newSession.setAttribute("userNm", userNm);
+		} else {
+			HttpSession session = req.getSession(false);
+			
+			if(session != null) {
+				session.removeAttribute("userIdx");
+				session.removeAttribute("userNm");
+			}
+		}
+		
 		model.addAttribute("loginInfo", loginInfo);
 		model.addAttribute("loginCnt", loginCnt);
 		
 		return "jsonView";
+	}
+	
+	/**
+	 * 로그아웃
+	 * @return "redirect:/"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/logout.do")
+	public String logout(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		HttpSession session = req.getSession(false);
+		
+		System.out.println("============================");
+		System.out.println("Success - logout.do");
+		System.out.println("============================");
+		
+		if(session != null) session.invalidate();
+		
+		return "redirect:/";
 	}
 
 }

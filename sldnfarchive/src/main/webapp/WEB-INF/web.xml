@@ -61,6 +61,15 @@
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>
+	
+	<session-config>
+		<session-timeout>600</session-timeout>
+		<cookie-config>
+			<name>JSESSIONID</name>
+			<secure>false</secure>
+		</cookie-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
     
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>

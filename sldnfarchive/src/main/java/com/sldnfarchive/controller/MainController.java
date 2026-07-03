@@ -26,6 +26,7 @@ import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
@@ -105,15 +106,17 @@ public class MainController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/profile.do")
-	public String profile(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
-		
-		userVO.setUserIdx(2);
-		
-		EgovMap selectUser = userService.selectUser(userVO);
+	public String profile(@ModelAttribute("userVO") UserVO userVO, HttpServletRequest req, ModelMap model) throws Exception {
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
 		
 		System.out.println("============================");
 		System.out.println("Success - profile.do");
 		System.out.println("============================");
+		
+		userVO.setUserIdx(idx);
+		
+		EgovMap selectUser = userService.selectUser(userVO);
 		
 		model.addAttribute("selectUser", selectUser);
 		
@@ -135,12 +138,15 @@ public class MainController {
 		
 		String uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		System.out.println("============================");
 		System.out.println("Success - updateProfile.do");
 		System.out.println("============================");
 		
-		userVO.setUserIdx(2);
-		userVO.setUpNo(2);
+		userVO.setUserIdx(idx);
+		userVO.setUpNo(idx);
 		
 		for(MultipartFile multipartFile: uploadFile) {
 			if(!multipartFile.isEmpty()) {
@@ -189,18 +195,21 @@ public class MainController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/deleteProfile.do")
-	public String deleteProfile(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws Exception {
+	public String deleteProfile(@ModelAttribute("userVO") UserVO userVO, HttpServletRequest req, ModelMap model) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
 		
+		HttpSession session = req.getSession(false);
+		Integer idx = (Integer) session.getAttribute("userIdx");
+		
 		System.out.println("============================");
 		System.out.println("Success - deleteProfile.do");
 		System.out.println("============================");
 		
-		userVO.setUserIdx(2);
+		userVO.setUserIdx(idx);
 		
 		userService.deleteUser(userVO);
 		txManager.commit(txStatus);

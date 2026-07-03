@@ -140,7 +140,9 @@
 			                    </c:if>
 			                    
 		                    	<div id="postBtn" class="col-12 p-0 mx-0 mb-0 mt-2 text-end">
+		                    		<c:if test="${(postInfo.boardNo eq 1 and userIdx eq 1) or postInfo.boardNo ne 1}">
 		                    		<input type="button" class="btn btn-primary" value="작성" onclick="javascript:goPost();" />
+		                    		</c:if>
 		                    	</div>
 		                    	<div id="postPager" class="board-pager col-12 p-0 mx-0 mb-0 mt-2 text-center">
 		                    		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="schPost" />

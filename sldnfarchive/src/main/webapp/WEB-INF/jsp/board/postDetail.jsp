@@ -94,11 +94,19 @@
 		                    				<td width="10%" class="py-1">${commentList.userNm}</td>
 		                    				<td width="90%" class="py-1">
 		                    					<div class="comment-container row col-12 p-0 m-0">
+		                    						<c:if test="${(postInfo.boardNo eq 1 and userIdx eq 1) or (postInfo.boardNo ne 1 and (userIdx eq 1 or commentList.regNo eq userIdx))}">
 		                    						<div class="comment-content col-11 ps-0 pe-2 py-0 m-0">${commentList.content}</div>
-													<div class="col-1 p-0 m-0 h-100 text-end">
-                    									<i class="col-auto fa-solid fa-pencil ms-2" onclick="javascript:updateComment(this);"></i>
-                    									<i class="col-auto fa-solid fa-x ms-2" onclick="javascript:beforeDeleteComment(this);"></i>
+													<div class="col-1 p-0 m-0">
+														<div class="row col-12 h-100 p-0 m-0 gap-2 align-items-center justify-content-end">
+                    										<i class="col-auto px-0 fa-solid fa-pencil" onclick="javascript:updateComment(this);"></i>
+                    										<i class="col-auto px-0 fa-solid fa-check d-none" onclick="javascript:beforeSaveComment(this);"></i>
+                    										<i class="col-auto px-0 fa-solid fa-x" onclick="javascript:beforeDeleteComment(this);"></i>
+	                    								</div>
 	                    							</div>
+	                    							</c:if>
+	                    							<c:if test="${(postInfo.boardNo eq 1 and userIdx ne 1) or (postInfo.boardNo ne 1 and not(userIdx eq 1 or commentList.regNo eq userIdx))}">
+		                    						<div class="comment-content col-12 ps-0 pe-2 py-0 m-0">${commentList.content}</div>	
+	                    							</c:if>
 		                    					</div>
 		                    				</td>
 		                    			</tr>
@@ -112,7 +120,7 @@
 		                    						</div>
 		                    						<div class="col-1 p-0 m-0">
 		                    							<div class="row col-12 h-100 p-0 m-0 align-items-center">
-		                    								<input type="button" class="btn btn-secondary" onclick="javascript:beforeSaveComment(0);" value="작성" />
+		                    								<input type="button" class="btn btn-secondary" onclick="javascript:beforeSaveComment(this);" value="작성" />
 		                    							</div>
 		                    						</div>
 		                    					</div>
@@ -121,7 +129,7 @@
 		                    			</c:if>
 		                    			<tr>
 		                    				<td colspan="2" class="text-end py-2">
-		                    					<c:if test="${(postInfo.boardNo eq 1 and userIdx eq 1) or (postInfo.boardNo ne 1 and selectPost.regNo eq userIdx)}">
+		                    					<c:if test="${(postInfo.boardNo eq 1 and userIdx eq 1) or (postInfo.boardNo ne 1 and (userIdx eq 1 or selectPost.regNo eq userIdx))}">
 		                    					<input type="button" class="btn btn-warning" value="수정" onclick="javascript:goPost();" />
 		                    					<input type="button" class="btn btn-danger" value="삭제" onclick="javascript:beforeDeletePost();" />
 		                    					</c:if>

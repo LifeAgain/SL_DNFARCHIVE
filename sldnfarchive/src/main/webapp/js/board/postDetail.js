@@ -172,27 +172,38 @@ function deleteMapping(fileNo) {
 }
 
 function updateComment(e) {
-	var commentNo = $(e).closest("tr").attr("id").split("comment")[1];
-	var ele = $(e).closest(".comment-container").children().eq(0);
-	var btnUp = $(e).closest(".comment-container").children().eq(1).children().eq(0);
-	var btnDel = $(e).closest(".comment-container").children().eq(1).children().eq(1);
+	var commentId = $(e).closest("tr").attr("id");
+	var commentNo = commentId.split("comment")[1];
+	var ele = $("#" + commentId).children().eq(1).children().children().eq(0);
 	var val = ele.text();
+	var btnUp = $("#" + commentId).children().eq(1).children().children().eq(1).children().children().eq(0);
+	var btnSave = $("#" + commentId).children().eq(1).children().children().eq(1).children().children().eq(1);
+	var otherEle = $("tr[id^='comment'][id!='" + commentId + "'][id!='comment0']");
 	
-	ele.html("<textarea id='content" + commentNo + "' name='content" + commentNo + "' class='form-control m-0'>" + val + "</textarea>");
+	ele.html("<textarea class='col-12 m-0 form-control'>" + val + "</textarea>");
+	btnUp.addClass("d-none");
+	btnSave.removeClass("d-none");
 	
-	btnUp.removeClass("fa-pencil");
-	btnUp.addClass("fa-check");
-	btnUp.attr("onclick", "javascript:beforeSaveComment(" + commentNo + ");");
-	btnUp.css("margin-top", "50%");
-	btnUp.css("transform", "translateY(-50%)");
-	btnDel.css("margin-top", "50%");
-	btnDel.css("transform", "translateY(-50%)");
+	for(var i = 0; i < otherEle.length; i++) {
+		var otherSubEle = otherEle.eq(i).children().eq(1).children().children().eq(0);
+		var otherVal = otherSubEle.text();
+		var otherBtnUp = otherEle.eq(i).children().eq(1).children().children().eq(1).children().children().eq(0);
+		var otherBtnSave = otherEle.eq(i).children().eq(1).children().children().eq(1).children().children().eq(1);
+		
+		otherSubEle.html(otherVal);
+		otherBtnUp.removeClass("d-none");
+		otherBtnSave.addClass("d-none");
+	}
 }
 
-function beforeSaveComment(commentNo) {
+function beforeSaveComment(e) {
+	var commentId = $(e).closest("tr").attr("id");
+	var commentNo = commentId.split("comment")[1];
 	var flag = "";
-	var val = $("#content" + commentNo).val();
+	var val = $("#comment" + commentNo + " textarea").val();
 	var len = val.length;
+	
+	console.log(val);
 	
 	if(len <= 0) {
 		Swal.fire({
@@ -210,7 +221,7 @@ function beforeSaveComment(commentNo) {
 function saveComment(commentNo) {
 	var obj = $("#detailFrm").serializeObject();
 	obj.commentNo = commentNo;
-	obj.content = $("#content" + commentNo).val();
+	obj.content = $("#comment" + commentNo + " textarea").val();
 	var url = "";
 	var txt = "";
 	var postNo = obj.postNo;

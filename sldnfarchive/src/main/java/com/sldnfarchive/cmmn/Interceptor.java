@@ -12,6 +12,7 @@ public class Interceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
 		HttpSession session = req.getSession(false);
 		String reqUrl = req.getRequestURL().toString();
+		String ajaxHeader = req.getHeader("X-Requested-With");
 		
 		System.out.println("============================");
 		System.out.println("preHandle >>>  Controller 실행 전 실행");
@@ -25,24 +26,28 @@ public class Interceptor implements HandlerInterceptor {
 			if(reqUrl.contains("/login")) {
 				return true;
 			} else {
-				res.sendRedirect(req.getContextPath() + "/");
+				if("XMLHttpRequest".equals(ajaxHeader)) {
+					res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "세션이 만료되었습니다.");
+				} else res.sendRedirect(req.getContextPath() + "/");
 				return false;
 			}
 		} else {
 			Integer idx = (Integer) session.getAttribute("userIdx");
 			
-			System.out.println("jsessionid:" + session.getId() + ", idx: " + idx);
-			
 			if(idx == null) {
 				if(reqUrl.contains("/login")) {
 					return true;
 				} else {
-					res.sendRedirect(req.getContextPath() + "/");
+					if("XMLHttpRequest".equals(ajaxHeader)) {
+						res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "세션이 만료되었습니다.");
+					} else res.sendRedirect(req.getContextPath() + "/");
 					return false;
 				}
 			} else {
 				if(reqUrl.contains("/login") && !reqUrl.contains("/login/logout.do")) {
-					res.sendRedirect(req.getContextPath() + "/main/main.do");
+					if("XMLHttpRequest".equals(ajaxHeader)) {
+						res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "세션이 만료되었습니다.");
+					} else res.sendRedirect(req.getContextPath() + "/main/main.do");
 					return false;
 				} else return true;
 			}

@@ -203,8 +203,6 @@ function beforeSaveComment(e) {
 	var val = $("#comment" + commentNo + " textarea").val();
 	var len = val.length;
 	
-	console.log(val);
-	
 	if(len <= 0) {
 		Swal.fire({
 			icon: "info",

@@ -1,3 +1,20 @@
+$(function() {
+	var boardType = "";
+	
+	if($(".board-list").length > 0) boardType = "A01";
+	else if($(".board-gallery").length > 0) boardType = "A02";
+	
+	if(boardType == "A02") {
+		var title = $(".board-gallery tr:nth-child(2) td strong").text();
+		var len = title.length;
+		
+		if(len > 20) {
+			title = title.substring(0, 19) + "...";
+			$(".board-gallery tr:nth-child(2) td strong").text(title);
+		}
+	}
+});
+
 function changeSchType() {
 	var schType = $("#schType").val();
 	

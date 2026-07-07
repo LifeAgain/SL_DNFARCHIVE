@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sldnfarchive.service.impl.VideoMapper">
+
+	<select id="videoList" parameterType="videoVO" resultType="egovMap">
+		SELECT
+			C.RN
+		  , C.VIDEO_NO
+		  , C.TITLE
+		  , C.VIDEO_URL
+		  , C.USER_NM
+		  , C.FM_REG_DATE
+		FROM
+			(
+				SELECT
+					ROW_NUMBER() OVER(ORDER BY A.VIDEO_NO DESC) AS RN
+				  , A.VIDEO_NO
+				  , A.TITLE
+				  , A.VIDEO_URL
+				  , B.USER_NM
+				  , DATE_FORMAT(A.REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
+				FROM
+					VIDEO_MASTER A
+					JOIN
+					USER_MASTER B
+					ON A.REG_NO = B.USER_IDX
+				WHERE
+						1=1
+				<if test="schAuthor != null and schAuthor != ''">
+					AND B.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
+				</if>
+				<if test="schKeyword != null and schKeyword != ''">
+					AND A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
+				</if>
+				ORDER BY
+					A.VIDEO_NO DESC
+			) C
+		WHERE
+				1=1
+		<if test="curIdx != null and pageUnit != null and curPage != null">
+			AND C.RN BETWEEN (#{curIdx} + (#{pageUnit} * (#{curPage} - 1))) AND (#{pageUnit} + (#{pageUnit} * (#{curPage} - 1)))
+		</if>
+		ORDER BY
+			C.RN
+		  , C.VIDEO_NO DESC
+	</select>
+	
+	<select id="videoListCnt" parameterType="videoVO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			VIDEO_MASTER A
+			JOIN
+			USER_MASTER B
+			ON A.REG_NO = B.USER_IDX
+		WHERE
+				1=1
+		<if test="schAuthor != null and schAuthor != ''">
+			AND B.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
+		</if>
+		<if test="schKeyword != null and schKeyword != ''">
+			AND A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
+		</if>
+	</select>
+	
+	<select id="selectVideo" parameterType="videoVO" resultType="egovMap">
+		SELECT
+			VIDEO_NO
+		  , TITLE
+		  , VIDEO_URL
+		FROM
+			VIDEO_MASTER
+		WHERE
+				1=1
+		<if test="videoNo != null and videoNo != ''">
+			AND VIDEO_NO = #{videoNo}
+		</if>
+	</select>
+	
+	<insert id="insertVideo" parameterType="videoVO">
+		INSERT INTO VIDEO_MASTER
+		(
+			TITLE
+		  , VIDEO_URL
+		  , REG_NO
+		  , REG_DATE
+		  , UP_NO
+		  , UP_DATE
+		)
+		VALUES
+		(
+			#{title}
+		  , #{videoUrl}
+		  , 1
+		  , NOW()
+		  , 1
+		  , NOW()
+		)
+	</insert>
+	
+	<update id="updateVideo" parameterType="videoVO">
+		UPDATE
+			VIDEO_MASTER
+		SET
+			TITLE = #{title}
+		  , VIDEO_URL = #{videoUrl}
+		  , UP_NO = 1
+		  , UP_DATE = NOW()
+		WHERE
+				1=1
+		<if test="videoNo != null and videoNo != ''">
+			AND VIDEO_NO = #{videoNo}
+		</if>
+	</update>
+
+	<delete id="deleteVideo" parameterType="videoVO">
+		DELETE FROM
+			VIDEO_MASTER
+		WHERE
+				1=1
+		<if test="videoNo != null and videoNo != ''">
+			AND VIDEO_NO = #{videoNo}
+		</if>
+	</delete>
+
+</mapper>

@@ -33,7 +33,7 @@
 		            		<form id="schVideoFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
 		            			<div class="row col-auto gap-2">
 		            				<select id="schType" name="schType" class="form-select w-auto" onchange="javascript:changeSchType();">
-		            					<option value="schKeyword">제목+내용</option>
+		            					<option value="schKeyword">제목</option>
 		            					<option value="schAuthor">작성자</option>
 		            				</select>
 			            			<input type="text" id="schKeyword" name="schKeyword" class="form-control w-auto" value="" onkeyup="javascript:if(event.keyCode == 13) schVideo(1);" />
@@ -81,7 +81,10 @@
 		                    					<c:if test="${not empty videoList[((i*5) + k)].videoNo}">
 			                    					<div id="postInfo${videoList[((i*5) + k)].videoNo}" class="post-info row col-12 p-0 m-0 justify-content-between align-items-center">
 					                    				<span class="reg-date text-secondary col-auto p-0 my-0 ms-0 me-3">${videoList[((i*5) + k)].fmRegDate}</span>
-				                    					<span class="view-cnt text-secondary col-auto p-0 m-0"><i class="fa-solid fa-eye"></i></span>
+				                    					<div class="video-btn row col-auto p-0 m-0 gap-2">
+				                    						<span class="text-secondary col-auto p-0 m-0"><i class="fa-solid fa-pencil" onclick="javascript:goVideo(this);"></i></span>
+				                    						<span class="text-secondary col-auto p-0 m-0"><i class="fa-solid fa-x" onclick="javascript:beforeDeleteVideo(this);"></i></span>
+				                    					</div>
 				                    				</div>
 			                    				</c:if>
 		                    				</td>
@@ -102,7 +105,7 @@
 			                    </div>
 			                    
 		                    	<div id="videoBtn" class="col-12 p-0 mx-0 mb-0 mt-2 text-end">
-		                    		<input type="button" class="btn btn-primary" value="작성" onclick="javascript:goVideo();" />
+		                    		<input type="button" class="btn btn-primary" value="작성" onclick="javascript:goVideo(this);" />
 		                    	</div>
 		                    	<div id="videoPager" class="board-pager col-12 p-0 mx-0 mb-0 mt-2 text-center">
 		                    		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="schVideo" />

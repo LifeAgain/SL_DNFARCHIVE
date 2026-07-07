@@ -44,10 +44,10 @@
 			                    			<td class="text-end pe-2 py-2"><label for="title"><strong>제목</strong></label></td>
 			                    			<td class="p-2">
 			                    				<c:if test="${flag eq 'I'}">
-			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" onchange="javascript:chkChangeVal(this);" value="" />
+			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" maxlength="100" onchange="javascript:chkChangeVal(this);" value="" />
 			                    				</c:if>
 			                    				<c:if test="${flag eq 'U'}">
-			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" onchange="javascript:chkChangeVal(this);" value="${selectPost.title}" />
+			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" maxlength="100" onchange="javascript:chkChangeVal(this);" value="${selectPost.title}" />
 			                    				</c:if>
 			                    			</td>
 			                    		</tr>

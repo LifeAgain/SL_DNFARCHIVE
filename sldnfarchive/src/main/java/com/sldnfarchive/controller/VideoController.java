@@ -116,22 +116,20 @@ public class VideoController {
 	 */
 	@RequestMapping(value = "/videoFrm.do")
 	public String videoFrm(@ModelAttribute("videoVO") VideoVO videoVO, HttpServletRequest req, ModelMap model) throws Exception {
-		int videoNo = Integer.valueOf(req.getParameter("videoNo"));
+		Integer videoNo = Integer.parseInt(req.getParameter("videoNo"));
 		String flag = "";
-		
-		if(videoNo > 0) {
-			flag = "U";
-			EgovMap selectVideo = videoService.selectVideo(videoVO);
-			
-			model.addAttribute("selectVideo", selectVideo);
-		} else {
-			flag = "I";
-		}
 		
 		System.out.println("============================");
 		System.out.println("Success - videoFrm.do");
 		System.out.println("============================");
 		
+		if(videoNo != null && videoNo > 0) {
+			flag = "U";
+			EgovMap selectVideo = videoService.selectVideo(videoVO);
+			
+			model.addAttribute("selectVideo", selectVideo);
+		} else flag = "I";
+	
 		model.addAttribute("flag", flag);
 		
 		return "video/videoFrm";

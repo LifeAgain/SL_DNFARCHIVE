@@ -1,11 +1,42 @@
 $(function() {
-	var content = $("#postDetail table tr").eq(2).children().eq(0).text();
-	content = content.replace(/(?:\r\n|\r|\n)/g, "<br/>");
-	var len = $("#comment0").length;
+	var boardNo = $("#boardNo").val();
+	var content = null;
+	var title = $(".board-detail table tr:first-child td strong").text();
+	var lenTitle = title.length;
+	var lenComm = $("#comment0").length;
 	
-	$("#postDetail table tr").eq(2).children().eq(0).html(content);
+	if(lenTitle > 50) {
+		title = title.substring(0, 49) + "...";
+		
+		$(".board-detail table tr:first-child td strong").text(title);
+	}
 	
-	if(len > 0) {
+	if(boardNo == 1) {
+		content = $("#postDetail table tr").eq(2).children().eq(0).text();
+		content = content.replace(/(?:\r\n|\r|\n)/g, "<br/>");
+		
+		$("#postDetail table tr").eq(2).children().eq(0).html(content);
+	} else if(boardNo == 3) {
+		if($(".content-img").length > 0) {
+			content = $("#postDetail table tr").eq(2).children().eq(0).children().eq(1).text();
+			content = content.replace(/(?:\r\n|\r|\n)/g, "<br/>");	
+			
+			$("#postDetail table tr").eq(2).children().eq(0).children().eq(1).html(content);
+		} else {
+			content = $("#postDetail table tr").eq(2).children().eq(0).text();
+			content = content.replace(/(?:\r\n|\r|\n)/g, "<br/>");
+			var contentArr = content.split("<br/>");
+			var newContent = "";
+			
+			for(var i = 0; i < contentArr.length; i++) {
+				if(!(i == 0 || i == 1 || i == (contentArr.length - 1))) newContent = newContent + contentArr[i] + "<br/>";
+			}
+			
+			$("#postDetail table tr").eq(2).children().eq(0).html(newContent);
+		}
+	}
+	
+	if(lenComm > 0) {
 		if($("#files1").length <= 0 && $("#files2").length <= 0) {
 			$(".board-detail table tr").eq(3).css("backgroundColor", "#efefef");
 			$(".board-detail table tr").eq(4).css("backgroundColor", "#ffffff");

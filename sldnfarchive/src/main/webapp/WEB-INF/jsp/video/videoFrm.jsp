@@ -6,7 +6,7 @@
 <%
   /**
   * @Class Name : videoFrm.jsp
-  * @Description : 게시글 작성 폼 모듈
+  * @Description : 동영상 작성 폼 모듈
   * @Modification Information
   *
   *   수정일         수정자                   수정내용
@@ -44,10 +44,10 @@
 			                    			<td class="text-end pe-2 py-2"><label for="title"><strong>제목</strong></label></td>
 			                    			<td class="p-2">
 			                    				<c:if test="${flag eq 'I'}">
-			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" onchange="javascript:chkChangeVal(this);" value="" />
+			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" maxlength="100" onchange="javascript:chkChangeVal(this);" value="" />
 			                    				</c:if>
 			                    				<c:if test="${flag eq 'U'}">
-			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" onchange="javascript:chkChangeVal(this);" value="${selectVideo.title}" />
+			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" maxlength="100" onchange="javascript:chkChangeVal(this);" value="${selectVideo.title}" />
 			                    				</c:if>
 			                    			</td>
 			                    		</tr>
@@ -81,6 +81,5 @@
 	            <%@include file="/WEB-INF/jsp/template/innerFooter.jsp" %>
             </div>
         </div>
-        <script src="/js/board/postFrm.js"></script>
-        <script src="/js/util/file.js"></script>
+        <script src="/js/video/videoFrm.js"></script>
 <%@include file="/WEB-INF/jsp/template/footer.jsp" %>

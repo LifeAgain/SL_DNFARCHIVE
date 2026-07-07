@@ -11248,6 +11248,10 @@ body {
 	font-size: 0.875rem;
 }
 
+.board-list table, .board-gallery table {
+	table-layout: fixed;
+}
+
 .board-list table tr:first-child, .board-detail table tr:first-child {
 	border-top: 2px solid var(--bs-card-border-color);
 	border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
@@ -11255,6 +11259,18 @@ body {
 
 .board-list table tr:not(:first-child), .board-detail tr:not(:first-child) {
 	border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+}
+
+.board-list table tr:not(:first-child) td:nth-child(2), .board-gallery tr:nth-child(2) td, .board-detail table tr:first-child td {
+	overflow: hidden;
+}
+
+a[id^="postTitle"] {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .board-pager a {
@@ -11295,7 +11311,7 @@ body {
 	content: "";
 }
 
-.board-detail table tr td .svg-inline--fa {
+.board-detail table tr td .svg-inline--fa, .video-btn span .svg-inline--fa {
 	cursor: pointer;
 }
 
@@ -11319,6 +11335,8 @@ body {
 	width: 20% !important;
 	max-width: 20%;
 }
+
+
 
 .post_img, .no-post_img {
 	display: flex;

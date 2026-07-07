@@ -1,14 +1,13 @@
 $(function() {
-	var postNo = $("#postNo").val();
+	var videoNo = $("#videoNo").val();
 	
-	if(postNo <= 0) $(".btn-save").val("작성");
+	if(videoNo <= 0) $(".btn-save").val("작성");
 	else $(".btn-save").val("수정");
 });
 
 function goList() {
-	var boardNo = $("#boardNo").val();
-	var path = "/board/postList.do?boardNo=" + boardNo;
-	var js = "/js/board/postList.js";
+	var path = "/video/videoList.do";
+	var js = "/js/video/videoList.js";
 	
 	$("#layoutSidenav_content").children().remove();
 	$("#layoutSidenav_content").load(path + " main, footer", function() {
@@ -17,7 +16,6 @@ function goList() {
 }
 
 function chkChangeVal(ele) {
-	var id = $(ele).attr("id");
 	var type = $(ele).attr("type");
 	var orgVal = $(ele).data("orgVal");
 	var curVal = "";
@@ -29,21 +27,16 @@ function chkChangeVal(ele) {
 	else $(ele).data("changeYn", "Y");
 }
 
-function beforeSavePost() {
-	var boardType = $(".board-frm").attr("class").split(" ")[1].replace("post", "");
-	var postNo = $("#postNo").val();
+function beforeSaveVideo() {
+	var videoNo = $("#videoNo").val();
 	var cnt = 0;
-	var obj = $("#postForm input[type!='button'][type!='file'][type!='hidden'], #postForm textarea");
+	var obj = $("#videoFrm input[type!='button'][type!='file'][type!='hidden'], #videoFrm textarea");
 	
-	if(postNo > 0) {
+	if(videoNo > 0) {
 		for(var i = 0; i < obj.length; i++) {
 			var id = $(obj[i]).attr("id");
 			
-			if(boardType == "A01") {
-				if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile1")[0].files.length > 0 || $("#uploadFile2")[0].files.length > 0) cnt++;
-			} else if(boardType == "A02") {
-				if($(obj[i]).data("changeYn") == "Y" || $("#uploadFile1")[0].files.length > 0) cnt++;
-			}
+			if($(obj[i]).data("changeYn") == "Y") cnt++;
 		}
 		
 		if(cnt <= 0) {
@@ -75,28 +68,26 @@ function beforeSavePost() {
 		}
 	}
 	
-	savePost();
+	saveVideo();
 }
 
-function savePost() {
+function saveVideo() {
 	var url = "";
 	var txt = "";
-	var obj = new FormData($("#postForm")[0]);
-	var boardType = $(".board-frm").attr("class").split(" ")[1].replace("post", "");
-	var postNo = $("#postNo").val();
+	var obj = $("#videoFrm").serializeObject();
 	
-	if(postNo <= 0) {
-		url = "/board/insertPost.do";
+	if(obj.videoNo <= 0) {
+		url = "/video/insertVideo.do";
 		txt = "작성";
 	} else {
-		url = "/board/updatePost.do";
+		url = "/video/updateVideo.do";
 		txt = "수정";
 	}
 	
 	Swal.fire({
 		icon: "question",
 		title: "작성 여부",
-		text: "게시글 " + txt + "을 완료하시겠습니까?",
+		text: "내용 " + txt + "을 완료하시겠습니까?",
 		showCancelButton: true,
 		confirmButtonText: "예",
 		cancelButtonText: "아니오"
@@ -106,28 +97,19 @@ function savePost() {
 				url: url
 			  , data: obj
 			  , type: "post"
-			  , processData: false
-			  , contentType: false
+			  , dataType: "json"
+			  , async: true
 			  , success: function(res) { // 결과 성공 콜백함수
-			  		for(var pair of obj.entries()) {
-			  			var id = "#" + pair[0];
-			  			var val = pair[1];
+			  		for(var key in obj) {
+			  			var id = "#" + key;
+			  			var val = obj[key];
 			  			
-			  			if(!(pair[0] == "uploadFile1" || pair[0] == "uploadFile2")) {
-				  			$(id).val(val);
-				  			$(id).data("orgVal", val);
-				  			$(id).data("changeYn", "N");
-				  		}
-				  		
-				  		if(boardType == "A02" && !(pair[0] == "uploadFile1")) {
-				  			$(id).val(val);
-				  			$(id).data("orgVal", val);
-				  			$(id).data("changeYn", "N");
-				  		}
+			  			$(id).val(val);
+			  			$(id).data("orgVal", val);
+			  			$(id).data("changeYn", "N");
 			  		}
 			  		
-			  		if(postNo > 0) goDetail(postNo);
-			  		else goList();
+			  		goList();
 			  		
 			        Swal.fire({
 						icon: "success",
@@ -145,11 +127,4 @@ function savePost() {
 			});
 		}
 	});
-}
-
-function cancel() {
-	var postNo = $("#postNo").val();
-	
-	if(postNo > 0) goDetail(postNo);
-	else goList();
 }

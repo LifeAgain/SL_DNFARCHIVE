@@ -33,20 +33,8 @@ package com.sldnfarchive.model;
  */
 public class VideoVO {
 	
-	/** 검색할 제목/내용 */
-	private String schKeyword;
-	
-	/** 검색할 작성자 */
-	private String schAuthor;
-	
 	/** 동영상 번호 */
 	private int videoNo;
-	
-	/** 게시판 형태 */
-	private String title;
-	
-	/** 게시판명 */
-	private String content;
 	
 	/** 동영상 주소 */
 	private String videoUrl;
@@ -76,44 +64,12 @@ public class VideoVO {
 	private int curIdx = 1;
 	
 
-	public String getSchKeyword() {
-		return schKeyword;
-	}
-
-	public void setSchKeyword(String schKeyword) {
-		this.schKeyword = schKeyword;
-	}
-
-	public String getSchAuthor() {
-		return schAuthor;
-	}
-
-	public void setSchAuthor(String schAuthor) {
-		this.schAuthor = schAuthor;
-	}
-
 	public int getVideoNo() {
 		return videoNo;
 	}
 
 	public void setVideoNo(int videoNo) {
 		this.videoNo = videoNo;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 	public String getVideoUrl() {

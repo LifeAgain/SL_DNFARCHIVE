@@ -11336,8 +11336,6 @@ a[id^="postTitle"] {
 	max-width: 20%;
 }
 
-
-
 .post_img, .no-post_img {
 	display: flex;
 	justify-content: center;
@@ -11360,6 +11358,12 @@ a[id^="postTitle"] {
 	position: relative;
 	display: inline-block;
 	max-width: 200px;
+}
+
+.post_img a {
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 
 .no-post_img img, .post_img img, .content-img img {

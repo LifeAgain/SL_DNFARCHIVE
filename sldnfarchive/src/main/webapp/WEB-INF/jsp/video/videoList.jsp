@@ -29,19 +29,6 @@
 		    <div id="layoutSidenav_content">
 		        <main>
 		            <div class="container-fluid px-4">
-		            	<div class="card card-header mt-4">
-		            		<form id="schVideoFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
-		            			<div class="row col-auto gap-2">
-		            				<select id="schType" name="schType" class="form-select w-auto" onchange="javascript:changeSchType();">
-		            					<option value="schKeyword">제목</option>
-		            					<option value="schAuthor">작성자</option>
-		            				</select>
-			            			<input type="text" id="schKeyword" name="schKeyword" class="form-control w-auto" value="" onkeyup="javascript:if(event.keyCode == 13) schVideo(1);" />
-		            			</div>
-		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schVideo(1);" value="검색" />
-		            		</form>
-		            	</div>
-		            	
 	                	<div class="card my-4">
 	                		<form:form modelAttribute="videoVO" id="videoFrm" name="videoFrm" method="post" onsubmit="javascript: return false;">
 	                		<div class="card-header">
@@ -63,13 +50,13 @@
 		                    				<c:if test="${j eq 0 and not empty videoList[((i*5) + k)]}">
 		                    				<td class="text-center py-2">
 		                    					<div class="post_img">
-		                    						<a href="${videoList[((i*5) + k)].videoUrl}" target="_blank"><img src="http://img.youtube.com/vi/${fn:substring(videoList[((i*5) + k)].videoUrl, 33, fn:length(videoList[((i*5) + k)].videoUrl))}/0.jpg" /></a>
+		                    						<a href="${videoList[((i*5) + k)].videoUrl}" target="_blank"><img src="/images/img_nouser.png" /></a>
 		                    					</div>
 		                    				</td>
 		                    				</c:if>
 		                    				
 		                    				<c:if test="${j eq 1}">
-		                    				<td><c:if test="${not empty videoList[((i*5) + k)].title}"><strong>${videoList[((i*5) + k)].title}</strong></c:if></td>
+		                    				<td><strong></strong></td>
 		                    				</c:if>
 		                    				
 		                    				<c:if test="${j eq 2}">

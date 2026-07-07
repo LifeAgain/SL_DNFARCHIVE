@@ -1,42 +1,31 @@
 $(function() {
-	var title = $(".board-gallery tr:nth-child(2) td strong").text();
-	var len = title.length;
-	
-	if(len > 20) {
-		title = title.substring(0, 19) + "...";
-		$(".board-gallery tr:nth-child(2) td strong").text(title);
-	}
+	getVideoData();
 });
 
-function changeSchType() {
-	var schType = $("#schType").val();
+function getVideoData() {
+	var ele = $(".post_img").children();
 	
-	if(schType == "schAuthor") {
-		$("#schKeyword").attr("id", "schAuthor");
-		$("#schKeyword").attr("name", "schAuthor");
-	} else if(schType == "schKeyword") {
-		$("#schAuthor").attr("id", "schKeyword");
-		$("#schAuthor").attr("name", "schKeyword");
-	}
+	$.each(ele, function(index, element) {
+		var url = $(element).attr("href");
+		
+		$.getJSON("https://noembed.com/embed/", {format: 'json', url: url}, function(data) {
+			var title = data.title;
+			var lenTitle = (data.title == null || typeof data.title == "undefined") ? "" : title.length;
+			
+			if(lenTitle > 20) title = title.substring(0, 19) + "...";
+			
+			$(".board-gallery tr:nth-child(2) td").eq(index).children().text(title);
+			
+			if(data.thumbnail_url != null || typeof data.thumbnail_url == "undefined") {
+				$(".post_img").eq(index).children().children().attr("src", data.thumbnail_url);
+			}
+		});
+	});
 }
 
 function schVideo(pageNo) {
-	var path = "";
-	var key = $("#schType").val();
-	var val = "";
-	
-	if(key == "schKeyword") {
-		val = $("#schKeyword").val();
+	var path = "/video/videoList.do?curPage=" + pageNo;
 		
-		if(val.length > 0) path = "/video/videoList.do?schKeyword=" + val + "&curPage=" + pageNo;
-		else path = "/video/videoList.do?curPage=" + pageNo;
-	} else if(key == "schAuthor") {
-		val = $("#schAuthor").val();
-		
-		if(val.length > 0) path = "/video/videoList.do?schAuthor=" + val + "&curPage=" + pageNo;
-		else path = "/video/videoList.do?curPage=" + pageNo;
-	}
-	
 	$(".card-body").children().remove();
 	$(".card-body").load(path + " #videoList, #videoBtn, #videoPager", function() {
 		

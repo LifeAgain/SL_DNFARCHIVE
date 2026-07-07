@@ -6,7 +6,6 @@
 		SELECT
 			C.RN
 		  , C.VIDEO_NO
-		  , C.TITLE
 		  , C.VIDEO_URL
 		  , C.USER_NM
 		  , C.FM_REG_DATE
@@ -15,7 +14,6 @@
 				SELECT
 					ROW_NUMBER() OVER(ORDER BY A.VIDEO_NO DESC) AS RN
 				  , A.VIDEO_NO
-				  , A.TITLE
 				  , A.VIDEO_URL
 				  , B.USER_NM
 				  , DATE_FORMAT(A.REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
@@ -25,13 +23,7 @@
 					USER_MASTER B
 					ON A.REG_NO = B.USER_IDX
 				WHERE
-						1=1
-				<if test="schAuthor != null and schAuthor != ''">
-					AND B.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
-				</if>
-				<if test="schKeyword != null and schKeyword != ''">
-					AND A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
-				</if>
+					1=1
 				ORDER BY
 					A.VIDEO_NO DESC
 			) C
@@ -54,19 +46,12 @@
 			USER_MASTER B
 			ON A.REG_NO = B.USER_IDX
 		WHERE
-				1=1
-		<if test="schAuthor != null and schAuthor != ''">
-			AND B.USER_NM LIKE CONCAT('%', #{schAuthor}, '%')
-		</if>
-		<if test="schKeyword != null and schKeyword != ''">
-			AND A.TITLE LIKE CONCAT('%', #{schKeyword}, '%')
-		</if>
+			1=1
 	</select>
 	
 	<select id="selectVideo" parameterType="videoVO" resultType="egovMap">
 		SELECT
 			VIDEO_NO
-		  , TITLE
 		  , VIDEO_URL
 		FROM
 			VIDEO_MASTER
@@ -80,8 +65,7 @@
 	<insert id="insertVideo" parameterType="videoVO">
 		INSERT INTO VIDEO_MASTER
 		(
-			TITLE
-		  , VIDEO_URL
+			VIDEO_URL
 		  , REG_NO
 		  , REG_DATE
 		  , UP_NO
@@ -89,8 +73,7 @@
 		)
 		VALUES
 		(
-			#{title}
-		  , #{videoUrl}
+			#{videoUrl}
 		  , 1
 		  , NOW()
 		  , 1
@@ -102,8 +85,7 @@
 		UPDATE
 			VIDEO_MASTER
 		SET
-			TITLE = #{title}
-		  , VIDEO_URL = #{videoUrl}
+			VIDEO_URL = #{videoUrl}
 		  , UP_NO = 1
 		  , UP_DATE = NOW()
 		WHERE

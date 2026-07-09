@@ -84,6 +84,47 @@
 			CTE.ID
 	</select>
 	
+	<select id="loginMenuList" resultType="egovMap">
+		SELECT
+			A.ID
+		  , A.TEXT
+		  , A.TYPE
+		FROM
+			(
+				(
+					SELECT
+						CONCAT(MENU_LCD, MENU_SCD) AS ID
+					  , MENU_NM AS TEXT
+					  , (
+						  		CASE MENU_SCD
+						  		WHEN '00' THEN '#'
+						  		ELSE CONCAT(MENU_LCD, '00')
+						  		END
+						  	) AS PARENT
+					  , ICON_TYPE AS TYPE
+					  , USE_YN
+					FROM
+						MENU_MASTER
+				)
+				UNION ALL
+				(
+					SELECT
+						CONCAT(SUBSTR(PARENT_CD, 1, 1), LPAD(BOARD_NO, 2, '0')) AS ID
+					 , BOARD_NM AS TEXT
+					 , PARENT_CD AS PARENT
+					 , BOARD_TYPE AS TYPE
+					 , USE_YN
+					FROM
+						BOARD_MASTER
+				)
+			) A
+		WHERE
+				1=1
+			AND A.USE_YN = 'Y'
+		ORDER BY
+			A.ID
+	</select>
+	
 	<select id="maxLcd" resultType="String">
 		SELECT
 			MAX(MENU_LCD) AS MAX_LCD

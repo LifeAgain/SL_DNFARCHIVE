@@ -48,6 +48,12 @@ public interface MenuMapper {
 	List<EgovMap> menuList(MenuVO menuVO) throws Exception;
 	
 	/**
+	 * 로그인 시 메뉴 리스트를 조회한다.
+	 * @exception Exception
+	 */
+	List<EgovMap> loginMenuList() throws Exception;
+	
+	/**
 	 * 가장 최근에 만들어진 대분류코드를 조회한다.
 	 * @exception Exception
 	 */

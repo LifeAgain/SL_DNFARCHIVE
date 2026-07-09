@@ -88,6 +88,17 @@ public class PostServiceImpl extends EgovAbstractServiceImpl implements PostServ
 	}
 	
 	/**
+	 * 최근 게시물 조회
+	 * @param PostVO
+	 * @return postMapper.postList
+	 * @exception Exception
+	 */
+	@Override
+	public List<EgovMap> curPostList() throws Exception {
+		return postMapper.curPostList();
+	}
+	
+	/**
 	 * 게시글 상세 조회
 	 * @param PostVO
 	 * @return postMapper.selectPost

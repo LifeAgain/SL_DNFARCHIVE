@@ -44,7 +44,7 @@ public class Interceptor implements HandlerInterceptor {
 					return false;
 				}
 			} else {
-				if(reqUrl.contains("/login") && !reqUrl.contains("/login/logout.do")) {
+				if(reqUrl.contains("/login") && !(reqUrl.contains("/login/logout.do") || reqUrl.contains("/main/loginMenuList.do"))) {
 					if("XMLHttpRequest".equals(ajaxHeader)) {
 						res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "세션이 만료되었습니다.");
 					} else res.sendRedirect(req.getContextPath() + "/main/main.do");

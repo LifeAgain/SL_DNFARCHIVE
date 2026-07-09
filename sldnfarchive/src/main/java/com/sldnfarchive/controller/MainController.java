@@ -20,9 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,21 +31,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import com.sldnfarchive.model.MenuVO;
+import com.sldnfarchive.model.PostVO;
 import com.sldnfarchive.model.UserVO;
+import com.sldnfarchive.model.VideoVO;
 import com.sldnfarchive.service.LoginService;
+import com.sldnfarchive.service.MenuService;
+import com.sldnfarchive.service.PostService;
 import com.sldnfarchive.service.UserService;
+import com.sldnfarchive.service.VideoService;
 
 /**
  * @Class Name : MainController.java
@@ -78,6 +77,18 @@ public class MainController {
 	@Resource(name = "userService")
 	private UserService userService;
 	
+	/** menuService */
+	@Resource(name = "menuService")
+	private MenuService menuService;
+	
+	/** postService */
+	@Resource(name = "postService")
+	private PostService postService;
+	
+	/** videoService */
+	@Resource(name = "videoService")
+	private VideoService videoService;
+	
 	/** txManager */
 	@Resource(name = "txManager")
 	protected DataSourceTransactionManager txManager;
@@ -92,17 +103,54 @@ public class MainController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/main.do")
-	public String main() throws Exception {
+	public String main(@ModelAttribute("postVO") PostVO postVO, @ModelAttribute("videoVO") VideoVO videoVO, ModelMap model) throws Exception {
+		List<EgovMap> curPostList = postService.curPostList();
+		int totalPostCnt = postService.postListCnt(postVO);
+		List<EgovMap> curVideoList = videoService.curVideoList();
+		int totalVideoCnt = videoService.videoListCnt(videoVO);
+		
 		System.out.println("============================");
 		System.out.println("Success - main.do");
 		System.out.println("============================");
+		
+		model.addAttribute("curPostList", curPostList);
+		model.addAttribute("totalPostCnt", totalPostCnt);
+		model.addAttribute("curVideoList", curVideoList);
+		model.addAttribute("totalVideoCnt", totalVideoCnt);
 		
 		return "main/main";
 	}
 	
 	/**
-	 * 메인화면
-	 * @return "main/main"
+	 * 메인메뉴
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/loginMenuList.do")
+	public String loginMenuList(@ModelAttribute("menuVO") MenuVO menuVO, HttpServletRequest req, ModelMap model) throws Exception {		
+		HttpSession session = req.getSession(false);
+		
+		System.out.println("============================");
+		System.out.println("Success - loginMenuList.do");
+		System.out.println("============================");
+		
+		if(session != null) {
+			Integer idx = (Integer) session.getAttribute("userIdx");
+			
+			if(idx != null) {
+				List<EgovMap> loginMenuList = menuService.loginMenuList();
+				
+				model.addAttribute("menuList", loginMenuList);
+				model.addAttribute("userIdx", idx);
+			}
+		}
+		
+		return "/template/leftnav";
+	}
+	
+	/**
+	 * 프로필 화면
+	 * @return "main/profile"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/profile.do")

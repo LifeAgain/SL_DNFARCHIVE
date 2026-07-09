@@ -78,6 +78,17 @@ public class VideoServiceImpl extends EgovAbstractServiceImpl implements VideoSe
 	}
 	
 	/**
+	 * 최신 동영상 조회
+	 * @param VideoVO
+	 * @return videoMapper.curVideoList
+	 * @exception Exception
+	 */
+	@Override
+	public List<EgovMap> curVideoList() throws Exception {
+		return videoMapper.curVideoList();
+	}
+	
+	/**
 	 * 동영상 정보 조회
 	 * @param VideoVO
 	 * @return videoMapper.selectVideo

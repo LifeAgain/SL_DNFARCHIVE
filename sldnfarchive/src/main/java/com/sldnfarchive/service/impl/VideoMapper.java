@@ -55,6 +55,13 @@ public interface VideoMapper {
 	int videoListCnt(VideoVO videoVO) throws Exception;
 	
 	/**
+	 * 최신 동영상 목록을 조회한다.
+	 * @param VideoVO
+	 * @exception Exception
+	 */
+	List<EgovMap> curVideoList() throws Exception;
+	
+	/**
 	 * 동영상 정보를 조회한다.
 	 * @param VideoVO
 	 * @exception Exception

@@ -49,6 +49,21 @@
 			1=1
 	</select>
 	
+	<select id="curVideoList" resultType="egovMap">
+		SELECT
+			VIDEO_NO
+		  , VIDEO_URL
+		  , DATE_FORMAT(REG_DATE, "%Y-%m-%d") AS FM_REG_DATE
+		FROM
+			VIDEO_MASTER
+		WHERE
+			1=1
+		ORDER BY
+			REG_DATE DESC
+		  , VIDEO_NO
+		LIMIT 5
+	</select>
+	
 	<select id="selectVideo" parameterType="videoVO" resultType="egovMap">
 		SELECT
 			VIDEO_NO

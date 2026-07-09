@@ -67,6 +67,16 @@ public class MenuServiceImpl extends EgovAbstractServiceImpl implements MenuServ
 	}
 	
 	/**
+	 * 로그인 시 메뉴 리스트 조회
+	 * @return menuMapper.loginMenuList
+	 * @exception Exception
+	 */
+	@Override
+	public List<EgovMap> loginMenuList() throws Exception {
+		return menuMapper.loginMenuList();
+	}
+	
+	/**
 	 * 최근 대분류코드 조회
 	 * @return menuMapper.maxLcd
 	 * @exception Exception

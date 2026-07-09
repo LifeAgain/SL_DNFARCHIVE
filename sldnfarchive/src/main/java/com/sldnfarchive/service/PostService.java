@@ -58,6 +58,13 @@ public interface PostService {
 	 * @exception Exception
 	 */
 	int postListCnt(PostVO postVO) throws Exception;
+	
+	/**
+	 * 최근게시물 조회
+	 * @param PostVO
+	 * @exception
+	 */
+	List<EgovMap> curPostList() throws Exception;
 
 	/**
 	 * 게시글 상세 조회

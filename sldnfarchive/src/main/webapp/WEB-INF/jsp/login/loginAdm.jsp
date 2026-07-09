@@ -36,7 +36,7 @@
                                                 <label for="userMail">ID</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="userPw" name="userPw" type="password" placeholder="Password" onkeyup="javascript:if(event.keyCode==13) login();" />
+                                                <input class="form-control" id="userPw" name="userPw" type="password" placeholder="password" onkeyup="javascript:if(event.keyCode==13) login();" />
                                                 <label for="userPw">PW</label>
                                             </div>
                                             <div class="text-center mb-3">

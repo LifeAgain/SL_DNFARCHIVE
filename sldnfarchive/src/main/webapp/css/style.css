@@ -11248,16 +11248,16 @@ body {
 	font-size: 0.875rem;
 }
 
-.board-list table, .board-gallery table {
+.board-list table, .board-gallery table, .curPostList {
 	table-layout: fixed;
 }
 
-.board-list table tr:first-child, .board-detail table tr:first-child {
+.board-list table tr:first-child, .board-detail table tr:first-child, .curPostList tr:first-child {
 	border-top: 2px solid var(--bs-card-border-color);
 	border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 
-.board-list table tr:not(:first-child), .board-detail tr:not(:first-child) {
+.board-list table tr:not(:first-child), .board-detail tr:not(:first-child), .curPostList tr:not(:first-child), .curPostList tr:not(:last-child) {
 	border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 
@@ -11265,7 +11265,7 @@ body {
 	overflow: hidden;
 }
 
-a[id^="postTitle"] {
+a[id^="postTitle"], td[id^="curPost"] a {
 	display: block;
 	width: 100%;
 	white-space: nowrap;

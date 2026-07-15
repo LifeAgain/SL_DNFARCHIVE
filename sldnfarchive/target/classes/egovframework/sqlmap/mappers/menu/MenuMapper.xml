@@ -84,11 +84,14 @@
 			CTE.ID
 	</select>
 	
-	<select id="loginMenuList" resultType="egovMap">
+	<select id="loginLargeMenuList" resultType="egovMap">
 		SELECT
 			A.ID
 		  , A.TEXT
 		  , A.TYPE
+		  , A.PARENT
+		  , A.PATH
+		  , A.USE_YN
 		FROM
 			(
 				(
@@ -102,6 +105,7 @@
 						  		END
 						  	) AS PARENT
 					  , ICON_TYPE AS TYPE
+					  , MENU_PATH AS PATH
 					  , USE_YN
 					FROM
 						MENU_MASTER
@@ -109,10 +113,11 @@
 				UNION ALL
 				(
 					SELECT
-						CONCAT(SUBSTR(PARENT_CD, 1, 1), LPAD(BOARD_NO, 2, '0')) AS ID
+					   PARENT_CD AS ID
 					 , BOARD_NM AS TEXT
 					 , PARENT_CD AS PARENT
 					 , BOARD_TYPE AS TYPE
+					 , BOARD_NO AS PATH
 					 , USE_YN
 					FROM
 						BOARD_MASTER
@@ -121,6 +126,58 @@
 		WHERE
 				1=1
 			AND A.USE_YN = 'Y'
+			AND SUBSTR(A.ID, 2, 2) = '00'
+			AND A.TYPE = 'default'
+		ORDER BY
+			A.ID
+	</select>
+	
+	<select id="loginSubMenuList" resultType="egovMap">
+		SELECT
+			A.ID
+		  , A.TEXT
+		  , A.TYPE
+		  , A.PARENT
+		  , A.PATH
+		  , A.USE_YN
+		FROM
+			(
+				(
+					SELECT
+						CONCAT(MENU_LCD, MENU_SCD) AS ID
+					  , MENU_NM AS TEXT
+					  , (
+						  		CASE MENU_SCD
+						  		WHEN '00' THEN '#'
+						  		ELSE CONCAT(MENU_LCD, '00')
+						  		END
+						  	) AS PARENT
+					  , ICON_TYPE AS TYPE
+					  , MENU_PATH AS PATH
+					  , USE_YN
+					FROM
+						MENU_MASTER
+				)
+				UNION ALL
+				(
+					SELECT
+					   PARENT_CD AS ID
+					 , BOARD_NM AS TEXT
+					 , PARENT_CD AS PARENT
+					 , BOARD_TYPE AS TYPE
+					 , CONCAT("/board/postList.do?boardNo=", BOARD_NO) AS PATH
+					 , USE_YN
+					FROM
+						BOARD_MASTER
+				)
+			) A
+		WHERE
+				1=1
+			AND A.USE_YN = 'Y'
+			AND NOT(
+							SUBSTR(A.ID, 2, 2) = '00'
+						AND A.TYPE = 'default'
+					)
 		ORDER BY
 			A.ID
 	</select>

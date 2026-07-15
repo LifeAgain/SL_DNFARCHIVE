@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
+import org.egovframe.rte.fdl.cryptography.EgovPasswordEncoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -138,9 +139,11 @@ public class MainController {
 			Integer idx = (Integer) session.getAttribute("userIdx");
 			
 			if(idx != null) {
-				List<EgovMap> loginMenuList = menuService.loginMenuList();
+				List<EgovMap> loginLargeMenuList = menuService.loginLargeMenuList();
+				List<EgovMap> loginSubMenuList = menuService.loginSubMenuList();
 				
-				model.addAttribute("menuList", loginMenuList);
+				model.addAttribute("largeMenuList", loginLargeMenuList);
+				model.addAttribute("subMenuList", loginSubMenuList);
 				model.addAttribute("userIdx", idx);
 			}
 		}
@@ -183,7 +186,7 @@ public class MainController {
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
-		
+		EgovPasswordEncoder pwEncode = new EgovPasswordEncoder();
 		String uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
 		
 		HttpSession session = req.getSession(false);
@@ -229,6 +232,9 @@ public class MainController {
 				}
 			}
 		}
+		
+		pwEncode.setAlgorithm("SHA-256");
+		userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
 		
 		userService.updateUser(userVO);
 		txManager.commit(txStatus);

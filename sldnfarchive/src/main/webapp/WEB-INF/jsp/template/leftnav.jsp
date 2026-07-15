@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn"	   uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -24,76 +25,59 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                        	<c:if test="${not empty largeMenuList}">
+                        	<c:if test="${userIdx eq '1'}">
+                        	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts0" aria-expanded="false" aria-controls="collapseLayouts0">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> ${largeMenuList[0].text}
+                                <c:set var="cntA" value="0" />
+                                <c:forEach var="subMenuListCntA" items="${subMenuList}">
+                                	<c:if test="${fn:contains(subMenuListCntA.id, 'A')}">
+                                		<c:set var="cntA" value="${cntA + 1}" />
+                                	</c:if>
+                                </c:forEach>
+                                <c:if test="${cntA > 0}">
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            	</c:if>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseLayouts0" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(1);">메뉴관리</a>
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(2);">공통코드관리</a>
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(3);">회원관리</a>
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(4);">게시판관리</a>
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(5);">공지사항</a>
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(6);">자유게시판</a>
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(7);">추천공략</a>
-                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu(8);">데미지계산기</a>
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                	<c:if test="${not empty largeMenuList[0]}">
+                        			<c:forEach var="subMenuListA" items="${subMenuList}" varStatus="status">
+                        			<c:if test="${fn:contains(subMenuListA.id, 'A') and subMenuListA.type ne 'default'}">
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu('${subMenuListA.path}');">${subMenuListA.text}</a>
+                                	</c:if>
+                                	</c:forEach>
+                                	</c:if>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Pages
+                            </c:if>
+                        	<c:forEach var="largeMenuList" items="${largeMenuList}" begin="1" varStatus="status"> 	
+                        	<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts${status.index}" aria-expanded="false" aria-controls="collapseLayouts${status.index}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> ${largeMenuList.text}
+                                <c:set var="cnt" value="0" />
+                                <c:forEach var="subMenuListCnt" items="${subMenuList}">
+                                	<c:if test="${fn:contains(subMenuListCnt.id, fn:substring(largeMenuList.id, 0, 1))}">
+                                		<c:set var="cnt" value="${cnt + 1}" />
+                                	</c:if>
+                                </c:forEach>
+                                <c:if test="${cnt > 0}">
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            	</c:if>
                             </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Authentication
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
-                                            <a class="nav-link" href="password.html">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Error
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.html">401 Page</a>
-                                            <a class="nav-link" href="404.html">404 Page</a>
-                                            <a class="nav-link" href="500.html">500 Page</a>
-                                        </nav>
-                                    </div>
+                            <div class="collapse" id="collapseLayouts${status.index}" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                	<c:if test="${not empty largeMenuList}">
+                        			<c:forEach var="subMenuList" items="${subMenuList}" varStatus="status">
+                        			<c:if test="${fn:contains(subMenuList.id, fn:substring(largeMenuList.id, 0, 1)) and subMenuList.type ne 'default'}">
+                                	<a class="nav-link" href="#" onclick="javascript:movejs_menu('${subMenuList.path}');">${subMenuList.text}</a>
+                                	</c:if>
+                                	</c:forEach>
+                                	</c:if>
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
-                            </a>
-                            <a class="nav-link" href="tables.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a>
+                        	</c:forEach>
+                            </c:if>
                         </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
                     </div>
                 </nav>
             </div>

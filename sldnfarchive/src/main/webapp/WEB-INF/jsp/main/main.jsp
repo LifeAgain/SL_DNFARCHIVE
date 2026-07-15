@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -23,7 +24,7 @@
 	<body class="sb-nav-fixed">
 		<%@include file="/WEB-INF/jsp/template/topnav.jsp" %>
 		<div id="layoutSidenav">
-		    <%@include file="/WEB-INF/jsp/template/leftnav.jsp" %>
+		    <jsp:include page="/main/loginMenuList.do" flush="true" />
 		    <div id="layoutSidenav_content">
 		        <main>
 		            <div class="container-fluid px-4">

@@ -296,6 +296,11 @@ function saveMenu() {
 					
 					$("#jstree").jstree(true).destroy();
 					menuList();
+					
+					$("div.sb-sidenav-menu").children().remove();
+					$("div.sb-sidenav-menu").load("/main/loginMenuList.do div.nav", function() {
+						
+					});
 			    }
 			  , error: function(req, status, err) { // 결과 에러 콜백함수
 			        Swal.fire({
@@ -346,6 +351,11 @@ function deleteMenu() {
 			
 			$("#jstree").jstree(true).destroy();
 			menuList();
+			
+			$("div.sb-sidenav-menu").children().remove();
+			$("div.sb-sidenav-menu").load("/main/loginMenuList.do div.nav", function() {
+				
+			});
 	    }
 	  , error: function(req, status, err) { // 결과 에러 콜백함수
 	        Swal.fire({

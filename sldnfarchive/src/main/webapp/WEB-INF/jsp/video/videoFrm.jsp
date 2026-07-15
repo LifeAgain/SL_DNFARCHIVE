@@ -24,7 +24,7 @@
 	<body class="sb-nav-fixed">
 		<%@include file="/WEB-INF/jsp/template/topnav.jsp" %>
 		<div id="layoutSidenav">
-		    <%@include file="/WEB-INF/jsp/template/leftnav.jsp" %>
+		    <jsp:include page="/main/loginMenuList.do" flush="true" />
 		    <div id="layoutSidenav_content">
 		        <main>
 		            <div class="container-fluid px-4">

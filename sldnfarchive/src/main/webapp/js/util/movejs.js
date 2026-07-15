@@ -1,38 +1,16 @@
-function movejs_menu(num) {
-	var path = "";
-	var js = "";
-	var util = "";
+function movejs_menu(path) {
+	var js = "/js/" + path.split("/")[1] + "/" + path.split("/")[2].replace(".do", "") + ".js";
+	var util = "/js/util/file.js";
 	
-	if(num == 1) {
-		path = "/menu/menuList.do";
-		js = "/js/menu/menuList.js";
-	} else if(num == 2) {
-		path = "/code/codeList.do";
-		js = "/js/code/codeList.js";
-	} else if(num == 3) {
-		path = "/user/userList.do";
-		js = "/js/user/userList.js";
-		util = "/js/util/file.js";
-	} else if(num == 4) {
-		path = "/board/boardList.do";
-		js = "/js/board/boardList.js";
-	} else if(num == 5) {
-		path = "/board/postList.do?boardNo=1";
-		js = "/js/board/postList.js";
-	} else if(num == 6) {
-		path = "/board/postList.do?boardNo=3";
-		js = "/js/board/postList.js";
-	} else if(num == 7) {
-		path = "/video/videoList.do";
-		js = "/js/video/videoList.js";
-	} else if(num == 8) {
-		
+	if(path.includes("/board/postList.do")) {
+		var boardNo = path.split("/board/postList.do?boardNo=")[1];
+		js = js.replace("?boardNo=" + boardNo, "");
 	}
 	
 	$("#layoutSidenav_content").children().remove();
 	$("#layoutSidenav_content").load(path + " main, footer", function() {
 		$.getScript(js);
 		
-		if(util.length > 0) $.getScript(util);
+		if(path == "/user/userList.do") $.getScript(util);
 	});
 }

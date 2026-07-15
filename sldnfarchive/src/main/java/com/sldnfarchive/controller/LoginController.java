@@ -16,8 +16,7 @@
 package com.sldnfarchive.controller;
 
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
-
-import java.util.List;
+import org.egovframe.rte.fdl.cryptography.EgovPasswordEncoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +60,7 @@ public class LoginController {
 	/** Validator */
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
+	
 
 	/**
 	 * 로그인 초기화면
@@ -99,6 +99,11 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/loginCheckAdm.do")
 	public String loginCheckAdm(@ModelAttribute("userVO") UserVO userVO, HttpServletRequest req, ModelMap model) throws Exception {
+		EgovPasswordEncoder pwEncode = new EgovPasswordEncoder();
+		pwEncode.setAlgorithm("SHA-256");
+		
+		userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
+		
 		EgovMap loginInfo = loginService.loginCheckAdm(userVO);
 		int loginCnt = loginService.loginCheckAdmCnt(userVO);
 		

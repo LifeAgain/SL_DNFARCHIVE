@@ -16,14 +16,12 @@
 package com.sldnfarchive.controller;
 
 import java.io.File;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
-import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import org.egovframe.rte.fdl.cryptography.EgovPasswordEncoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,19 +31,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
-import com.sldnfarchive.model.CodeVO;
 import com.sldnfarchive.model.UserVO;
 import com.sldnfarchive.service.UserService;
 
@@ -143,13 +135,13 @@ public class UserController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/insertUser.do")
-	public String insertUser(@ModelAttribute("userVO") UserVO userVO, ModelMap model, @RequestParam("uploadFile") MultipartFile[] uploadFile) throws Exception {
+	public String insertUser(@ModelAttribute("userVO") UserVO userVO, HttpServletRequest req, ModelMap model, @RequestParam("uploadFile") MultipartFile[] uploadFile) throws Exception {
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
-		
+		EgovPasswordEncoder pwEncode = new EgovPasswordEncoder();
 		String uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
 		
 		System.out.println("============================");
@@ -190,6 +182,9 @@ public class UserController {
 			}
 		}
 		
+		pwEncode.setAlgorithm("SHA-256");
+		userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
+		
 		userService.insertUser(userVO);
 		txManager.commit(txStatus);
 		
@@ -208,7 +203,7 @@ public class UserController {
 		
 		// txStatus
 		TransactionStatus txStatus = txManager.getTransaction(txDef);
-		
+		EgovPasswordEncoder pwEncode = new EgovPasswordEncoder();
 		String uploadPath = "C:/Users/Samsung5/git/SL_DNFARCHIVE/sldnfarchive/src/main/webapp/images/upload";
 		
 		System.out.println("============================");
@@ -250,6 +245,9 @@ public class UserController {
 				}
 			}
 		}
+		
+		pwEncode.setAlgorithm("SHA-256");
+		userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
 		
 		userService.updateUser(userVO);
 		txManager.commit(txStatus);

@@ -173,7 +173,7 @@ function deleteProfile() {
 				title: "탈퇴 완료",
 				text: "회원 탈퇴를 완료했습니다."
 			}).then((res) => {
-				window.location.href = "/login/login.do";
+				window.location.href = "/login/logout.do";
 			});
 	    }
 	  , error: function(req, status, err) { // 결과 에러 콜백함수

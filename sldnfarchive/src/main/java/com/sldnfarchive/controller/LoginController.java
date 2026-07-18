@@ -23,14 +23,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import com.sldnfarchive.model.OAuthVO;
 import com.sldnfarchive.model.UserVO;
 import com.sldnfarchive.service.LoginService;
+import com.sldnfarchive.service.OAuthService;
+import com.sldnfarchive.service.UserService;
 
 /**
  * @Class Name : LoginController.java
@@ -56,6 +66,22 @@ public class LoginController {
 	/** LoginService */
 	@Resource(name = "loginService")
 	private LoginService loginService;
+	
+	/** UserService */
+	@Resource(name = "userService")
+	private UserService userService;
+	
+	/** OAuthService */
+	@Resource(name = "kakaoOAuthVO")
+	private OAuthVO kakaoOAuthVO;
+	
+	/** OAuthService */
+	@Resource(name = "OAuthService")
+	private OAuthService OAuthService;
+	
+	/** txManager */
+	@Resource(name = "txManager")
+	protected DataSourceTransactionManager txManager;
 
 	/** Validator */
 	@Resource(name = "beanValidator")
@@ -64,21 +90,80 @@ public class LoginController {
 
 	/**
 	 * 로그인 초기화면
+	 * @param model
 	 * @return "login/login"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/login.do")
-	public String login() throws Exception {
+	public String login(ModelMap model) throws Exception {
+		String id = kakaoOAuthVO.getClientId();
+		String callbackUri = kakaoOAuthVO.getCallbackUrl();
+		String url = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" + id + "&redirect_uri=" + callbackUri;
+		
 		System.out.println("============================");
 		System.out.println("Success - login.do");
 		System.out.println("============================");
+		
+		model.addAttribute("access_url", url);
 		
 		return "login/login";
 	}
 	
 	/**
+	 * 유저 로그인
+	 * @param UserVO - 로그인 요청 정보가 담긴 VO
+	 * @param model
+	 * @return "jsonView"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = "/loginCheck.do")
+	public String loginCheck(@RequestParam String code) throws Exception {
+		String accessToken = OAuthService.getAccessToken(code);
+		UserVO userVO = new UserVO();
+		
+		System.out.println("============================");
+		System.out.println("Success - loginCheck.do");
+		System.out.println("============================");
+		
+		if(accessToken == null) return "redirect:/";
+		
+		EgovMap userInfo = OAuthService.getUserInfo(accessToken);
+		
+		String id = (String) userInfo.get("id");
+		String nickname = (String) userInfo.get("nickname");
+		
+		if(id == null) return "redirect:/";
+		
+		userVO.setUserMail("Kakao@" + id);
+		
+		EgovMap dbUserInfo = loginService.loginCheck(userVO);
+		
+		if(dbUserInfo == null || dbUserInfo.isEmpty()) {
+			userVO.setUserNm(nickname);
+			userVO.setUserStat("Y");
+			userService.insertUser(userVO);
+			
+			dbUserInfo = loginService.loginCheck(userVO);
+		}
+		
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest req = attr.getRequest();
+		
+		HttpSession oldSession = req.getSession(false);
+		if(oldSession != null) oldSession.invalidate();
+		HttpSession newSession = req.getSession();
+		
+		Integer idx = Integer.parseInt(dbUserInfo.get("userIdx").toString());
+		
+		newSession.setAttribute("userIdx", idx);
+		newSession.setAttribute("userNm", nickname);
+		
+		return "redirect:/main/main.do";
+	}
+	
+	/**
 	 * 관리자 로그인
-	 * @return "login/login"
+	 * @return "login/loginAdm"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/loginAdm.do")

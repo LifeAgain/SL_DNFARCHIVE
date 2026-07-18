@@ -182,8 +182,10 @@ public class UserController {
 			}
 		}
 		
-		pwEncode.setAlgorithm("SHA-256");
-		userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
+		if(!(req.getParameter("userPw") == null || req.getParameter("userPw").equals(""))) {
+			pwEncode.setAlgorithm("SHA-256");
+			userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
+		}
 		
 		userService.insertUser(userVO);
 		txManager.commit(txStatus);
@@ -246,9 +248,11 @@ public class UserController {
 			}
 		}
 		
-		pwEncode.setAlgorithm("SHA-256");
-		userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
-		
+		if(!(req.getParameter("userPw") == null || req.getParameter("userPw").equals(""))) {
+			pwEncode.setAlgorithm("SHA-256");
+			userVO.setUserPw(pwEncode.encryptPassword(req.getParameter("userPw")));
+		}
+			
 		userService.updateUser(userVO);
 		txManager.commit(txStatus);
 		

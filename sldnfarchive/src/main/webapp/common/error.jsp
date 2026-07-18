@@ -10,7 +10,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Error</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="/css/style.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -24,10 +24,7 @@
                                     <h1 class="display-1">Error</h1>
                                     <p class="lead"></p>
                                     <p></p>
-                                    <a href="index.html">
-                                        <i class="fas fa-arrow-left me-1"></i>
-                                        Return to Dashboard
-                                    </a>
+                                    <a href="/"><i class="fas fa-arrow-left me-1"></i> Return to Dashboard</a>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +36,7 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/script.js"></script>
+        <script src="/js/script.js"></script>
     </body>
 </body>
 </html>

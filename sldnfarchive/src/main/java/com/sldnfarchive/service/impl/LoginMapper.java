@@ -41,7 +41,15 @@ import com.sldnfarchive.model.UserVO;
 public interface LoginMapper {
 	
 	/**
-	 * 로그인 정보를 조회한다.
+	 * 로그인된 계정 정보를 조회한다.
+	 * @param UserVO
+	 * @return loginInfo
+	 * @exception Exception
+	 */
+	EgovMap loginCheck(UserVO userVO) throws Exception;
+	
+	/**
+	 * 관리자 로그인 정보를 조회한다.
 	 * @param UserVO
 	 * @return loginInfo
 	 * @exception Exception

@@ -19,6 +19,14 @@ function editProfile() {
 		
 		$("#myUserStat").data("orgVal", $("#myUserStat").prop("checked"));
 	}
+	
+	if($("#myUserMail").val().substring(0, 6) == "Kakao@") {
+		$("#myUserPw").addClass("bg-secondary");
+		$("#myUserPw").attr("readonly", "readonly");
+	} else {
+		$("#myUserPw").removeClass("bg-secondary");
+		$("#myUserPw").attr("readonly", "");
+	}
 }
 
 function chkChangeVal(ele) {
@@ -59,7 +67,7 @@ function beforeSaveProfile() {
 			var id = $(obj[i]).attr("id");
 			var nm = $("label[for='" + id + "']").text();
 			
-			if(!(id == "myUserStat" || id == "myUserNote")) {
+			if(!(id == "myUserStat" || id == "myUserNote" || ($("#myUserMail").val().substring(0, 6) == "Kakao@" && id == "myUserPw"))) {
 				var num = $(obj[i]).val().length;
 			
 				if(num <= 0) {

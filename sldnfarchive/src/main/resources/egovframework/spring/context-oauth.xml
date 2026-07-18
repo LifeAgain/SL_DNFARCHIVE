@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<bean id="kakaoOAuthVO" class="com.sldnfarchive.model.OAuthVO">
+		<property name="serviceName" value="kakao" />
+		<property name="clientId" value="8970394b7156189ea0523522f27446f9" />
+		<property name="clientSecret" value="sBciVI3Rf6eij0C0E1mNyIEpTDzCtOKf" />
+		<property name="callbackUrl" value="http://127.0.0.1:8080/login/loginCheck.do" />
+		<property name="scope" value="profile_nickname" />
+	</bean>
+	
+</beans>

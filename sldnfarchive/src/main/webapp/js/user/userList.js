@@ -155,6 +155,14 @@ function editUser() {
 		  				$(id).attr("readonly", true);
 		  			}
 		  			
+		  			if($("#userMail").val().substring(0, 6) == "Kakao@") {
+						$("#userPw").addClass("bg-secondary");
+						$("#userPw").attr("readonly", "readonly");
+					} else {
+						$("#userPw").removeClass("bg-secondary");
+						$("#userPw").attr("readonly", "");
+					}
+		  			
 		  			if($(id).is(":checkbox")) {
 		  				if(val == "Y") $(id).prop("checked", true);
 		  				else $(id).prop("checked", false);
@@ -189,6 +197,7 @@ function editUser() {
   			if(id == "userMail") {
   				$("#" + id).removeClass("bg-secondary");
   				$("#" + id).attr("readonly", false);
+  				$("#" + id).attr("onchange", "javascript:chkChangeVal(this);");
   			}
   			
   			$("#" + id).val("");
@@ -206,6 +215,14 @@ function chkChangeVal(ele) {
 	
 	if(orgVal == curVal) $(ele).data("changeYn", "N");
 	else $(ele).data("changeYn", "Y");
+	
+	if($("#userMail").val().substring(0, 6) == "Kakao@") {
+		$("#userPw").addClass("bg-secondary");
+		$("#userPw").attr("readonly", "readonly");
+	} else {
+		$("#userPw").removeClass("bg-secondary");
+		$("#userPw").attr("readonly", "");
+	}
 }
 
 function beforeSaveUser() {
@@ -239,7 +256,7 @@ function beforeSaveUser() {
 			var id = $(obj[i]).attr("id");
 			var nm = $("label[for='" + id + "']").text();
 			
-			if(!(id == "userStat" || id == "userNote")) {
+			if(!(id == "userStat" || id == "userNote" || ($("#userMail").val().substring(0, 6) == "Kakao@" && id == "userPw"))) {
 				var num = $(obj[i]).val().length;
 			
 				if(num <= 0) {

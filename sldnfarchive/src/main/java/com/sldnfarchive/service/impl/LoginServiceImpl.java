@@ -62,6 +62,17 @@ public class LoginServiceImpl extends EgovAbstractServiceImpl implements LoginSe
 	 * @exception Exception
 	 */
 	@Override
+	public EgovMap loginCheck(UserVO userVO) throws Exception {
+		return loginMapper.loginCheck(userVO);
+	}
+	
+	/**
+	 * 로그인된 관리자 계정 정보를 조회한다.
+	 * @param UserVO
+	 * @return loginInfo
+	 * @exception Exception
+	 */
+	@Override
 	public EgovMap loginCheckAdm(UserVO userVO) throws Exception {
 		return loginMapper.loginCheckAdm(userVO);
 	}

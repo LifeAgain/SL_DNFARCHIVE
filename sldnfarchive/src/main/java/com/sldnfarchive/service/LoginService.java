@@ -38,9 +38,17 @@ import com.sldnfarchive.model.UserVO;
  *  Copyright (C) by MOPAS All right reserved.
  */
 public interface LoginService {
-
+	
 	/**
 	 * 로그인된 계정 정보를 조회한다.
+	 * @param UserVO
+	 * @return loginInfo
+	 * @exception Exception
+	 */
+	EgovMap loginCheck(UserVO userVO) throws Exception;
+
+	/**
+	 * 로그인된 관리자 계정 정보를 조회한다.
 	 * @param UserVO
 	 * @return loginInfo
 	 * @exception Exception

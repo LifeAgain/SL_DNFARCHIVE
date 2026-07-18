@@ -33,7 +33,7 @@
                                     
                                    	<div class="card-body">
                                            <div class="text-center">
-	                                       		<a class="btn p-0 border-0">
+	                                       		<a href="${access_url}" class="btn p-0 border-0">
 	                                           		<img src="/images/kakao_login_medium_wide.png" />
 	                                           	</a>
                                            </div>

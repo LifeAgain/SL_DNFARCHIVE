@@ -31,11 +31,15 @@
 		            	<div class="card card-header mt-4">
 		            		<form id="schPostFrm" class="row d-block d-md-flex col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
 		            			<div class="row d-block d-md-flex col-12 p-0 m-0 col-md-auto gap-2">
-		            				<select id="schType" name="schType" class="form-select w-100 w-md-auto" onchange="javascript:changeSchType();">
-		            					<option value="schKeyword">제목+내용</option>
-		            					<option value="schAuthor">작성자</option>
-		            				</select>
-			            			<input type="text" id="schKeyword" name="schKeyword" class="form-control w-100 w-md-auto mt-2 mt-md-0" value="" onkeyup="javascript:if(event.keyCode == 13) schPost(1);" />
+		            				<div class="col-12 col-md-auto p-0 m-0">
+			            				<select id="schType" name="schType" class="form-select" onchange="javascript:changeSchType();">
+			            					<option value="schKeyword">제목+내용</option>
+			            					<option value="schAuthor">작성자</option>
+			            				</select>
+		            				</div>
+		            				<div class="col-12 col-md-auto p-0 mx-0 mb-0 mt-2 mt-md-0">
+			            				<input type="text" id="schKeyword" name="schKeyword" class="form-control w-100" value="" onkeyup="javascript:if(event.keyCode == 13) schPost(1);" />
+		            				</div>
 		            			</div>
 		            			<div class="text-end text-md-start w-auto px-0 mt-2 mt-md-0">
 		            				<input type="button" class="btn btn-primary col-auto" onclick="javascript:schPost(1);" value="검색" />

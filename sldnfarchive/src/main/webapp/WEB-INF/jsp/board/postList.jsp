@@ -29,15 +29,17 @@
 		        <main>
 		            <div class="container-fluid px-4">
 		            	<div class="card card-header mt-4">
-		            		<form id="schPostFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
-		            			<div class="row col-auto gap-2">
-		            				<select id="schType" name="schType" class="form-select w-auto" onchange="javascript:changeSchType();">
+		            		<form id="schPostFrm" class="row d-block d-md-flex col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
+		            			<div class="row d-block d-md-flex col-12 p-0 m-0 col-md-auto gap-2">
+		            				<select id="schType" name="schType" class="form-select w-100 w-md-auto" onchange="javascript:changeSchType();">
 		            					<option value="schKeyword">제목+내용</option>
 		            					<option value="schAuthor">작성자</option>
 		            				</select>
-			            			<input type="text" id="schKeyword" name="schKeyword" class="form-control w-auto" value="" onkeyup="javascript:if(event.keyCode == 13) schPost(1);" />
+			            			<input type="text" id="schKeyword" name="schKeyword" class="form-control w-100 w-md-auto mt-2 mt-md-0" value="" onkeyup="javascript:if(event.keyCode == 13) schPost(1);" />
 		            			</div>
-		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schPost(1);" value="검색" />
+		            			<div class="text-end text-md-start w-auto px-0 mt-2 mt-md-0">
+		            				<input type="button" class="btn btn-primary col-auto" onclick="javascript:schPost(1);" value="검색" />
+		            			</div>
 		            		</form>
 		            	</div>
 		            	

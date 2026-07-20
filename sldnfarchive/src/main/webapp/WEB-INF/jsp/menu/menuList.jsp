@@ -43,7 +43,7 @@
 			            				<input type="text" id="schMenuNm" name="schMenuNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schMenu();" />
 			            			</div>
 			            		</div>
-			            		<div class="text-end text-md-start w-auto mt-2 mt-md-0">
+			            		<div class="text-end text-md-start w-auto px-0 mt-2 mt-md-0">
 		            				<input type="button" class="btn btn-primary col-auto" onclick="javascript:schMenu();" value="검색" />
 		            			</div>
 		            		</form>

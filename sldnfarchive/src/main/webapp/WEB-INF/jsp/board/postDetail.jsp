@@ -73,8 +73,8 @@
 		                    			<c:if test="${postInfo.boardType eq 'A01'}">
 		                    			<c:forEach var="fileList" items="${fileList}" varStatus="status">
 			                    			<tr id="files${fileList.rn}">
-			                    				<td width="10%" class="py-1"><strong>첨부${fileList.rn}</strong></td>
-			                    				<td width="90%" class="py-1">
+			                    				<td class="col-2 py-1"><strong>첨부${fileList.rn}</strong></td>
+			                    				<td class="col-10 py-1">
 			                    					<c:if test="${fileList.ext eq 'jpg' or fileList.ext eq 'gif' or fileList.ext eq 'png' or fileList.ext eq 'jpeg' or fileList.ext eq 'bmp' or fileList.ext eq 'tif'}">
 			                    						<a href="/images/upload/${fileList.fileNmDtl}" class="text-decoration-none text-black" download>${fileList.fileNm}</a>
 			                    					</c:if>
@@ -91,12 +91,12 @@
 		                    			</tr>
 		                    			<c:forEach var="commentList" items="${commentList}" varStatus="status">
 		                    			<tr id="comment${commentList.commentNo}">
-		                    				<td width="10%" class="py-1">${commentList.userNm}</td>
-		                    				<td width="90%" class="py-1">
+		                    				<td class="col-2 py-1 text-end pe-2">${commentList.userNm}</td>
+		                    				<td class="col-10 py-1">
 		                    					<div class="comment-container row col-12 p-0 m-0">
 		                    						<c:if test="${(postInfo.boardNo eq 1 and userIdx eq 1) or (postInfo.boardNo ne 1 and (userIdx eq 1 or commentList.regNo eq userIdx))}">
-		                    						<div class="comment-content col-11 ps-0 pe-2 py-0 m-0">${commentList.content}</div>
-													<div class="col-1 p-0 m-0">
+		                    						<div class="comment-content col-8 col-sm-10 col-md-11 ps-0 pe-2 py-0 m-0">${commentList.content}</div>
+													<div class="col-4 col-sm-2 col-md-1 p-0 m-0">
 														<div class="row col-12 h-100 p-0 m-0 gap-2 align-items-center justify-content-end">
                     										<i class="col-auto px-0 fa-solid fa-pencil" onclick="javascript:updateComment(this);"></i>
                     										<i class="col-auto px-0 fa-solid fa-check d-none" onclick="javascript:beforeSaveComment(this);"></i>
@@ -112,13 +112,13 @@
 		                    			</tr>
 		                    			</c:forEach>
 		                    			<tr id="comment0">
-		                    				<td width="10%" class="py-1">${userNm}</td>
-		                    				<td width="90%" class="py-1">
+		                    				<td class="col-2 py-1 text-end pe-2">${userNm}</td>
+		                    				<td class="col-10 py-1">
 		                    					<div class="row col-12 p-0 m-0">
-		                    						<div class="col-11 ps-0 pe-2 py-0 m-0">
+		                    						<div class="col-8 col-sm-10 col-md-11 ps-0 pe-2 py-0 m-0">
 		                    							<textarea id="content0" name="content0" class="form-control m-0"></textarea>
 		                    						</div>
-		                    						<div class="col-1 p-0 m-0">
+		                    						<div class="col-4 col-sm-2 col-md-1 p-0 m-0">
 		                    							<div class="row col-12 h-100 p-0 m-0 align-items-center">
 		                    								<input type="button" class="btn btn-secondary" onclick="javascript:beforeSaveComment(this);" value="작성" />
 		                    							</div>

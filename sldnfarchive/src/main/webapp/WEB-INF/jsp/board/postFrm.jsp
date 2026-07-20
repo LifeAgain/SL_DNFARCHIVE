@@ -41,8 +41,8 @@
 		                    	<div class="board-frm post${postInfo.boardType}">
 			                    	<table class="col-12 p-0 m-0">
 			                    		<tr>
-			                    			<td class="text-end pe-2 py-2"><label for="title"><strong>제목</strong></label></td>
-			                    			<td class="p-2">
+			                    			<td class="col-3 col-sm-2 text-end pe-2 py-2"><label for="title"><strong>제목</strong></label></td>
+			                    			<td class="col-9 col-sm-10 p-2">
 			                    				<c:if test="${flag eq 'I'}">
 			                    					<input type="text" id="title" name="title" class="form-control m-0" placeholder="제목" maxlength="100" onchange="javascript:chkChangeVal(this);" value="" />
 			                    				</c:if>
@@ -52,8 +52,8 @@
 			                    			</td>
 			                    		</tr>
 			                    		<tr>
-			                    			<td class="text-end pe-2 py-2"><label for="content"><strong>내용</strong></label></td>
-			                    			<td class="p-2">
+			                    			<td class="col-3 col-sm-2 text-end pe-2 py-2"><label for="content"><strong>내용</strong></label></td>
+			                    			<td class="col-9 col-sm-10 p-2">
 			                    				<c:if test="${flag eq 'I'}">
 			                    					<textarea id="content" name="content" rows="5" class="form-control m-0" placeholder="내용" onchange="javascript:chkChangeVal(this);"></textarea>
 			                    				</c:if>
@@ -63,23 +63,23 @@
 			                    			</td>
 			                    		</tr>
 			                    		<tr>
-			                    			<td class="text-end pe-2 py-2"><label for="uploadFile1"><strong>첨부1</strong></label></td>
-			                    			<td class="p-2">
+			                    			<td class="col-3 col-sm-2 text-end pe-2 py-2"><label for="uploadFile1"><strong>첨부1</strong></label></td>
+			                    			<td class="col-9 col-sm-10 p-2">
 			                    				<input type="hidden" id="fileNo1" name="fileNo1" value="${fileList[0].fileNo}" />
 			                    				<c:if test="${postInfo.boardType eq 'A01'}">
-			                    				<input type="file" id="uploadFile1" name="uploadFile1" />
+			                    				<input type="file" id="uploadFile1" class="col-12 p-0 m-0" name="uploadFile1" />
 			                    				</c:if>
 			                    				<c:if test="${postInfo.boardType eq 'A02'}">
-			                    				<input type="file" id="uploadFile1" name="uploadFile1" accept="image/*" onchange="javascript:fileCheck(this);" multiple />
+			                    				<input type="file" id="uploadFile1" class="col-12 p-0 m-0" name="uploadFile1" accept="image/*" onchange="javascript:fileCheck(this);" multiple />
 			                    				</c:if>
 			                    			</td>
 			                    		</tr>
 			                    		<c:if test="${postInfo.boardType eq 'A01'}">
 			                    		<tr>
-			                    			<td class="text-end pe-2 py-2"><label for="uploadFile2"><strong>첨부2</strong></label></td>
-			                    			<td class="p-2">
+			                    			<td class="col-3 col-sm-2 text-end pe-2 py-2"><label for="uploadFile2"><strong>첨부2</strong></label></td>
+			                    			<td class="col-9 col-sm-10 p-2">
 			                    				<input type="hidden" id="fileNo2" name="fileNo2" value="${fileList[1].fileNo}" />
-			                    				<input type="file" id="uploadFile2" name="uploadFile2" />
+			                    				<input type="file" id="uploadFile2" class="col-12 p-0 m-0" name="uploadFile2" />
 			                    			</td>
 			                    		</tr>
 			                    		</c:if>

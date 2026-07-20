@@ -61,19 +61,19 @@
 		                    		<div id="postList" class="board-list">
 				                    	<table class="col-12 p-0 m-0">
 				                    		<tr>
-				                    			<th width="10%" class="text-center py-1">번호</th>
-				                    			<th width="45%" class="text-center py-1">제목</th>
-				                    			<th width="15%" class="text-center py-1">작성자</th>
-				                    			<th width="15%" class="text-center py-1">작성일자</th>
-				                    			<th width="15%" class="text-center py-1">조회수</th>
+				                    			<th class="col-2 col-md-1 text-center py-1">번호</th>
+				                    			<th class="col-7 col-md-6 text-center py-1">제목</th>
+				                    			<th class="d-none d-md-table-cell col-sm-2 text-center py-1">작성자</th>
+				                    			<th class="d-none d-md-table-cell col-sm-2 text-center py-1">작성일자</th>
+				                    			<th class="col-3 col-md-1 text-center py-1">조회수</th>
 				                    		</tr>
 				                    		<c:if test="${totalCnt > 0}">
 				                    		<c:forEach var="postList" items="${postList}" varStatus="status">
 				                    		<tr>
 				                    			<td class="text-center py-2">${postList.rn}</td>
 				                    			<td><a id="postTitle${postList.postNo}" href="#" class="text-decoration-none text-black py-2" onclick="javascript:goDetail(${postList.postNo})">${postList.title}</a></td>
-				                    			<td class="text-center py-2">${postList.userNm}</td>
-				                    			<td class="text-center py-2">${postList.fmRegDate}</td>
+				                    			<td class="d-none d-md-table-cell text-center py-2">${postList.userNm}</td>
+				                    			<td class="d-none d-md-table-cell text-center py-2">${postList.fmRegDate}</td>
 				                    			<td class="text-center py-2">${postList.viewCnt}</td>
 				                    		</tr>
 				                    		</c:forEach>

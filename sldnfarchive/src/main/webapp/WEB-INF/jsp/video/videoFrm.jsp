@@ -41,8 +41,8 @@
 		                    	<div class="board-frm">
 			                    	<table class="col-12 p-0 m-0">
 			                    		<tr>
-			                    			<td class="text-end pe-2 py-2"><label for="videoUrl"><strong>영상URL</strong></label></td>
-			                    			<td class="p-2">
+			                    			<td class="col-4 col-sm-2 text-end pe-2 py-2"><label for="videoUrl"><strong>영상URL</strong></label></td>
+			                    			<td class="col-8 col-sm-10 p-2">
 			                    				<c:if test="${flag eq 'I'}">
 			                    					<input type="text" id="videoUrl" name="videoUrl" class="form-control m-0" onchange="javascript:chkChangeVal(this);" placeholder="영상URL" value="" />
 			                    				</c:if>

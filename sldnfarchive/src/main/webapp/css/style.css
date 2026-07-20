@@ -11248,7 +11248,7 @@ body {
 	font-size: 0.875rem;
 }
 
-.board-list table, .board-gallery table, .curPostList {
+.board-list table, .board-gallery table, .board-frm table, .curPostList {
 	table-layout: fixed;
 }
 

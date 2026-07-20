@@ -29,8 +29,8 @@
 		        <main>
 		            <div class="container-fluid px-4">
 		            	<div class="card card-header mt-4">
-		            		<form id="schBoardFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
-		            			<div class="row col-auto gap-2">
+		            		<form id="schBoardFrm" class="row d-block d-md-flex col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
+		            			<div class="row d-block d-md-flex col-12 p-0 m-0 col-md-auto gap-2">
 		            				<div class="input-group px-0 w-auto">
 			            				<label for="schBoardType" class="input-group-text">종류</label>
 			            				<select id="schBoardType" name="schBoardType" class="form-select" onchange="javascript:schBoard();">
@@ -40,7 +40,7 @@
 			            					</c:forEach>
 			            				</select>
 			            			</div>
-			            			<div class="input-group px-0 w-auto">
+			            			<div class="input-group px-0 w-auto mt-2 mt-md-0">
 			            				<label for="schParentCd" class="input-group-text">상위메뉴</label>
 			            				<select id="schParentCd" name="schParentCd" class="form-select" onchange="javascript:schBoard();">
 			            					<option value="">전체</option>
@@ -49,7 +49,7 @@
 			            					</c:forEach>
 			            				</select>
 			            			</div>
-		            				<div class="input-group px-0 w-auto">
+		            				<div class="input-group px-0 w-auto mt-2 mt-md-0">
 			            				<label for="schUseYn" class="input-group-text">사용여부</label>
 			            				<select id="schUseYn" name="schUseYn" class="form-select" onchange="javascript:schBoard();">
 			            					<option value="">전체</option>
@@ -57,7 +57,7 @@
 			            					<option value="N">미사용</option>
 			            				</select>
 			            			</div>
-			            			<div class="input-group px-0 w-auto">
+			            			<div class="input-group px-0 w-auto mt-2 mt-md-0">
 			            				<label for="schCommentYn" class="input-group-text">댓글사용여부</label>
 			            				<select id="schCommentYn" name="schCommentYn" class="form-select" onchange="javascript:schBoard();">
 			            					<option value="">전체</option>
@@ -65,11 +65,13 @@
 			            					<option value="N">미사용</option>
 			            				</select>
 			            			</div>
-			            			<div class="input-group px-0 w-auto">
+			            			<div class="input-group px-0 w-auto mt-2 mt-md-0">
 			            				<label for="schBoardNm" class="input-group-text">이름</label>
 			            				<input type="text" id="schBoardNm" name="schBoardNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schBoard();" />
 			            			</div>
-			            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schBoard();" value="검색" />
+			            			<div class="text-end text-md-start w-auto mt-2 mt-md-0">
+			            				<input type="button" class="btn btn-primary col-auto" onclick="javascript:schBoard();" value="검색" />
+		            				</div>
 		            			</div>
 		            		</form>
 		            	</div>
@@ -89,17 +91,17 @@
 	                        	</div>
                         		
 		                    	<div class="row col-12 p-0 m-0 mt-4">
-			                    	<div class="col-6 p-0 m-0">
+			                    	<div class="col-12 col-md-6 p-0 m-0">
 			                    		<div class="table">
 			                    			<table id="boardGrid"></table>
 			                    			<div id="gridPager"></div>
 			                    		</div>
 			                    	</div>
-			                    	<div class="col-6 p-0 m-0">
+			                    	<div class="col-12 col-md-6 p-0 m-0">
 			                    		<form id="editFrm" onsubmit="javascript:return false;">
 				                    		<div class="row col-12 p-0 m-0">
 					                    		<div class="input-group p-0">
-			                              			<label for="boardType" class="col-3 p-2 text-end">종류</label>
+			                              			<label for="boardType" class="col-4 col-md-3 p-2 text-end">종류</label>
 			                              			<select id="boardType" name="boardType" class="form-select" onchange="javascript:chkChangeVal(this);">
 						            					<option value="">- 선택 -</option>
 						            					<c:forEach var="codeList" items="${codeList}" varStatus="status">
@@ -108,16 +110,16 @@
 						            				</select>
 			                              		</div>
 		                              		</div>
-		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-		                              			<div class="col-6 p-0 m-0">
+		                              		<div class="row d-block d-md-flex col-12 p-0 mx-0 mt-3 mb-0">
+		                              			<div class="col-md-6 col-12 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="boardNm" class="col-6 p-2 text-end">이름</label>
+				                              			<label for="boardNm" class="col-4 col-md-6 p-2 text-end">이름</label>
 				                              			<input type="text" id="boardNm" name="boardNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="이름" value="" />
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-6 p-0 m-0">
+			                              		<div class="col-md-6 col-12 p-0 mx-0 mt-3 mb-0 mt-md-0">
 			                              			<div class="input-group">
-				                              			<label for="parentCd" class="col-6 p-2 text-end">상위메뉴</label>
+				                              			<label for="parentCd" class="col-4 col-md-6 p-2 text-end">상위메뉴</label>
 				                              			<select id="parentCd" name="parentCd" class="form-select" onchange="javascript:chkChangeVal(this);">
 							            					<option value="">- 선택 -</option>
 							            					<c:forEach var="parentMenuList" items="${parentMenuList}" varStatus="status">
@@ -130,13 +132,13 @@
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 		                              			<div class="col-6 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="useYn" class="col-6 p-2 text-end">사용여부</label>
+				                              			<label for="useYn" class="col-8 col-md-6 p-2 text-end">사용여부</label>
 			                              				<input type="checkbox" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>
 			                              		<div class="col-6 p-0 m-0">
 			                              			<div class="input-group">
-				                              			<label for="commentYn" class="col-6 p-2 text-end">댓글기능</label>
+				                              			<label for="commentYn" class="col-8 col-md-6 p-2 text-end">댓글기능</label>
 			                              				<input type="checkbox" id="commentYn" name="commentYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 				                              		</div>
 			                              		</div>

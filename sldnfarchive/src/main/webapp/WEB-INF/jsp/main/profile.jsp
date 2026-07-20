@@ -40,35 +40,35 @@
   			<form id="myFrm" onsubmit="javascript:return false;">
     			<input type="file" id="myUploadFile" name="myUploadFile" class="d-none" accept="image/*" onchange="javascript:fileCheck(this);" />
    				
-   				<div class="row col-12 p-0 m-0">
+   				<div class="row d-block d-lg-flex col-12 p-0 m-0">
     				<div class="input-group p-0">
-            			<label for="myUserMail" class="col-2 p-2 text-end">ID</label>
+            			<label for="myUserMail" class="col-5 col-lg-2 p-2 text-end">ID</label>
             			<input type="text" id="myUserMail" name="myUserMail" class="form-control bg-secondary" placeholder="메일주소" value="${selectUser.userMail}" readonly />
             		</div>
         		</div>
-        		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-        			<div class="col-6 p-0 m-0">
+        		<div class="row d-block d-lg-flex col-12 p-0 mx-0 mt-3 mb-0">
+        			<div class="col-12 col-lg-6 p-0 m-0">
 	     				<div class="input-group">
-	             			<label for="myUserNm" class="col-4 p-2 text-end">이름</label>
+	             			<label for="myUserNm" class="col-5 col-lg-4 p-2 text-end">이름</label>
 	             			<input type="text" id="myUserNm" name="myUserNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="이름(성명/모험단)" value="${selectUser.userNm}" />
 	             		</div>
             		</div>
-            		<div class="col-6 p-0 m-0">
+            		<div class="col-12 col-lg-6 p-0 mx-0 mb-0 mt-3 mt-lg-0">
             			<div class="input-group">
-             				<label for="myUserStat" class="col-8 p-2 text-end stat${selectUser.userStat}">휴면여부</label>
+             				<label for="myUserStat" class="col-5 col-lg-8 p-2 text-end stat${selectUser.userStat}">휴면여부</label>
             				<input type="checkbox" id="myUserStat" name="myUserStat" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
              			</div>
             		</div>
         		</div>
-        		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+        		<div class="row d-block d-lg-flex col-12 p-0 mx-0 mt-3 mb-0">
             		<div class="input-group p-0">
-            			<label for="myUserPw" class="col-2 p-2 text-end">PW</label>
+            			<label for="myUserPw" class="col-5 col-lg-2 p-2 text-end">PW</label>
             			<input type="password" id="myUserPw" name="myUserPw" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="비밀번호" value="${selectUser.userPw}" />
             		</div>
         		</div>
-        		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
+        		<div class="row d-block d-lg-flex col-12 p-0 mx-0 mt-3 mb-0">
    				<div class="input-group p-0">
-            			<label for="myUserNote" class="col-2 p-2 text-end">비고</label>
+            			<label for="myUserNote" class="col-5 col-lg-2 p-2 text-end">비고</label>
             			<textarea id="myUserNote" name="myUserNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);">${selectUser.userNote}</textarea>
             		</div>
         		</div>

@@ -28,8 +28,8 @@
 		        <main>
 		            <div class="container-fluid px-4">
 		            	<div class="card card-header mt-4">
-		            		<form id="schUserFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
-		            			<div class="row col-auto gap-2">
+		            		<form id="schUserFrm" class="row d-block d-md-flex col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
+		            			<div class="row d-block d-md-flex col-12 p-0 m-0 col-md-auto gap-2">
 			            			<div class="input-group px-0 w-auto">
 			            				<label for="schUserStat" class="input-group-text">휴면여부</label>
 			            				<select id="schUserStat" name="schUserStat" class="form-select" onchange="javascript:schUser();">
@@ -38,12 +38,14 @@
 			            					<option value="N">휴면</option>
 			            				</select>
 			            			</div>
-			            			<div class="input-group px-0 w-auto">
+			            			<div class="input-group px-0 w-auto mt-2 mt-md-0">
 			            				<label for="schUserNm" class="input-group-text">이름</label>
 			            				<input type="text" id="schUserNm" name="schUserNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schUser();" />
 			            			</div>
 		            			</div>
-		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schUser();" value="검색" />
+		            			<div class="text-end text-md-start w-auto mt-2 mt-md-0">
+		            				<input type="button" class="btn btn-primary col-auto" onclick="javascript:schUser();" value="검색" />
+		            			</div>
 		            		</form>
 		            	</div>
 		            	
@@ -61,14 +63,14 @@
 		                 			<input type="button" class="btn bg-danger text-bg-danger" onclick="javascript:beforeDeleteUser();" value="삭제" />
 	                        	</div>
                         		
-		                    	<div class="row col-12 p-0 m-0 mt-4">
-			                    	<div class="col-6 p-0 m-0">
+		                    	<div class="row d-block d-md-flex col-12 p-0 m-0 mt-4">
+			                    	<div class="col-12 col-md-6 p-0 m-0">
 			                    		<div class="table">
 			                    			<table id="userGrid"></table>
 			                    			<div id="gridPager"></div>
 			                    		</div>
 			                    	</div>
-			                    	<div class="row col-6 p-0 m-0">
+			                    	<div class="row col-12 col-md-6 p-0 m-0">
 			                    		<div class="col-4 p-0 m-0">
 			                    			<div class="col-12 ps-2 pe-0 py-0">
 			                    				<img id="profileImg" class="col-12 p-0 m-0" src="/images/img_nouser.png" />
@@ -80,39 +82,43 @@
 					                    		
 					                    		<div class="row col-12 p-0 m-0">
 						                    		<div class="input-group p-0">
-				                              			<label for="userMail" class="col-2 p-2 text-end">ID</label>
+				                              			<label for="userMail" class="col-4 col-md-2 p-2 text-end">ID</label>
 				                              			<input type="text" id="userMail" name="userMail" class="form-control bg-secondary" placeholder="메일주소" value="" readonly />
 				                              		</div>
 			                              		</div>
-			                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-			                              			<div class="col-6 p-0 m-0">
+			                              		<div class="row d-block d-md-flex col-12 p-0 mx-0 mt-3 mb-0">
+			                              			<div class="col-12 col-md-6 p-0 m-0">
 							                    		<div class="input-group">
 					                              			<label for="userNm" class="col-4 p-2 text-end">이름</label>
 					                              			<input type="text" id="userNm" name="userNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="이름(성명/모험단)" value="" />
 					                              		</div>
 				                              		</div>
-				                              		<div class="col-6 p-0 m-0">
+				                              		<div class="col-12 col-md-6 p-0 mx-0 mt-3 mb-0 mt-md-0">
 				                              			<div class="input-group">
-					                              			<label for="userStat" class="col-8 p-2 text-end">휴면여부</label>
+					                              			<label for="userStat" class="col-4 col-md-8 p-2 text-end">휴면여부</label>
 				                              				<input type="checkbox" id="userStat" name="userStat" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
 					                              		</div>
 				                              		</div>
 			                              		</div>
 			                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 				                              		<div class="input-group p-0">
-				                              			<label for="userPw" class="col-2 p-2 text-end">PW</label>
+				                              			<label for="userPw" class="col-4 col-md-2 p-2 text-end">PW</label>
 				                              			<input type="password" id="userPw" name="userPw" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="비밀번호" value="" />
 				                              		</div>
 			                              		</div>
 			                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 					                    			<div class="input-group p-0">
-				                              			<label for="userNote" class="col-2 p-2 text-end">비고</label>
+				                              			<label for="userNote" class="col-4 col-md-2 p-2 text-end">비고</label>
 				                              			<textarea id="userNote" name="userNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);"></textarea>
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-12 p-0 mx-0 mt-3 mb-1 text-end">
-			                              			<label for="uploadFile" class="btn bg-secondary text-bg-secondary">프로필이미지</label>
-			                              			<input type="button" class="btn btn-primary" onclick="javascript:beforeSaveUser();" value="저장" />
+			                              		<div class="row d-block d-md-flex col-12 p-0 mx-0 mt-3 mb-1 justify-content-end gap-2">
+			                              			<div class="col-auto text-end ps-0">
+			                              				<label for="uploadFile" class="btn bg-secondary text-bg-secondary">프로필이미지</label>
+			                              			</div>
+			                              			<div class="col-auto text-end ps-0 mt-3 mt-md-0">
+			                              				<input type="button" class="btn btn-primary" onclick="javascript:beforeSaveUser();" value="저장" />
+			                              			</div>
 			                              		</div>
 		                              		</form>
 		                              	</div>

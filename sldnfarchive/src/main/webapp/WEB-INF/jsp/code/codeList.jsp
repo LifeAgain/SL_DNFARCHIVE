@@ -28,8 +28,8 @@
 		        <main>
 		            <div class="container-fluid px-4">
 		            	<div class="card card-header mt-4">
-		            		<form id="schCodeFrm" class="row col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
-		            			<div class="row col-auto gap-2">
+		            		<form id="schCodeFrm" class="row d-block d-md-flex col-12 p-0 m-0 justify-content-between" onsubmit="javascript:return false;">
+		            			<div class="row d-block d-md-flex col-12 p-0 m-0 col-md-auto gap-2">
 		            				<div class="input-group px-0 w-auto">
 			            				<label for="schUseYn" class="input-group-text">사용여부</label>
 			            				<select id="schUseYn" name="schUseYn" class="form-select" onchange="javascript:schCodeUseYn();">
@@ -38,12 +38,14 @@
 			            					<option value="N">미사용</option>
 			            				</select>
 			            			</div>
-			            			<div class="input-group px-0 w-auto">
+			            			<div class="input-group px-0 w-auto mt-2 mt-md-0">
 			            				<label for="schCodeNm" class="input-group-text">코드명</label>
 			            				<input type="text" id="schCodeNm" name="schCodeNm" class="form-control" value="" onkeyup="javascript:if(event.keyCode == 13) schCode();" />
 			            			</div>
 			            		</div>
-		            			<input type="button" class="btn btn-primary col-auto" onclick="javascript:schCode();" value="검색" />
+			            		<div class="text-end text-md-start w-auto mt-2 mt-md-0">
+		            				<input type="button" class="btn btn-primary col-auto" onclick="javascript:schCode();" value="검색" />
+		            			</div>
 		            		</form>
 		            	</div>
 		            	
@@ -56,40 +58,46 @@
 		                    </div>
 		                    
 		                    <div class="card-body">
-		                    	 <div class="col-12 m-0 text-end">
-		                 			<input type="button" class="btn bg-warning text-bg-warning" onclick="javascript:insertCode('L');" value="상위메뉴 추가" />
-		                 			<input type="button" class="btn bg-warning text-bg-warning" onclick="javascript:insertCode('S');" value="하위메뉴 추가" />
-		                 			<input type="button" class="btn bg-danger text-bg-danger" onclick="javascript:beforeDeleteCode();" value="삭제" />
+		                    	 <div class="row col-12 p-0 m-0 d-block d-md-flex justify-content-md-end gap-2">
+		                    	 	<div class="col-auto text-end ps-0">
+		                 				<input type="button" class="btn bg-warning text-bg-warning" onclick="javascript:insertCode('L');" value="상위코드 추가" />
+		                 			</div>
+		                 			<div class="col-auto text-end ps-0 mt-2 mt-md-0">
+		                 				<input type="button" class="btn bg-warning text-bg-warning" onclick="javascript:insertCode('S');" value="하위코드 추가" />
+		                 			</div>
+		                 			<div class="col-auto text-end ps-0 mt-2 mt-md-0">
+		                 				<input type="button" class="btn bg-danger text-bg-danger" onclick="javascript:beforeDeleteCode();" value="삭제" />
+	                        		</div>
 	                        	</div>
                         		
-		                    	<div class="row col-12 p-0 m-0 mt-4">
-			                    	<div class="col-4 p-0 m-0">
+		                    	<div class="row d-block d-md-flex col-12 p-0 m-0 mt-4">
+			                    	<div class="col-12 col-md-4 p-0 m-0">
 			                    		<div id="jstree"></div>
 			                    	</div>
-			                    	<div class="col-8 p-0 m-0">
+			                    	<div class="col-12 col-md-8 p-0 mx-0 mb-0 mt-4 mt-md-0">
 			                    		<form id="editFrm" onsubmit="javascript:return false;">
-				                    		<div class="row col-12 p-0 m-0">
-				                    			<div class="col-6 p-0 m-0">
+				                    		<div class="row d-block d-md-flex col-12 p-0 m-0">
+				                    			<div class="col-12 col-md-6 p-0 m-0">
 						                    		<div class="input-group">
 				                              			<label for="codeLcd" class="col-4 p-2 text-end">대분류코드</label>
 				                              			<input type="text" id="codeLcd" name="codeLcd" class="form-control bg-secondary" placeholder="대분류코드" value="" readonly />
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-6 p-0 m-0">
+			                              		<div class="col-12 col-md-6 p-0 mx-0 mt-3 mb-0 mt-md-0">
 				                              		<div class="input-group">
 				                              			<label for="codeScd" class="col-4 p-2 text-end">소분류코드</label>
 				                              			<input type="text" id="codeScd" name="codeScd" class="form-control bg-secondary" placeholder="소분류코드" value="" readonly />
 				                              		</div>
 			                              		</div>
 		                              		</div>
-		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
-				                    			<div class="col-6 p-0 m-0">
+		                              		<div class="row d-block d-md-flex col-12 p-0 mx-0 mt-3 mb-0">
+				                    			<div class="col-12 col-md-6 p-0 m-0">
 						                    		<div class="input-group">
 				                              			<label for="codeNm" class="col-4 p-2 text-end">코드명</label>
 				                              			<input type="text" id="codeNm" name="codeNm" class="form-control" onchange="javascript:chkChangeVal(this);" placeholder="코드명" value="" />
 				                              		</div>
 			                              		</div>
-			                              		<div class="col-6 p-0 m-0">
+			                              		<div class="col-12 col-md-6 p-0 mx-0 mt-3 mb-0 mt-md-0">
 				                              		<div class="input-group">
 				                              			<label for="useYn" class="col-4 p-2 text-end">사용여부</label>
 			                              				<input type="checkbox" id="useYn" name="useYn" class="form-check" onchange="javascript:chkChangeVal(this);" value="" />
@@ -98,7 +106,7 @@
 		                              		</div>
 		                              		<div class="row col-12 p-0 mx-0 mt-3 mb-0">
 				                    			<div class="input-group p-0">
-			                              			<label for="codeNote" class="col-2 p-2 text-end">비고</label>
+			                              			<label for="codeNote" class="col-4 col-md-2 p-2 text-end">비고</label>
 			                              			<textarea id="codeNote" name="codeNote" class="form-control h-auto" onchange="javascript:chkChangeVal(this);" placeholder="비고(500자 내외 입력)"></textarea>
 			                              		</div>
 		                              		</div>

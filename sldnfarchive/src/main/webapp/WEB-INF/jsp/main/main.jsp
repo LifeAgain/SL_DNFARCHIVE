@@ -28,8 +28,8 @@
 		    <div id="layoutSidenav_content">
 		        <main>
 		            <div class="container-fluid px-4">
-	                        <div class="row col-12 p-0 mx-0 my-4">
-	                            <div class="col-6 p-0 m-0 mb-4 pe-1">
+	                        <div class="row d-block d-lg-flex col-12 p-0 mx-0 my-4">
+	                            <div class="col-lg-6 col-12 p-0 ms-0 pe-lg-1 mt-0 mb-4">
 	                            	<div class="card">
                                     	<div class="card-header"><strong>공지사항</strong></div>
                                     	<div class="card-body">
@@ -57,7 +57,7 @@
                                     	</div>
 	                            	</div>
 	                            </div>
-	                            <div class="col-6 p-0 m-0 mb-4 ps-1">
+	                            <div class="col-lg-6 col-12 p-0 ms-0 mt-0 mb-4 ps-lg-1">
 	                            	<div class="card">
                                     	<div class="card-header"><strong>추천공략</strong></div>
                                     	<div class="card-body">

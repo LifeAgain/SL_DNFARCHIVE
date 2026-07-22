@@ -91,49 +91,38 @@
 		                    		<div id="postList" class="board-gallery">
 				                    	<table class="col-12 p-0 m-0">
 				                    		<c:if test="${totalCnt > 0}">
-			                    			<c:forEach var="i" begin="0" end="1">
-			                    			<c:if test="${not empty postList[(i * 5)]}">
-			                    			<c:forEach var="j" begin="0" end="3">
-			                    			<tr>
-			                    				<c:forEach var="k" begin="0" end="4">
-			                    				<c:if test="${j eq 0 and not empty postList[((i*5) + k)]}">
-			                    				<td class="text-center py-2">
-			                    					<c:if test="${empty postList[((i*5) + k)].fileNmDtl}">
-			                    					<div class="no-post_img" onclick="javascript:goDetail('${postList[((i*5) + k)].postNo}');">
-			                    						<img src="/images/img_nouser.png" />
-			                    					</div>
-			                    					</c:if>
-			                    					<c:if test="${not empty postList[((i*5) + k)].fileNmDtl}">
-			                    					<div class="post_img" onclick="javascript:goDetail('${postList[((i*5) + k)].postNo}');">
-			                    						<img src="/images/upload/${postList[((i*5) + k)].fileNmDtl}" />
-			                    					</div>
-			                    					</c:if>
-			                    				</td>
-			                    				</c:if>
-			                    				
-			                    				<c:if test="${j eq 1}">
-			                    				<td><c:if test="${not empty postList[((i*5) + k)].title}"><strong>${postList[((i*5) + k)].title}</strong></c:if></td>
-			                    				</c:if>
-			                    				
-			                    				<c:if test="${j eq 2}">
-			                    				<td><c:if test="${not empty postList[((i*5) + k)].userNm}">${postList[((i*5) + k)].userNm}</c:if></td>
-			                    				</c:if>
-			                    				
-			                    				<c:if test="${j eq 3}">
-			                    				<td>
-			                    					<c:if test="${not empty postList[((i*5) + k)].postNo}">
-				                    					<div id="postInfo${postList[((i*5) + k)].postNo}" class="post-info row col-12 p-0 m-0 justify-content-between align-items-center">
-						                    				<span class="view-cnt text-secondary col-auto p-0 m-0"><i class="fa-solid fa-eye"></i> ${postList[((i*5) + k)].viewCnt}</span>
-						                    				<span class="reg-date text-secondary col-auto p-0 my-0 ms-0 me-3">${postList[((i*5) + k)].fmRegDate}</span>
-					                    				</div>
+				                    		<tr class="row col-12 p-0 m-0">
+				                    			<c:forEach var="postList" items="${postList}" varStatus="status">
+				                    			<td class="px-1">
+				                    				<c:if test="${empty postList.fileNmDtl}">
+				                    				<div class="text-center py-2">
+				                    					<div class="no-post_img" onclick="javascript:goDetail('${postList.postNo}')">
+		                    								<img src="/images/img_nouser.png" />
+		                    							</div>
+	                    							</div>
+		                    						</c:if>
+		                    						<c:if test="${not empty postList.fileNmDtl}">
+		                    						<div class="text-center py-2">
+				                    					<div class="post_img" onclick="javascript:goDetail('${postList.postNo}')">
+		                    								<img src="/images/upload/${postList.fileNmDtl}" />
+		                    							</div>
+		                    						</div>
 				                    				</c:if>
-			                    				</td>
-			                    				</c:if>
-			                    				</c:forEach>	
-			                    			</tr>
-			                    			</c:forEach>
-			                    			</c:if>
-			                    			</c:forEach>
+				                    				<c:if test="${not empty postList.title}">
+	                    							<div class="post_title py-1"><strong>${postList.title}</strong></div>
+	                    							</c:if>
+	                    							<c:if test="${not empty postList.userNm}">
+	                    							<div class="post_author py-1">${postList.userNm}</div>
+	                    							</c:if>
+	                    							<c:if test="${not empty postList.postNo}">
+			                    					<div id="postInfo${postList.postNo}" class="post-info row col-12 p-0 m-0 justify-content-between align-items-center">
+					                    				<span class="reg-date text-secondary col-auto p-0 my-0 ms-0 me-2">${postList.fmRegDate}</span>
+				                    					<span class="view-cnt text-secondary col-auto p-0 m-0"><i class="fa-solid fa-eye"></i> ${postList.viewCnt}</span>
+				                    				</div>
+				                    				</c:if>
+				                    			</td>
+				                    			</c:forEach>
+				                    		</tr>
 				                    		</c:if>
 				                    		
 				                    		<c:if test="${totalCnt <= 0}">

@@ -14,7 +14,7 @@ function getVideoData() {
 			
 			if(lenTitle > 20) title = title.substring(0, 19) + "...";
 			
-			$(".board-gallery tr:nth-child(2) td").eq(index).children().text(title);
+			$(".board-gallery tr td .post_title strong").text(title);
 			
 			if(data.thumbnail_url != null || typeof data.thumbnail_url == "undefined") {
 				$(".post_img").eq(index).children().children().attr("src", data.thumbnail_url);

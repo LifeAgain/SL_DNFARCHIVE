@@ -1060,6 +1060,11 @@ progress {
   .gy-sm-5 {
     --bs-gutter-y: 3rem;
   }
+  
+  .board-gallery tr td {
+	width: 20% !important;
+	max-width: 20% !important;
+  }
 }
 @media (min-width: 768px) {
   .col-md {
@@ -11248,7 +11253,7 @@ body {
 	font-size: 0.875rem;
 }
 
-.board-list table, .board-gallery table, .board-frm table, .curPostList {
+.board-list table, .board-frm table, .curPostList {
 	table-layout: fixed;
 }
 
@@ -11332,8 +11337,8 @@ a[id^="postTitle"], td[id^="curPost"] a {
 }
 
 .board-gallery tr td {
-	width: 20% !important;
-	max-width: 20%;
+	width: 50%;
+	max-width: 50%;
 }
 
 .post_img, .no-post_img {
@@ -11361,7 +11366,9 @@ a[id^="postTitle"], td[id^="curPost"] a {
 }
 
 .post_img a {
-	display: block;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 100%;
 	height: 100%;
 }

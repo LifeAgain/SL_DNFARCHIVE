@@ -42,47 +42,32 @@
 	                    		<div id="videoList" class="board-gallery">
 			                    	<table class="col-12 p-0 m-0">
 			                    		<c:if test="${totalCnt > 0}">
-		                    			<c:forEach var="i" begin="0" end="1">
-		                    			<c:if test="${not empty videoList[(i * 5)]}">
-		                    			<c:forEach var="j" begin="0" end="3">
-		                    			<tr>
-		                    				<c:forEach var="k" begin="0" end="4">
-		                    				<c:if test="${j eq 0 and not empty videoList[((i*5) + k)]}">
-		                    				<td class="text-center py-2">
-		                    					<div class="post_img">
-		                    						<a href="${videoList[((i*5) + k)].videoUrl}" target="_blank"><img src="/images/img_nouser.png" /></a>
-		                    					</div>
-		                    				</td>
-		                    				</c:if>
-		                    				
-		                    				<c:if test="${j eq 1}">
-		                    				<td><strong></strong></td>
-		                    				</c:if>
-		                    				
-		                    				<c:if test="${j eq 2}">
-		                    				<td><c:if test="${not empty videoList[((i*5) + k)].userNm}">${videoList[((i*5) + k)].userNm}</c:if></td>
-		                    				</c:if>
-		                    				
-		                    				<c:if test="${j eq 3}">
-		                    				<td>
-		                    					<c:if test="${not empty videoList[((i*5) + k)].videoNo}">
-			                    					<div id="postInfo${videoList[((i*5) + k)].videoNo}" class="post-info row col-12 p-0 m-0 justify-content-between align-items-center">
-					                    				<span class="reg-date text-secondary col-auto p-0 my-0 ms-0 me-3">${videoList[((i*5) + k)].fmRegDate}</span>
-				                    					<div class="video-btn row col-auto p-0 m-0 gap-2">
-				                    						<span class="text-secondary col-auto p-0 m-0"><i class="fa-solid fa-pencil" onclick="javascript:goVideo(this);"></i></span>
-				                    						<span class="text-secondary col-auto p-0 m-0"><i class="fa-solid fa-x" onclick="javascript:beforeDeleteVideo(this);"></i></span>
-				                    					</div>
-				                    				</div>
-			                    				</c:if>
-		                    				</td>
-		                    				</c:if>
-		                    				</c:forEach>	
-		                    			</tr>
-		                    			</c:forEach>
+			                    		<tr class="row col-12 p-0 m-0">
+			                    			<c:forEach var="videoList" items="${videoList}" varStatus="status">
+			                    			<td class="px-1">
+			                    				<div class="text-center py-2">
+			                    					<div class="post_img">
+	                    								<a href="${videoList.videoUrl}" target="_blank"><img src="/images/img_nouser.png" /></a>
+	                    							</div>
+	                    						</div>
+                    							<div class="post_title py-1"><strong></strong></div>
+                    							<c:if test="${not empty videoList.userNm}">
+                    							<div class="post_author py-1">${videoList.userNm}</div>
+                    							</c:if>
+                    							<c:if test="${not empty videoList.videoNo}">
+                    							<div id="postInfo${videoList.videoNo}" class="post-info row col-12 p-0 m-0 justify-content-between align-items-center">
+				                    				<span class="reg-date text-secondary col-auto p-0 my-0 ms-0 me-2">${videoList.fmRegDate}</span>
+			                    					<div class="video-btn row col-auto p-0 m-0 gap-2">
+			                    						<span class="text-secondary col-auto p-0 m-0"><i class="fa-solid fa-pencil" onclick="javascript:goVideo(this);"></i></span>
+			                    						<span class="text-secondary col-auto p-0 m-0"><i class="fa-solid fa-x" onclick="javascript:beforeDeleteVideo(this);"></i></span>
+			                    					</div>
+			                    				</div>
+                    							</c:if>
+			                    			</td>
+			                    			</c:forEach>
+			                    		</tr>
 		                    			</c:if>
-		                    			</c:forEach>
-			                    		</c:if>
-			                    		
+		                    			
 			                    		<c:if test="${totalCnt <= 0}">
 		                    			<tr>
 		                    				<td colspan="5" class="text-center py-3">게시글이 존재하지 않습니다.</td>

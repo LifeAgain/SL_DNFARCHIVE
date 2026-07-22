@@ -35,16 +35,16 @@
                                     	<div class="card-body">
                                     		<table class="col-12 p-0 m-0 curPostList">
                                     			<tr>
-                                    				<th class="text-center py-1" width="65%">제목</th>
-                                    				<th class="text-center py-1" width="15%">조회수</th>
-                                    				<th class="text-center py-1" width="20%">작성일자</th>
+                                    				<th class="text-center py-1 col-9 col-md-7">제목</th>
+                                    				<th class="text-center py-1 col-3">조회수</th>
+                                    				<th class="d-none d-md-table-cell text-center py-1 col-md-3">작성일자</th>
                                     			</tr>
                                     			<c:if test="${totalPostCnt > 0}">
                                     			<c:forEach var="curPostList" items="${curPostList}" begin="0" end="4" varStatus="status">
                                     			<tr>
-                                    				<td id="curPost${curPostList.postNo}" class="px-2"><a class="text-decoration-none text-black" href="#" onclick="javascript:goDetail(this);">${curPostList.title}</a></td>
-                                    				<td class="text-center">${curPostList.viewCnt}</td>
-                                    				<td class="text-center">${curPostList.fmRegDate}</td>
+                                    				<td id="curPost${curPostList.postNo}" class="px-2 col-10 col-md-7"><a class="text-decoration-none text-black" href="#" onclick="javascript:goDetail(this);">${curPostList.title}</a></td>
+                                    				<td class="text-center col-2">${curPostList.viewCnt}</td>
+                                    				<td class="d-none d-md-table-cell text-center col-md-3">${curPostList.fmRegDate}</td>
                                     			</tr>
                                     			</c:forEach>
                                     			</c:if>
@@ -63,14 +63,14 @@
                                     	<div class="card-body">
                                     		<table class="col-12 p-0 m-0 curPostList">
                                     			<tr>
-                                    				<th class="text-center py-1" width="80%">제목</th>
-                                    				<th class="text-center py-1" width="20%">작성일자</th>
+                                    				<th class="text-center py-1 col-12 col-sm-10">제목</th>
+                                    				<th class="d-none d-sm-table-cell text-center py-1 col-sm-2">작성일자</th>
                                     			</tr>
                                     			<c:if test="${totalVideoCnt > 0}">
                                     			<c:forEach var="curVideoList" items="${curVideoList}" begin="0" end="4" varStatus="status">
                                     			<tr>
-                                    				<td class="px-2"><a class="text-decoration-none text-black" href="${curVideoList.videoUrl}" target="_blank"></a></td>
-                                    				<td class="text-center">${curVideoList.fmRegDate}</td>
+                                    				<td class="px-2 col-12 col-sm-10"><a class="text-decoration-none text-black" href="${curVideoList.videoUrl}" target="_blank"></a></td>
+                                    				<td class="d-none d-sm-table-cell text-center col-sm-2">${curVideoList.fmRegDate}</td>
                                     			</tr>
                                     			</c:forEach>
                                     			</c:if>

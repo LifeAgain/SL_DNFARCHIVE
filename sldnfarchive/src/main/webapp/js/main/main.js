@@ -1,27 +1,6 @@
 $(function() {
 	getVideoData();
-	// loginMenuList();
 });
-
-function loginMenuList() {
-	$.ajax({
-		url: "/main/loginMenuList.do"
-	  , type: "post"
-	  , dataType: "json"
-	  , async: true
-	  , success: function(res) { // 결과 성공 콜백함수
-	        console.log(res);
-	        $("a.collapsed")
-	    }
-	  , error: function(req, status, err) { // 결과 에러 콜백함수
-	        Swal.fire({
-				icon: "error",
-				title: "에러 발생",
-				text: "관리자에게 문의해주세요."
-			});
-	    }
-	});
-}
 
 function goDetail(e) {
 	var postNo = $(e).closest("td").attr("id").split("curPost")[1];

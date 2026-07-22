@@ -1,4 +1,8 @@
 $(function() {
+	detailView();
+});
+
+function detailView() {
 	var boardNo = $("#boardNo").val();
 	var boardType = "";
 	var content = null;
@@ -6,14 +10,14 @@ $(function() {
 	var lenTitle = title.length;
 	var lenComm = $("#comment0").length;
 	
-	if(lenTitle > 50) {
-		title = title.substring(0, 49) + "...";
+	if(lenTitle > 25) {
+		title = title.substring(0, 24) + "...";
 		
 		$(".board-detail table tr:first-child td strong").text(title);
 	}
 	
-	if(boardNo == 1 || boardNo == 3) boardType == "A01";
-	else boardType == "A02";
+	if(boardNo == 1) boardType = "A01";
+	else boardType = "A02";
 	
 	if(boardType == "A01") {
 		content = $("#postDetail table tr").eq(2).children().eq(0).text();
@@ -63,7 +67,7 @@ $(function() {
 		$(".board-detail table tr").eq(4).css("backgroundColor", "#ffffff");
 		$(".board-detail table tr").eq(5).css("backgroundColor", "#ffffff");
 	}
-});
+}
 
 function goList() {
 	var boardNo = $("#boardNo").val();

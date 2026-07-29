@@ -642,7 +642,7 @@ progress {
 }
 
 @media(min-width: 370px) {
-  .setPts, .oathPts {
+  #box1 table tr.card td {
 	font-size: var(--bs-body-font-size) !important;
   }
 }
@@ -11413,18 +11413,24 @@ a[id^="postTitle"], td[id^="curPost"] a {
 	height: 40px;
 }
 
+ul#tabList {
+	overflow-x: auto;
+}
+
+#box1 table tr.card td {
+	font-size: 13px;
+}
+
 #box1 table tr.card td:first-child {
 	border-right: var(--bs-card-border-width) solid var(--bs-card-border-color) !important;
 }
 
 .setPts {
 	color: #a98b30;
-	font-size: 14px;
 }
 
 .oathPts {
 	color: #d9a863;
-	font-size: 14px;
 }
 
 .crystal_name, .crystal_lvl {

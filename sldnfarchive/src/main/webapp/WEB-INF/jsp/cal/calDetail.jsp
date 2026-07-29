@@ -73,51 +73,55 @@
 		                    		</div>
 			                    	<div class="card mt-4">
 			                    		<div class="card-header col-12 p-0 m-0">
-			                    			<ul id="tabList" class="nav col-12 p-0 m-0 justify-content-center">
-			                    				<li id="tab1" class="px-3 py-2 active" onclick="javascript:tabChange(this);">장착장비</li>
-			                    				<li id="tab2" class="px-3 py-2" onclick="javascript:tabChange(this);">스탯</li>
-			                    				<li id="tab3" class="px-3 py-2" onclick="javascript:tabChange(this);">세부스탯</li>
-			                    				<li id="tab4" class="px-3 py-2" onclick="javascript:tabChange(this);">아바타&크리쳐</li>
-			                    				<li id="tab5" class="px-3 py-2" onclick="javascript:tabChange(this);">버프강화</li>
-			                    				<li id="tab6" class="px-3 py-2" onclick="javascript:tabChange(this);">스킬개화</li>
-			                    				<li id="tab7" class="px-3 py-2" onclick="javascript:tabChange(this);">딜표</li>
-			                    				<li id="tab8" class="px-3 py-2" onclick="javascript:tabChange(this);">스킬정보</li>
-			                    				<li id="tab9" class="px-3 py-2" onclick="javascript:tabChange(this);">버프계산</li>
+			                    			<ul id="tabList" class="nav flex-nowrap flex-md-wrap col-12 p-0 m-0 justify-content-md-center">
+			                    				<li id="tab1" class="px-3 py-2 flex-shrink-0 active" onclick="javascript:tabChange(this);">장착장비</li>
+			                    				<li id="tab2" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">스탯</li>
+			                    				<li id="tab3" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">세부스탯</li>
+			                    				<li id="tab4" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">아바타&크리쳐</li>
+			                    				<li id="tab5" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">버프강화</li>
+			                    				<li id="tab6" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">스킬개화</li>
+			                    				<li id="tab7" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">딜표</li>
+			                    				<li id="tab8" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">스킬정보</li>
+			                    				<li id="tab9" class="px-3 py-2 flex-shrink-0" onclick="javascript:tabChange(this);">버프계산</li>
 			                    			</ul>
 			                    		</div>
 			                    		<div class="card-body">
 			                    			<div id="box1" class="active">
 			                    				<table class="col-12 p-0 m-0">
 			                    					<tr class="card flex-row">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2 bg-grey">세트</td>
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2 bg-grey">
+			                    						<td class="d-flex col-2 justify-content-center align-items-center py-2 bg-grey">세트</td>
+			                    						<td class="d-flex col-2 justify-content-center align-items-center py-2 bg-grey">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="${selectCal.setItemImg}" alt="set" />
-			                    								<div class="col-auto p-0 m-0 oath_img"></div>
+			                    								<div class="col-auto d-none d-md-table-cell p-0 m-0 oath_img"></div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 bg-grey rarity_${selectCal.setItemRarity}"><strong>${selectCal.setItemNm}</strong></td>
-			                    						<td class="col-4 d-table-cell d-md-flex justify-content-end align-items-center gap-2 px-0 pe-md-3 py-2 bg-grey">
-			                    							<div class="setPts">세트포인트 ${selectCal.curSetPts}</div>
-			                    							<div class="setPts">보정전 ${selectCal.setPts}</div>
+			                    						<td class="d-flex col-4 text-center justify-content-center align-items-center py-2 bg-grey rarity_${selectCal.setItemRarity}"><strong>${selectCal.setItemNm}</strong></td>
+			                    						<td class="d-flex col-4 text-end justify-content-end align-items-center px-0 pe-md-3 py-2 bg-grey">
+			                    							<div class="d-block d-md-flex gap-2">
+			                    								<div class="setPts"><strong class="d-block d-md-inline-block me-0 me-md-1">세트포인트</strong><span>${selectCal.curSetPts}</span></div>
+			                    								<div class="setPts"><strong class="d-block d-md-inline-block me-0 me-md-1">보정전</strong><span>${selectCal.setPts}</span></div>
+			                    							</div>
 			                    						</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2 bg-grey">서약</td>
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2 bg-grey">
+			                    						<td class="d-flex col-2 justify-content-center align-items-center py-2 bg-grey">서약</td>
+			                    						<td class="d-flex col-2 justify-content-center align-items-center py-2 bg-grey">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="${selectCal.setOathImg}" alt="oath" />
-			                    								<div class="col-auto p-0 m-0 oath_img"></div>
+			                    								<div class="col-auto d-none d-md-table-cell p-0 m-0 oath_img"></div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 bg-grey rarity_${selectCal.setOathRarity}"><strong>${selectCal.setOathNm}</strong></td>
-			                    						<td class="col-4 d-table-cell d-md-flex justify-content-end align-items-center gap-2 px-0 pe-md-3 py-2 bg-grey">
-			                    							<div class="oathPts">서약포인트 ${selectCal.curSetOathPts}</div>
-			                    							<div class="oathPts">보정전 ${selectCal.setOathPts}</div>
+			                    						<td class="d-flex col-4 text-center justify-content-center align-items-center p-2 px-md-0 bg-grey rarity_${selectCal.setOathRarity}"><strong>${selectCal.setOathNm}</strong></td>
+			                    						<td class="d-flex col-4 text-end justify-content-end align-items-center px-0 pe-md-3 py-2 bg-grey">
+			                    							<div class="d-block d-md-flex gap-2">
+			                    								<div class="oathPts"><strong class="d-block d-md-inline-block me-0 me-md-1">서약포인트</strong><span>${selectCal.curSetOathPts}</span></div>
+			                    								<div class="oathPts"><strong class="d-block d-md-inline-block me-0 me-md-1">보정전</strong><span>${selectCal.setOathPts}</span></div>
+			                    							</div>
 			                    						</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">무기</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">무기</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.weaponid}" alt="equip" />
@@ -126,22 +130,22 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.weaponrarity}"><strong>${selectCal.weapon}</strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.weaponrarity}"><strong>${selectCal.weapon}</strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.weaponampyn}">${selectCal.weaponreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">칭호</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">칭호</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.titleid}" alt="equip" />
 			                    								<div class="col-auto p-0 m-0 oath_img"></div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.titlerarity}"><strong>${selectCal.title}</strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.titlerarity}"><strong>${selectCal.title}</strong></td>
 			                    						<td class="col-4 text-center py-2"></td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">상의</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">상의</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.jacketid}" alt="equip" />
@@ -154,11 +158,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.jacketrarity}"><strong>${selectCal.jacket} <c:if test="${selectCal.jacketlvlstr ne ''}"><span class="tune_badge">${selectCal.jacketlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.jacketrarity}"><strong>${selectCal.jacket} <c:if test="${selectCal.jacketlvlstr ne ''}"><span class="tune_badge">${selectCal.jacketlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.jacketampyn}">${selectCal.jacketreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">머리어깨</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">머리어깨</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.shoulderid}" alt="equip" />
@@ -171,11 +175,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.shoulderrarity}"><strong>${selectCal.shoulder} <c:if test="${selectCal.shoulderlvlstr ne ''}"><span class="tune_badge">${selectCal.shoulderlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.shoulderrarity}"><strong>${selectCal.shoulder} <c:if test="${selectCal.shoulderlvlstr ne ''}"><span class="tune_badge">${selectCal.shoulderlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.shoulderampyn}">${selectCal.shoulderreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">하의</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">하의</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.pantsid}" alt="equip" />
@@ -188,11 +192,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.pantsrarity}"><strong>${selectCal.pants} <c:if test="${selectCal.pantslvlstr ne ''}"><span class="tune_badge">${selectCal.pantslvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.pantsrarity}"><strong>${selectCal.pants} <c:if test="${selectCal.pantslvlstr ne ''}"><span class="tune_badge">${selectCal.pantslvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.pantsampyn}">${selectCal.pantsreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">신발</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">신발</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.shoesid}" alt="equip" />
@@ -205,11 +209,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.shoesrarity}"><strong>${selectCal.shoes} <c:if test="${selectCal.shoeslvlstr ne ''}"><span class="tune_badge">${selectCal.shoeslvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.shoesrarity}"><strong>${selectCal.shoes} <c:if test="${selectCal.shoeslvlstr ne ''}"><span class="tune_badge">${selectCal.shoeslvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.shoesampyn}">${selectCal.shoesreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">벨트</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">벨트</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.waistid}" />
@@ -222,11 +226,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.waistrarity}"><strong>${selectCal.waist} <c:if test="${selectCal.waistlvlstr ne ''}"><span class="tune_badge">${selectCal.waistlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.waistrarity}"><strong>${selectCal.waist} <c:if test="${selectCal.waistlvlstr ne ''}"><span class="tune_badge">${selectCal.waistlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.waistampyn}">${selectCal.waistreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">목걸이</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">목걸이</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.amuletid}" />
@@ -239,11 +243,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.amuletrarity}"><strong>${selectCal.amulet} <c:if test="${selectCal.amuletlvlstr ne ''}"><span class="tune_badge">${selectCal.amuletlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.amuletrarity}"><strong>${selectCal.amulet} <c:if test="${selectCal.amuletlvlstr ne ''}"><span class="tune_badge">${selectCal.amuletlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.amuletampyn}">${selectCal.amuletreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">팔찌</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">팔찌</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.wristid}" />
@@ -256,11 +260,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.wristrarity}"><strong>${selectCal.wrist} <c:if test="${selectCal.wristlvlstr ne ''}"><span class="tune_badge">${selectCal.wristlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.wristrarity}"><strong>${selectCal.wrist} <c:if test="${selectCal.wristlvlstr ne ''}"><span class="tune_badge">${selectCal.wristlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.wristampyn}">${selectCal.wristreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">반지</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">반지</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 				                    							<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.ringid}" />
@@ -273,11 +277,11 @@
 			                    								</div>
 		                    								</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.ringrarity}"><strong>${selectCal.ring} <c:if test="${selectCal.ringlvlstr ne ''}"><span class="tune_badge">${selectCal.ringlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.ringrarity}"><strong>${selectCal.ring} <c:if test="${selectCal.ringlvlstr ne ''}"><span class="tune_badge">${selectCal.ringlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.ringampyn}">${selectCal.ringreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">보조장비</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">보조장비</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.supportid}" />
@@ -290,11 +294,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.supportrarity}"><strong>${selectCal.support} <c:if test="${selectCal.supportlvlstr ne ''}"><span class="tune_badge">${selectCal.supportlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.supportrarity}"><strong>${selectCal.support} <c:if test="${selectCal.supportlvlstr ne ''}"><span class="tune_badge">${selectCal.supportlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.supportampyn}">${selectCal.supportreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">마법석</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">마법석</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.magicStonid}" />
@@ -307,11 +311,11 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.magicStonrarity}"><strong>${selectCal.magicSton} <c:if test="${selectCal.magicStonlvlstr ne ''}"><span class="tune_badge">${selectCal.magicStonlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.magicStonrarity}"><strong>${selectCal.magicSton} <c:if test="${selectCal.magicStonlvlstr ne ''}"><span class="tune_badge">${selectCal.magicStonlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.magicStonampyn}">${selectCal.magicStonreinforce}</td>
 			                    					</tr>
 			                    					<tr class="card flex-row mt-2">
-			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">귀걸이</td>
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">귀걸이</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
 			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.earringid}" />
@@ -324,7 +328,7 @@
 			                    								</div>
 			                    							</div>
 			                    						</td>
-			                    						<td class="col-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.earringrarity}"><strong>${selectCal.earring} <c:if test="${selectCal.earringlvlstr ne ''}"><span class="tune_badge">${selectCal.earringlvlstr}</span></c:if></strong></td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0 rarity_${selectCal.earringrarity}"><strong>${selectCal.earring} <c:if test="${selectCal.earringlvlstr ne ''}"><span class="tune_badge">${selectCal.earringlvlstr}</span></c:if></strong></td>
 			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2 ${selectCal.earringampyn}">${selectCal.earringreinforce}</td>
 			                    					</tr>
 			                    				</table>

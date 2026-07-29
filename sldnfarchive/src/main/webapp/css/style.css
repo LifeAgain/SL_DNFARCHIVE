@@ -641,6 +641,12 @@ progress {
   margin-left: auto;
 }
 
+@media(min-width: 370px) {
+  .setPts, .oathPts {
+	font-size: var(--bs-body-font-size) !important;
+  }
+}
+
 @media (min-width: 576px) {
   .container-sm, .container {
     max-width: 540px;
@@ -11373,7 +11379,7 @@ a[id^="postTitle"], td[id^="curPost"] a {
 	height: 100%;
 }
 
-.no-post_img img, .post_img img, .content-img img {
+.no-post_img img, .post_img img, .content-img img, .character_img img {
 	max-width: 100%;
 	max-height: 100%;
 }
@@ -11382,4 +11388,105 @@ a[id^="postTitle"], td[id^="curPost"] a {
 	position: absolute;
 	top: 0;
 	right: 0;
+}
+
+.character_img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
+	cursor: pointer;
+}
+
+#calDetail #tabList li {
+	cursor: pointer;
+}
+
+#calDetail #tabList li.active {
+	font-weight: bold;
+}
+
+.equip_img img, .oath_img {
+	width: 40px;
+	height: 40px;
+}
+
+#box1 table tr.card td:first-child {
+	border-right: var(--bs-card-border-width) solid var(--bs-card-border-color) !important;
+}
+
+.setPts {
+	color: #a98b30;
+	font-size: 14px;
+}
+
+.oathPts {
+	color: #d9a863;
+	font-size: 14px;
+}
+
+.crystal_name, .crystal_lvl {
+	background: rgba(0, 0, 0, .5);
+	color: #ffffff;
+	font-size: 7.5px;
+}
+
+.bg-grey {
+	background-color: #f2f4f7;
+}
+
+.rarity_common {
+	color: #000000;
+}
+
+.rarity_uncommon {
+	color: #68d5ed;
+}
+
+.rarity_rare {
+	color: #b36bff;
+}
+
+.rarity_unique, .amp {
+	color: #ff00ff;
+}
+
+.rarity_chronicle {
+	color: #ff6666;
+}
+
+.rarity_legendary {
+	color: #ff7800;
+}
+
+.rarity_epic {
+	color: #ffb400;
+}
+
+.rarity_myth {
+	color: #ffd700;
+}
+
+.rarity_ancient {
+	color: #46cfa7;
+}
+
+.rarity_myth {
+	color: #000000;
+}
+
+.tune_badge {
+	background-color: #000000;
+	color: rgb(164, 126, 59);
+	font-size: 11px;
+	font-weight: 600;
+	width: 11px;
+	height: 11px;
+	line-height: 11px;
+	padding: 2px;
+	border: 2px solid rgb(122, 78, 13);
+	border-radius: 3.5px;
+	overflow: hidden;
 }

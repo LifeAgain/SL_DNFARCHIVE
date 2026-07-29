@@ -63,8 +63,8 @@
                                     	<div class="card-body">
                                     		<table class="col-12 p-0 m-0 curPostList">
                                     			<tr>
-                                    				<th class="text-center py-1 col-12 col-sm-10">제목</th>
-                                    				<th class="d-none d-sm-table-cell text-center py-1 col-sm-2">작성일자</th>
+                                    				<th class="text-center py-1 col-12 col-sm-9">제목</th>
+                                    				<th class="d-none d-sm-table-cell text-center py-1 col-sm-3">작성일자</th>
                                     			</tr>
                                     			<c:if test="${totalVideoCnt > 0}">
                                     			<c:forEach var="curVideoList" items="${curVideoList}" begin="0" end="4" varStatus="status">

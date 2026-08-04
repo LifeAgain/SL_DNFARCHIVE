@@ -16,7 +16,7 @@ function detailView() {
 		$(".board-detail table tr:first-child td strong").text(title);
 	}
 	
-	if(boardNo == 1) boardType = "A01";
+	if(boardNo == 1 || boardNo == 3) boardType = "A01";
 	else boardType = "A02";
 	
 	if(boardType == "A01") {

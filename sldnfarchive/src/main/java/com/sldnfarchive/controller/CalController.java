@@ -142,18 +142,24 @@ public class CalController {
 		String url1 = commonUrl + "/status?apikey=" + API_KEY;
 		String url2 = commonUrl + "/equip/equipment?apikey=" + API_KEY;
 		String url3 = commonUrl + "/equip/oath?apikey=" + API_KEY;
+		String url4 = commonUrl + "/equip/avatar?apikey=" + API_KEY;
+		String url5 = commonUrl + "/equip/creature?apikey=" + API_KEY;
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
 		String jsonString1 = restTemplate.getForObject(url1, String.class);
 		String jsonString2 = restTemplate.getForObject(url2, String.class);
 		String jsonString3 = restTemplate.getForObject(url3, String.class);
+		String jsonString4 = restTemplate.getForObject(url4, String.class);
+		String jsonString5 = restTemplate.getForObject(url5, String.class);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		
 		JsonNode rootNode1 = objectMapper.readTree(jsonString1);
 		JsonNode rootNode2 = objectMapper.readTree(jsonString2);
 		JsonNode rootNode3 = objectMapper.readTree(jsonString3);
+		JsonNode rootNode4 = objectMapper.readTree(jsonString4);
+		JsonNode rootNode5 = objectMapper.readTree(jsonString5);
 		
 		// tab1
 		JsonNode equipNode = rootNode2.path("equipment");
@@ -182,6 +188,13 @@ public class CalController {
 		int setOathPts = setOathInfo.path("active").path("setPoint").path("current").asInt(0);
 		int setOathPts2 = oathNode.path("info").path("setPoint").asInt(0);
 		int curSetOathPts = setOathPts - adjustedPts;
+		
+		// tab4
+		JsonNode avatarNode = rootNode4.path("avatar");
+		JsonNode creatureNode = rootNode5.path("creature");
+		JsonNode artifactNode = creatureNode.path("artifact");
+		String creatureId = creatureNode.path("itemId").asText("");
+		String creatureNm = creatureNode.path("itemName").asText("");
 		
 		System.out.println("============================");
 		System.out.println("Success - selectCal.do");
@@ -395,6 +408,65 @@ public class CalController {
 		selectCal.put("setOathNm", setOathNm);
 		selectCal.put("setOathPts", (setOathNm.equals("")) ? setOathPts2 : setOathPts);
 		selectCal.put("curSetOathPts", (setOathNm.equals("")) ? (setOathPts2 - adjustedPts) : curSetOathPts);
+		
+		// tab4
+		if(avatarNode.isArray() && avatarNode.size() > 0) {
+			for(JsonNode avatar : avatarNode) {
+				String slotId = avatar.path("slotId").asText("");
+				String itemId = avatar.path("itemId").asText("");
+				String itemNm = avatar.path("itemName").asText("");
+				String cloneItemId = avatar.path("clone").path("itemId").asText("");
+				String cloneItemNm = avatar.path("clone").path("itemName").asText("");
+				String option = avatar.path("optionAbility").asText("");
+				JsonNode emblemNode = avatar.path("emblems");
+				String emblemNm = "";
+				int slotNo = 0;
+				
+				if(emblemNode.isArray() && emblemNode.size() > 0) {
+					for(JsonNode emblem : emblemNode) {
+						slotNo = emblem.path("slotNo").asInt(0);
+						emblemNm = emblem.path("itemName").asText("");
+						String rarity = emblem.path("itemRarity").asText("");
+						
+						if(rarity.contains("커먼")) rarityClass = "common";
+						else if(rarity.contains("언커먼")) rarityClass = "uncommon";
+						else if(rarity.contains("레어")) rarityClass = "rare";
+						else if(rarity.contains("유니크")) rarityClass = "unique";
+						else if(rarity.contains("레전더리")) rarityClass = "legendary";
+						
+						selectCal.put(slotId + "emblemnm" + slotNo, emblemNm);
+						selectCal.put(slotId + "emblemrarity" + slotNo, rarityClass);
+					}
+				}
+				
+				selectCal.put(slotId + "avatarid", itemId);
+				selectCal.put(slotId + "avatarnm", itemNm);
+				selectCal.put(slotId + "avatarcloneid", cloneItemId);
+				selectCal.put(slotId + "avatarclonenm", cloneItemNm);
+				selectCal.put(slotId + "avataroption", option);
+			}
+		}
+		
+		if(artifactNode.isArray() && artifactNode.size() > 0) {
+			for(JsonNode artifact : artifactNode) {
+				String slotColor = artifact.path("slotColor").asText("");
+				String artifactId = artifact.path("itemId").asText("");
+				String artifactNm = artifact.path("itemName").asText("");
+				String rarity = artifact.path("itemRarity").asText("");
+				
+				if(rarity.contains("커먼")) rarityClass = "common";
+				else if(rarity.contains("언커먼")) rarityClass = "uncommon";
+				else if(rarity.contains("레어")) rarityClass = "rare";
+				else if(rarity.contains("유니크")) rarityClass = "unique";
+				
+				selectCal.put("artifactId" + slotColor, artifactId);
+				selectCal.put("artifactNm" + slotColor, artifactNm);
+				selectCal.put("artifactRarity" + slotColor, rarityClass);
+			}
+		}
+		
+		selectCal.put("creatureId", creatureId);
+		selectCal.put("creatureNm", creatureNm);
 		
 		model.addAttribute("selectCal", selectCal);
 		

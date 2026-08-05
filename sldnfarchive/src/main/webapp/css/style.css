@@ -642,7 +642,7 @@ progress {
 }
 
 @media(min-width: 370px) {
-  #box1 table tr.card td {
+  #box1 table tr.card td, #box4 table tr.card td {
 	font-size: var(--bs-body-font-size) !important;
   }
 }
@@ -11413,11 +11413,16 @@ a[id^="postTitle"], td[id^="curPost"] a {
 	height: 40px;
 }
 
+.artifact_img img {
+	width: 20px;
+	height: 20px;
+}
+
 ul#tabList {
 	overflow-x: auto;
 }
 
-#box1 table tr.card td {
+#box1 table tr.card td, #box4 table tr.card td {
 	font-size: 13px;
 }
 

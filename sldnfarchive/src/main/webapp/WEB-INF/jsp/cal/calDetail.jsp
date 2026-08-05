@@ -216,7 +216,7 @@
 			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">벨트</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
-			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.waistid}" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.waistid}" alt="equip" />
 			                    								<div class="col-auto p-0 m-0 oath_img position-relative">
 			                    									<img src="https://img-api.neople.co.kr/df/items/${selectCal.crystalId1}" alt="oath" />
 			                    									<span class="position-absolute top-0 start-0 crystal_name">${selectCal.crystalNm1}</span>
@@ -233,7 +233,7 @@
 			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">목걸이</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
-			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.amuletid}" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.amuletid}" alt="equip" />
 			                    								<div class="col-auto p-0 m-0 oath_img position-relative">
 			                    									<img src="https://img-api.neople.co.kr/df/items/${selectCal.crystalId2}" alt="oath" />
 			                    									<span class="position-absolute top-0 start-0 crystal_name">${selectCal.crystalNm2}</span>
@@ -250,7 +250,7 @@
 			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">팔찌</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
-			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.wristid}" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.wristid}" alt="equip" />
 			                    								<div class="col-auto p-0 m-0 oath_img position-relative">
 			                    									<img src="https://img-api.neople.co.kr/df/items/${selectCal.crystalId3}" alt="oath" />
 			                    									<span class="position-absolute top-0 start-0 crystal_name">${selectCal.crystalNm3}</span>
@@ -267,7 +267,7 @@
 			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">반지</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
-				                    							<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.ringid}" />
+				                    							<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.ringid}" alt="equip" />
 				                    							<div class="col-auto p-0 m-0 oath_img position-relative">
 			                    									<img src="https://img-api.neople.co.kr/df/items/${selectCal.crystalId4}" alt="oath" />
 			                    									<span class="position-absolute top-0 start-0 crystal_name">${selectCal.crystalNm4}</span>
@@ -284,7 +284,7 @@
 			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">보조장비</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
-			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.supportid}" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.supportid}" alt="equip" />
 			                    								<div class="col-auto p-0 m-0 oath_img position-relative">
 			                    									<img src="https://img-api.neople.co.kr/df/items/${selectCal.crystalId5}" alt="oath" />
 			                    									<span class="position-absolute top-0 start-0 crystal_name">${selectCal.crystalNm5}</span>
@@ -301,7 +301,7 @@
 			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">마법석</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
-			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.magicStonid}" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.magicStonid}" alt="equip" />
 			                    								<div class="col-auto p-0 m-0 oath_img position-relative">
 			                    									<img src="https://img-api.neople.co.kr/df/items/${selectCal.crystalId6}" alt="oath" />
 			                    									<span class="position-absolute top-0 start-0 crystal_name">${selectCal.crystalNm6}</span>
@@ -318,7 +318,7 @@
 			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">귀걸이</td>
 			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
 			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
-			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.earringid}" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.earringid}" alt="equip" />
 			                    								<div class="col-auto p-0 m-0 oath_img position-relative">
 			                    									<img src="https://img-api.neople.co.kr/df/items/${selectCal.crystalId7}" alt="oath" />
 			                    									<span class="position-absolute top-0 start-0 crystal_name">${selectCal.crystalNm7}</span>
@@ -334,8 +334,280 @@
 			                    				</table>
 			                    			</div>
 			                    			
-			                    			<div id="box2" class="">
-			                    				
+			                    			<div id="box4" class="d-none">
+			                    				<table class="col-12 p-0 m-0">
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">모자</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.headgearavatarid}" alt="avatar" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.headgearavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.headgearavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.headgearavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.headgearemblemrarity1}">${selectCal.headgearemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.headgearemblemrarity2}">${selectCal.headgearemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">머리</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.hairavatarid}" alt="avatar" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.hairavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.hairavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.hairavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.hairemblemrarity1}">${selectCal.hairemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.hairemblemrarity2}">${selectCal.hairemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">얼굴</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.faceavatarid}" alt="avatar" />
+		                    									<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.faceavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.faceavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.faceavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.faceemblemrarity1}">${selectCal.faceemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.faceemblemrarity2}">${selectCal.faceemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">상의</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.jacketavatarid}" alt="avatar" />
+			                    								<img class="col-auto p-0" src="https://img-api.neople.co.kr/df/items/${selectCal.jacketavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.jacketavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.jacketavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.jacketemblemrarity1}">${selectCal.jacketemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.jacketemblemrarity2}">${selectCal.jacketemblemnm2}</div>
+			                    								<div class="text-center rarity_${selectCal.jacketemblemrarity3}">${selectCal.jacketemblemnm3}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">하의</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.pantsavatarid}" alt="avatar" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.pantsavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.pantsavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.pantsavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.pantsemblemrarity1}">${selectCal.pantsemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.pantsemblemrarity2}">${selectCal.pantsemblemnm2}</div>
+			                    								<div class="text-center rarity_${selectCal.pantsemblemrarity3}">${selectCal.pantsemblemnm3}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">신발</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.shoesavatarid}" alt="avatar"/>
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.shoesavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.shoesavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.shoesavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.shoesemblemrarity1}">${selectCal.shoesemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.shoesemblemrarity2}">${selectCal.shoesemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">목가슴</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.breastavatarid}" alt="avatar" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.breastavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.breastavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.breastavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.breastemblemrarity1}">${selectCal.breastemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.breastemblemrarity2}">${selectCal.breastemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">허리</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.waistavatarid}" alt="avatar" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.waistavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.waistavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.waistavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.waistemblemrarity1}">${selectCal.waistemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.waistemblemrarity2}">${selectCal.waistemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">피부</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+				                    							<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.skinavatarid}" alt="avatar" />
+				                    							<div class="col-auto p-0 m-0 oath_img"></div>
+		                    								</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.skinavatarnm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.skinavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.skinemblemrarity1}">${selectCal.skinemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.skinemblemrarity2}">${selectCal.skinemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">오라</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.auroraavatarid}" alt="avatar" />
+			                    								<div class="col-auto p-0 m-0 oath_img"></div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.auroraavatarnm}</div>
+			                    								<div class="text-center text-secondary"></div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.auroraemblemrarity1}">${selectCal.auroraemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.auroraemblemrarity2}">${selectCal.auroraemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">무기</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.weaponavatarid}" alt="avatar" />
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.weaponavatarcloneid}" alt="avatarclone" />
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">
+			                    							<div>
+			                    								<div class="text-center">${selectCal.weaponavatarclonenm}</div>
+			                    								<div class="text-center text-secondary">${selectCal.weaponavataroption}</div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.weaponemblemrarity1}">${selectCal.weaponemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.weaponemblemrarity2}">${selectCal.weaponemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-2">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">오라스킨</td>
+			                    						<td class="col-2 d-flex justify-content-center align-items-center py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.auraSkinavatarid}" />
+			                    								<div class="col-auto p-0 m-0 oath_img"></div>
+			                    							</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">${selectCal.auraSkinavatarnm}</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.auraSkinemblemrarity1}">${selectCal.auraSkinemblemnm1}</div>
+			                    								<div class="text-center rarity_${selectCal.auraSkinemblemrarity2}">${selectCal.auraSkinemblemnm2}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    					<tr class="card flex-row mt-4">
+			                    						<td class="col-2 d-none d-md-flex justify-content-center align-items-center py-2">크리쳐</td>
+			                    						<td class="col-2 py-2">
+			                    							<div class="row col-12 p-0 m-0 equip_img gap-2 justify-content-center align-items-center">
+			                    								<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.creatureId}" />
+			                    								<div class="col-auto p-0 m-0 oath_img d-none d-md-block"></div>
+			                    							</div>
+			                    							<div class="row col-12 p-0 m-0 artifact_img gap-2 justify-content-center align-items-center mt-2">
+		                    									<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.artifactIdRED}" />
+		                    									<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.artifactIdBLUE}" />
+		                    									<img class="col-auto p-0 m-0" src="https://img-api.neople.co.kr/df/items/${selectCal.artifactIdGREEN}" />
+		                    								</div>
+			                    						</td>
+			                    						<td class="col-6 col-md-4 d-flex justify-content-center align-items-center p-2 px-md-0">${selectCal.creatureNm}</td>
+			                    						<td class="col-4 d-flex justify-content-end align-items-center ps-0 pe-2 pe-md-3 py-2">
+			                    							<div>
+			                    								<div class="text-center rarity_${selectCal.artifactRarityRED}">${selectCal.artifactNmRED}</div>
+			                    								<div class="text-center rarity_${selectCal.artifactRarityBLUE}">${selectCal.artifactNmBLUE}</div>
+			                    								<div class="text-center rarity_${selectCal.artifactRarityGREEN}">${selectCal.artifactNmGREEN}</div>
+			                    							</div>
+			                    						</td>
+			                    					</tr>
+			                    				</table>
 			                    			</div>
 			                    		</div>
 			                    	</div>
